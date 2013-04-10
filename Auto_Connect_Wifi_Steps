@@ -1,0 +1,19 @@
+Open Network interfacs config file:  sudo nano /etc/network/interfaces
+
+make sure these are in place:
+	auto wlan0
+	allow-hotplug wlan0
+	iface wlan0 inet manual
+	wpa-roam /etc/wpa_supplicant/wpa_supplicant.conf
+
+Modify supplicant:		sudo nano /etc/wpa_supplicant/wpa_supplicant.confctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+	update_config=1
+	
+	network={
+	        ssid="MyNetworkName"
+	        psk="MyPSK"
+	        proto=WPA
+	        key_mgmt=WPA-PSK
+	        pairwise=TKIP
+	        auth_alg=OPEN
+	}
