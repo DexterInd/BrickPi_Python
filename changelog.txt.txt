@@ -1,0 +1,10 @@
+Note: This changes match changes i made to BrickPi_Firmware_2_0 in BrickPi repo
+
+1.  Changed SetMotor to set a single motor to a single power
+
+2.  added function SetAllMotors to set all motors to one power
+
+3.  in function ReadEncoder() multiplied value by -1 to fix encoders going backwards
+
+4.  function ReadAnalog() now takes in a port number and returns an integer value of the analog read from that port
+
