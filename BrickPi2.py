@@ -9,6 +9,12 @@ ser = serial.Serial("/dev/ttyAMA0", 115200, timeout=0.5)
 address = 0x06
 addr_Motor = 0x01
 
+
+def WaitForSerial():
+	x= ' '
+	while(x==' '):
+		x=ser.read(1)
+
 def SetAllMotors(motor_power):
 	try:
 		if motor_power < -100:
@@ -20,11 +26,10 @@ def SetAllMotors(motor_power):
 
 		out_string= "9"+chr(int(motor_power))+"\n"
 		ser.write(out_string)
-		print out_string
-		
+
 	except IOError:
 		print "Failed Motor Write. Check BrickPi"
-	time.sleep(.001)
+	WaitForSerial()
 
 def SetMotor(motor_num, motor_power):
 	try:
@@ -42,11 +47,10 @@ def SetMotor(motor_num, motor_power):
 		motor_num= motor_num-1
 		out_string= "1"+chr(int(motor_num))+chr(int(motor_power))+"\n"
         	ser.write(out_string)
-		print out_string
 
 	except IOError:
 		print "Failed Motor Write.  Check BrickPi"
-	time.sleep(.001)
+	WaitForSerial()
 
 #remnant of original version.... not used
 def signed(n):
@@ -64,16 +68,18 @@ def ReadEncoder(encoder_number):
 	try:
 		out_string = chr(encoder_number)+"\n"
 		ser.write(out_string)
-		time.sleep(0.1)
-		encoder_value = ser.read(200)
+		WaitForSerial()
+		encoder_value= ser.read(1)
+		temp= ' '
+		while(temp != '\n'):
+			temp= ser.read(1)
+			encoder_value+= temp
 	except IOError:
 		print "Failed Encoder Reading.  Check BrickPi."
 		return 0
-
 	retVal= encoder_value[:-2]
 	retVal= int(retVal)
 	retVal= retVal*-1      #fixes issue of encoders being backwards
-	print retVal
 	return retVal
 
 def ReadAnalog(port_num):
@@ -84,7 +90,7 @@ def ReadAnalog(port_num):
 	port_num= port_num -1
 	out_string = "8\n"
 	ser.write(out_string)
-	time.sleep(0.001)
+	WaitForSerial()
 	retVal = ser.read(4)
 	retVal = (retVal)
 	a= retVal[port_num]
@@ -100,7 +106,7 @@ def SetLED(LED1, LED2):
 
 	out_string = "7" + chr(iLED1) + chr(iLED2) + "\n"
 	ser.write(out_string)
-	time.sleep(0.001)
+	WaitForSerial()
 
 def test_LED():
 	SetLED(1,0)
