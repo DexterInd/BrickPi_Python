@@ -175,13 +175,13 @@ def BrickPiSetupSensors():
 
                 for device in range(BrickPi.SensorI2CDevices[port]):
                     AddBits(3,0,7, (BrickPi.SensorI2CAddr[port][device] >> 1))
-                    AddBits(3,0,2, BrickPi.SesorSettings[port][device])
+                    AddBits(3,0,2, BrickPi.SensorSettings[port][device])
                     if(BrickPi.SensorSettings[port][device] & BIT_I2C_SAME):
                         AddBits(3,0,4, BrickPi.SensorI2CWrite[port][device])
                         AddBits(3,0,4, BrickPi.SensorI2CRead[port][device])
 
                         for out_byte in range(BrickPi.SensorI2CWrite[port][device]):
-                            AddBits(3,0,8, BricPi.SensorI2COut[port][device][out_byte])
+                            AddBits(3,0,8, BrickPi.SensorI2COut[port][device][out_byte])
 
         tx_bytes = (((Bit_Offset + 7) / 8) + 3) #eq to UART_TX_BYTES
         BrickPiTx(BrickPi.Address[i], tx_bytes , Array)
@@ -245,7 +245,7 @@ def BrickPiUpdateValues():
                 for device in range(BrickPi.SensorI2CDevices[port]):
                     if not (BrickPi.SensorSettings[port][device] & BIT_I2C_SAME):
                         AddBits(1,0,4, BrickPi.SensorI2CWrite[port][device])
-                        AddBits(1,0,4, brickPi.SensorI2CRead[port][device])
+                        AddBits(1,0,4, BrickPi.SensorI2CRead[port][device])
                         for out_byte in range(BrickPi.SensorI2CWrite[port][device]):
                             AddBits(1,0,8, BrickPi.SensorI2COut[port][device][out_byte])
                     device += 1
