@@ -3,6 +3,7 @@
 # Last Updated: June 24, 2013
 # http://www.dexterindustries.com/
 # This code is for testing the BrickPi with a Thermal Infrared sensor from Dexter Industries
+# Product webpage: http://www.dexterindustries.com/TIR_Sensor.html
 
 from BrickPi import *   #import BrickPi.py file to use BrickPi operations
 

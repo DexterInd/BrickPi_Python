@@ -4,6 +4,7 @@
 # 
 # License - Attribute; if you use part of this code, please let us know!  
 # We hope it's useful to you!
+# Product webpage: http://www.dexterindustries.com/dIMU.html
 
 import smbus
 import time

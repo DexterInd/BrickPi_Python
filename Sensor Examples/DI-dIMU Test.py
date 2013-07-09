@@ -7,7 +7,7 @@
 # 
 # This is a program for testing the RPi BrickPi drivers and I2C communication on the BrickPi with a dIMU
 # The program continuously polls values from the dIMU and displays Accelerometer & Gyroscope Readings
-
+# Product webpage: http://www.dexterindustries.com/dIMU.html
 
 from BrickPi import *
 

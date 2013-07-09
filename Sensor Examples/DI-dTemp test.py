@@ -3,6 +3,7 @@
 # Last Updated: June 24, 2013
 # http://www.dexterindustries.com/
 # This code is for testing the BrickPi with a Temperature sensor from Dexter Industries
+# Product webpage: http://www.dexterindustries.com/Products-Thermometer.html
 
 from BrickPi import *   #import BrickPi.py file to use BrickPi operations
 import math
