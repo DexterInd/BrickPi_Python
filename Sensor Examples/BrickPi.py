@@ -42,7 +42,7 @@ MSG_TYPE_CHANGE_ADDR = 1 # Change the UART address.
 MSG_TYPE_SENSOR_TYPE = 2 # Change/set the sensor type.
 MSG_TYPE_VALUES      = 3 # Set the motor speed and direction, and return the sesnors and encoders.
 MSG_TYPE_E_STOP      = 4 # Float motors immidately
-
+MSG_TYPE_TIMEOUT_SETTINGS =5 # Set the timeout
 # New UART address (MSG_TYPE_CHANGE_ADDR)
 BYTE_NEW_ADDRESS   = 1
 
