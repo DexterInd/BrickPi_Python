@@ -50,6 +50,8 @@ BYTE_NEW_ADDRESS   = 1
 BYTE_SENSOR_1_TYPE = 1
 BYTE_SENSOR_2_TYPE = 2
 
+BYTE_TIMEOUT=1
+
 TYPE_MOTOR_PWM               = 0
 TYPE_MOTOR_SPEED             = 1
 TYPE_MOTOR_POSITION          = 2
@@ -122,7 +124,7 @@ def BrickPiChangeAddress(OldAddr, NewAddr):
     return 0
 
 def BrickPiSetTimeout():
-	for i in range(bits):
+	for i in range(2):
 		Array[BYTE_MSG_TYPE] = MSG_TYPE_TIMEOUT_SETTINGS
 		Array[BYTE_TIMEOUT] = BrickPi.Timeout&0xFF
 		Array[BYTE_TIMEOUT + 1] = (BrickPi.Timeout / 256     ) & 0xFF
