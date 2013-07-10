@@ -37,12 +37,12 @@ MASK_9V   = 0x04
 MASK_D0_S = 0x08
 MASK_D1_S = 0x10
 
-BYTE_MSG_TYPE        = 0 # MSG_TYPE is the first byte.
-MSG_TYPE_CHANGE_ADDR = 1 # Change the UART address.
-MSG_TYPE_SENSOR_TYPE = 2 # Change/set the sensor type.
-MSG_TYPE_VALUES      = 3 # Set the motor speed and direction, and return the sesnors and encoders.
-MSG_TYPE_E_STOP      = 4 # Float motors immidately
-MSG_TYPE_TIMEOUT_SETTINGS =5 # Set the timeout
+BYTE_MSG_TYPE				= 0 # MSG_TYPE is the first byte.
+MSG_TYPE_CHANGE_ADDR		= 1 # Change the UART address.
+MSG_TYPE_SENSOR_TYPE		= 2 # Change/set the sensor type.
+MSG_TYPE_VALUES    			= 3 # Set the motor speed and direction, and return the sesnors and encoders.
+MSG_TYPE_E_STOP      		= 4 # Float motors immidately
+MSG_TYPE_TIMEOUT_SETTINGS	= 5 # Set the timeout
 # New UART address (MSG_TYPE_CHANGE_ADDR)
 BYTE_NEW_ADDRESS   = 1
 
@@ -84,10 +84,10 @@ Retried = 0
 
 class BrickPiStruct:
     Address = [ 1, 2 ]
-
     MotorSpeed  = [0] * 4
+	
     MotorEnable = [0] * 4
-
+	
     EncoderOffset = [None] * 4
     Encoder       = [None] * 4
 
@@ -103,10 +103,11 @@ class BrickPiStruct:
     SensorI2CRead    = [ [None] * 8 for i in range(4) ]
     SensorI2COut     = [ [ [None] * 16 for i in range(8) ] for i in range(4) ]
     SensorI2CIn      = [ [ [None] * 16 for i in range(8) ] for i in range(4) ]
-    
+    Timeout = 0
 BrickPi = BrickPiStruct()
 
 
+	
 def BrickPiChangeAddress(OldAddr, NewAddr):
     Array[BYTE_MSG_TYPE] = MSG_TYPE_CHANGE_ADDR;
     Array[BYTE_NEW_ADDRESS] = NewAddr;
@@ -120,7 +121,25 @@ def BrickPiChangeAddress(OldAddr, NewAddr):
         return -1
     return 0
 
-    
+def BrickPiSetTimeout():
+	for i in range(bits):
+		Array[BYTE_MSG_TYPE] = MSG_TYPE_TIMEOUT_SETTINGS
+		Array[BYTE_TIMEOUT] = BrickPi.Timeout&0xFF
+		Array[BYTE_TIMEOUT + 1] = (BrickPi.Timeout / 256     ) & 0xFF
+		Array[BYTE_TIMEOUT + 2] = (BrickPi.Timeout / 65536   ) & 0xFF
+		Array[BYTE_TIMEOUT + 3] = (BrickPi.Timeout / 16777216) & 0xFF
+		BrickPiTx(BrickPi.Address[i], 5, Array)
+		res, BytesReceived, InArray = BrickPiRx(0.002500)
+		if res :
+			return -1
+		for j in range(len(InArray)):
+			Array[j] = InArray[j]
+		if not (BytesReceived == 1 and Array[BYTE_MSG_TYPE] == MSG_TYPE_TIMEOUT_SETTINGS):
+			return -1
+		i+=1
+	return 0
+		
+	
 def GetBits( byte_offset, bit_offset, bits):
     global Bit_Offset
     result = 0
