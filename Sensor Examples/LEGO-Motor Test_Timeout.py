@@ -15,8 +15,8 @@ BrickPiSetupSensors()   #Send the properties of sensors to BrickPi
 
 #Communication timeout in ms (how long since last valid communication before floating the motors).
 #0 disables the timeout so the motor would keep running even if it is not communicating with the RaspberryPi
-BrickPi.Timeout=5000
-print BrickPiSetTimeout()
+BrickPi.Timeout=1000
+print "BrickPiSetTimeout Status :",BrickPiSetTimeout()
 
 while True:
     print "Running Forward"
