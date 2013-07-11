@@ -1,6 +1,7 @@
 # Jaikrishna
+# Karan Nayan
 # Initial Date: June 24, 2013
-# Last Updated: June 24, 2013
+# Last Updated: July 11, 2013
 # http://www.dexterindustries.com/
 #
 # Ported from Matthew Richardson's BrickPi library for C 
@@ -141,6 +142,35 @@ def BrickPiSetTimeout():
 		i+=1
 	return 0
 		
+def motorRotateDegree(power,deg,port,sampling_time=.1):
+	"""Rotate the selected motor by specified degrees
+	
+	Args:
+		power		: the power at which to rotate the motor (0-255)
+		deg		: the angle (in degrees) by which to rotate the motor
+		port		: the port on which the motor is connected
+		sampling_time	: (optional) the rate(in seconds) at which to read the data in the encoders
+	Returns:
+		0 on success
+	"""
+	BrickPi.MotorEnable[port] = 1				#Enable the Motor
+	power=abs(power)
+	BrickPi.MotorSpeed[port] = power if deg>0 else -power	#For running clockwise and anticlockwise
+	init_val=BrickPi.Encoder[port]				#Initial reading of the encoder	
+	final_val=init_val+(deg*2)				#Final value when the motor has to be stopped;One encoder value counts for 0.5 degrees
+	while (deg>0 and final_val>init_val) or (deg<0 and final_val<init_val) :	#Check if final value reached
+	    result = BrickPiUpdateValues()  			#Ask BrickPi to update values for sensors/motors
+	    if not result :                		 	#If updating values succeeded
+	        init_val=BrickPi.Encoder[port]    		#Read the encoder degrees 
+		#print init_val
+	    time.sleep(sampling_time)				#sleep for the sampling time given (default:100 ms)
+	BrickPi.MotorSpeed[port]=-power if deg>0 else power	#Run the motors in reverse direction to stop instantly
+	BrickPiUpdateValues()
+	time.sleep(.04)
+	BrickPi.MotorEnable[port] = 0
+	BrickPiUpdateValues()
+	
+	return 0
 	
 def GetBits( byte_offset, bit_offset, bits):
     global Bit_Offset
