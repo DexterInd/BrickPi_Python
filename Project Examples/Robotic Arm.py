@@ -11,7 +11,7 @@
 # Setup battery power source for the RPi & BrickPi and boot. 
 # To control the program, connection can be made though SSH though PuTTY or similar software(can also be controlled with a local keyboard)
 # Open up PuTTY and enter UserName:pi Password:raspberry (Default values)
-# Navigate to the directory containing this code and enter 'python Arm.py'
+# Navigate to the directory containing this code and enter 'python "Robotic Arm.py"'
 # The user needs to enter one of the following keys:
 # Direction keys - to move the arm
 # Space to pick up object
