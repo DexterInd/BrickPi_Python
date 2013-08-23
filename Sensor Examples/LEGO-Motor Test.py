@@ -16,14 +16,14 @@ BrickPiSetupSensors()   #Send the properties of sensors to BrickPi
 while True:
     print "Running Forward"
     BrickPi.MotorSpeed[PORT_A] = 200  #Set the speed of MotorA (-255 to 255)
-    BrickPi.MotorSpeed[PORT_B] = 200  #Set the speed of MotorA (-255 to 255)
+    BrickPi.MotorSpeed[PORT_B] = 200  #Set the speed of MotorB (-255 to 255)
     ot = time.time()
     while(time.time() - ot < 3):    #running while loop for 3 seconds
         BrickPiUpdateValues()       # Ask BrickPi to update values for sensors/motors
         time.sleep(.1)              # sleep for 100 ms
     print "Running Reverse"
     BrickPi.MotorSpeed[PORT_A] = -200  #Set the speed of MotorA (-255 to 255)
-    BrickPi.MotorSpeed[PORT_B] = -200  #Set the speed of MotorA (-255 to 255)
+    BrickPi.MotorSpeed[PORT_B] = -200  #Set the speed of MotorB (-255 to 255)
     ot = time.time()
     while(time.time() - ot < 3):    #running while loop for 3 seconds
         BrickPiUpdateValues()       # Ask BrickPi to update values for sensors/motors
