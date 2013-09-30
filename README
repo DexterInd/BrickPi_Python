@@ -3,6 +3,11 @@ BrickPi Python Code
 
 This repository contains drivers and examples for using the BrickPi in Python.
 
+DRIVERS:  This folder contains BrickPi.py, which you should include in your python program using the BrickPi.
+
+Sensor Examples: Before starting with the examples, please copy "BrickPi.py" into the examples folder.
+
+
 More information on BrickPi and Python is found on our website, here:  http://www.dexterindustries.com/BrickPi/program-it/python/
 
 BrickPi is a Raspberry Pi Board that connects LEGO MINDSTORMS motors and sensors to the Raspberry Pi.
