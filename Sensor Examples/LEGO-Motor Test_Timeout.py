@@ -2,6 +2,10 @@
 # Initial Date: July 10, 2013
 # Last Updated: July 10, 2013
 # http://www.dexterindustries.com/
+#
+# These files have been made available online through a Creative Commons Attribution-ShareAlike 3.0  license.
+# (http://creativecommons.org/licenses/by-sa/3.0/)
+#
 # This code is for testing the BrickPi with a Lego Motor and with the timeout enabled
 
 from BrickPi import *   #import BrickPi.py file to use BrickPi operations

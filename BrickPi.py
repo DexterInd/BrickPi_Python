@@ -1,8 +1,12 @@
 # Jaikrishna
 # Karan Nayan
+# John Cole
 # Initial Date: June 24, 2013
-# Last Updated: July 11, 2013
+# Last Updated: Oct 3, 2013
 # http://www.dexterindustries.com/
+#
+# These files have been made available online through a Creative Commons Attribution-ShareAlike 3.0  license.
+# (http://creativecommons.org/licenses/by-sa/3.0/)
 #
 # Ported from Matthew Richardson's BrickPi library for C 
 # This library can be used in RaspberryPi to communicate with BrickPi

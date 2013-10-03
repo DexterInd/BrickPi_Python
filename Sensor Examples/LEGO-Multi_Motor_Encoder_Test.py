@@ -2,6 +2,10 @@
 # Initial Date: July 11, 2013
 # Last Updated: July 11, 2013
 # http://www.dexterindustries.com/
+#
+# These files have been made available online through a Creative Commons Attribution-ShareAlike 3.0  license.
+# (http://creativecommons.org/licenses/by-sa/3.0/)
+#
 # This is an example of controlling the rotation of motors using encoders
 from BrickPi import *   #import BrickPi.py file to use BrickPi operations
 

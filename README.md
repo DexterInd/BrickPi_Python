@@ -3,6 +3,8 @@ BrickPi Python Code
 
 This repository contains drivers and examples for using the BrickPi in Python.
 
+These files have been made available online through a [Creative Commons Attribution-ShareAlike 3.0](http://creativecommons.org/licenses/by-sa/3.0/) license.
+
 Installation
 ============
 

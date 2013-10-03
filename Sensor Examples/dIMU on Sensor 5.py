@@ -1,9 +1,11 @@
 # Dexter Industries Example for Connecting the LEGO MINDSTORMS NXT Sensor to the Raspberry Pi
 # January 2013
-# More information at www.dexterindustries.com/howto
+#
+# These files have been made available online through a Creative Commons Attribution-ShareAlike 3.0  license.
+# (http://creativecommons.org/licenses/by-sa/3.0/)
+#
+# More information at www.dexterindustries.com/BrickPi
 # 
-# License - Attribute; if you use part of this code, please let us know!  
-# We hope it's useful to you!
 # Product webpage: http://www.dexterindustries.com/dIMU.html
 
 import smbus
