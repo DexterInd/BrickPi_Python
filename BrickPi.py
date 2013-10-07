@@ -15,6 +15,8 @@
 # - Instead of Call by Reference in BrickPiRx, multiple values are returned and then copied to the main Array appropriately
 # - BrickPiStruct Variables are assigned to None and then modified to avoid appending which may lead to errors
 
+# - NOTE THAT DEBUGGING ERROR MESSAGES ARE TURNED OFF BY DEFAULT.  To debug, just take the comment out of Line 29.
+
 
 import time
 import serial
@@ -24,7 +26,7 @@ ser.baudrate = 500000
 # ser.writeTimeout = 0.0005		
 # ser.timeout = 0.0001
 
-DEBUG = 1	# Remove to hide errors 
+# DEBUG = 1	# Remove to hide errors 
 
 PORT_A = 0
 PORT_B = 1
