@@ -15,7 +15,26 @@
 # - Instead of Call by Reference in BrickPiRx, multiple values are returned and then copied to the main Array appropriately
 # - BrickPiStruct Variables are assigned to None and then modified to avoid appending which may lead to errors
 
+##################################################################################################################
+# Debugging:
 # - NOTE THAT DEBUGGING ERROR MESSAGES ARE TURNED OFF BY DEFAULT.  To debug, just take the comment out of Line 29.
+# 
+# If you #define DEBUG in the program, the BrickPi.h drivers will print debug messages to the terminal. One common message is
+# "BrickPiRx error: -2", in function BrickPiUpdateValues(). This is caused by an error in the communication with one of the
+# microcontrollers on the BrickPi. When this happens, the drivers automatically re-try the communication several times before the
+# function gives up and returns -1 (unsuccessful) to the user-program.
+
+# Function BrickPiUpdateValues() will either return 0 (success), or -1 (error that could not automatically be resolved, even after
+# re-trying several times). We have rarely had BrickPiUpdateValues() retry more than once before the communication was successful.
+# A known cause for "BrickPiRx error: -2" is the RPi splitting the UART message. Sometimes the RPi will send e.g. 3 bytes, wait a
+# while, and then send 4 more, when it should have just sent 7 at once. During the pause between the packs of bytes, the BrickPi
+# microcontrollers will think the transmission is complete, realize the message doesn't make sense, throw it away, and not return
+# a message to the RPi. The RPi will then fail to receive a message in the specified amount of time, timeout, and then retry the
+# communication.
+
+If a function returns 0, it completed successfully. If it returns -1, there was an error (most likely a communications error).
+
+Function BrickPiRx() (background function that receives UART messages from the BrickPi) can return 0 (success), -1 (undefined error that shouldn't have happened, e.g. a filesystem error), -2 (timeout: the RPi didn't receive any UART communication from the BrickPi within the specified time), -4 (the message was too short to even contain a valid header), -5 (communication checksum error), or -6 (the number of bytes received was less than specified by the length byte).
 
 
 import time
