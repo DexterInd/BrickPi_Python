@@ -32,9 +32,9 @@
 # a message to the RPi. The RPi will then fail to receive a message in the specified amount of time, timeout, and then retry the
 # communication.
 
-If a function returns 0, it completed successfully. If it returns -1, there was an error (most likely a communications error).
+# If a function returns 0, it completed successfully. If it returns -1, there was an error (most likely a communications error).
 
-Function BrickPiRx() (background function that receives UART messages from the BrickPi) can return 0 (success), -1 (undefined error that shouldn't have happened, e.g. a filesystem error), -2 (timeout: the RPi didn't receive any UART communication from the BrickPi within the specified time), -4 (the message was too short to even contain a valid header), -5 (communication checksum error), or -6 (the number of bytes received was less than specified by the length byte).
+# Function BrickPiRx() (background function that receives UART messages from the BrickPi) can return 0 (success), -1 (undefined error that shouldn't have happened, e.g. a filesystem error), -2 (timeout: the RPi didn't receive any UART communication from the BrickPi within the specified time), -4 (the message was too short to even contain a valid header), -5 (communication checksum error), or -6 (the number of bytes received was less than specified by the length byte).
 
 
 import time
