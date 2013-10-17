@@ -9,8 +9,9 @@ Installation
 ============
 
 The `BrickPi` module can be installed using the `setup.py` script included in
-this repository:
+this repository.  First install python setuptools, and then install the BrickPi module:
 
+	apt-get install python-setuptools
     sudo python setup.py install
 
 This will install the `BrickPi` module globally.  To use the module in your own
