@@ -62,7 +62,8 @@ def dTemp():
 while True:
     result = BrickPiUpdateValues()  # Ask BrickPi to update values for sensors/motors 
     if not result :
-            s = 'Time: ' + time.strftime('%X') + '  Sensor: ' + str(dTemp())    #BrickPi.Sensor[PORT] stores the value obtained from sensor
+            s = 'Office Conditions at ' + time.strftime('%X') + '  are ' + str(dTemp()) + ' C' #BrickPi.Sensor[PORT] stores the value obtained from sensor
+			print s
             try:
                 twitter.update_status(status=s) # Make a tweet 
                 print "Tweeted:",s
