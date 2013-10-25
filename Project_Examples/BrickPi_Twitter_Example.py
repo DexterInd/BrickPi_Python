@@ -1,8 +1,8 @@
 # Jaikrishna
 # Initial Date: July 10, 2013
-# Last Updated: July 10, 2013
+# Last Updated: Oct 25, 2013 by John Cole
 # http://www.dexterindustries.com/
-# This code is for setting up the BrickPi & Raspberry Pi as a Tweet bot
+# This code is for setting up the BrickPi & Raspberry Pi to tweet the temperature and time.
 
 # Enter these commands to setup twython library to support twitter:
 # sudo wget https://bitbucket.org/pypa/setuptools/raw/0.7.4/ez_setup.py -O - | sudo python
@@ -18,6 +18,7 @@ import math
 BrickPiSetup()  # setup the serial port for communication
 
 # Setup keys for Twitter
+# You can do this by going to https://dev.twitter.com/apps
 APP_KEY = "1234567890"
 APP_SECRET = "1234567890"
 OAUTH_TOKEN = "1234567890" #
@@ -62,8 +63,8 @@ def dTemp():
 while True:
     result = BrickPiUpdateValues()  # Ask BrickPi to update values for sensors/motors 
     if not result :
-            s = 'Office Conditions at ' + time.strftime('%X') + '  are ' + str(dTemp()) + ' C' #BrickPi.Sensor[PORT] stores the value obtained from sensor
-			print s
+            s = 'Office Conditions at ' + time.strftime('%X') + '  are ' + str(dTemp()) + ' C'#BrickPi.Sensor[PORT] stores the value obtained from sensor
+            print s
             try:
                 twitter.update_status(status=s) # Make a tweet 
                 print "Tweeted:",s
