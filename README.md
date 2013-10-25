@@ -8,10 +8,13 @@ These files have been made available online through a [Creative Commons Attribut
 Installation
 ============
 
-The `BrickPi` module can be installed using the `setup.py` script included in
-this repository.  First install python setuptools, and then install the BrickPi module:
+The `BrickPi` module can be installed using the `setup.py` script included in the BrickPi_Python repository.
 
-	apt-get install python-setuptools
+First, open a terminal program on the Raspberry Pi, and change directories to the location (directory) you cloned the BrickPi_Python.
+
+Once there, we'll install python setuptools, and then install the BrickPi Python module:
+
+	sudo apt-get install python-setuptools
     sudo python setup.py install
 
 This will install the `BrickPi` module globally.  To use the module in your own
