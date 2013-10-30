@@ -8,9 +8,13 @@ See our step-by-step instructions at [http://www.dexterindustries.com/BrickPi/pr
 Links
 ============
 [BrickPi](http://www.dexterindustries.com/BrickPi.html)
+
 [ThingSpeak: The Internet of Things](https://www.thingspeak.com/)
+
 [LEGO Mindstorms](http://mindstorms.lego.com)
+
 [Dexter Industries](http://www.dexterindustries.com)
+
 
 License
 ============
