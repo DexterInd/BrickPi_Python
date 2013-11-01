@@ -1,11 +1,12 @@
 ###################################################################################
 #bookreader.py
-#Takes a pictture of a page of printed text, does OCR on it and reads it aloud
+#Takes a picture of a page of printed text, performs Optical Character Recognition (ORC) 
+#on the image, and then reads it aloud.
 #
 #Karan Nayan
 #31 Oct,2013
 #Dexter Industries
-#www.dexterindustries.com
+#www.dexterindustries.com/BrickPi
 #
 #You may use this code as you wish, provided you give credit where it's due.
 ###################################################################################
@@ -46,20 +47,20 @@ while True:
 	call ("tesseract j2.jpg out1", shell=True)
 	print "OCR complete"
 	
-	#Ofen the text file and split the paragraph to Sentences
+	#Open the text file and split the paragraph to Sentences
 	fname="out1.txt"
 	f=open(fname)
 	content=f.read()
 	print content
 	sentences = splitParagraphIntoSentences(content)
 
-	#Speak aloud each sentence one by one
+	#Speak aloud each sentence in the paragraph one by one
 	for s in sentences:
 		sound(s.strip())
 		
 	#Move the motor arm to turn the page
 	print "Next Page"
-	BrickPi.MotorSpeed[PORT_C] = -sp  #Set the speed of MotorA (-255 to 255
+	BrickPi.MotorSpeed[PORT_C] = -sp  	#Set the speed of MotorA (-255 to 255
 	BrickPiUpdateValues() 
 	time.sleep(t)              # sleep for 100 ms
 	BrickPi.MotorSpeed[PORT_C] = 0 
