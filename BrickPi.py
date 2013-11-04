@@ -2,7 +2,7 @@
 # Karan Nayan
 # John Cole
 # Initial Date: June 24, 2013
-# Last Updated: Oct 3, 2013
+# Last Updated: Nov 4, 2013
 # http://www.dexterindustries.com/
 #
 # These files have been made available online through a Creative Commons Attribution-ShareAlike 3.0  license.
@@ -134,6 +134,69 @@ class BrickPiStruct:
     Timeout = 0
 BrickPi = BrickPiStruct()
 
+#PSP Mindsensors class
+class button:
+	#Initialize all the buttons to 0
+	def init(self):
+		self.l1=0
+		self.l2=0
+		self.r1=0
+		self.r2=0
+		self.a=0
+		self.b=0
+		self.c=0
+		self.d=0
+		self.tri=0
+		self.sqr=0
+		self.cir=0
+		self.cro=0
+		self.ljb=0
+		self.ljx=0
+		self.ljy=0
+		self.rjx=0
+		rjy=0
+		
+	#Update all the buttons
+	def upd(self,I2C_PORT):
+		#For all buttons:
+		#0:	Unpressed
+		#1:	Pressed
+		#
+		#Left and right joystick: -127 to 127
+		self.ljb=~(BrickPi.SensorI2CIn[I2C_PORT][0][0]>>1)&1
+		self.rjb=~(BrickPi.SensorI2CIn[I2C_PORT][0][0]>>2)&1
+		
+		#For buttons a,b,c,d
+		self.d=~(BrickPi.SensorI2CIn[I2C_PORT][0][0]>>4)&1
+		self.c=~(BrickPi.SensorI2CIn[I2C_PORT][0][0]>>5)&1
+		self.b=~(BrickPi.SensorI2CIn[I2C_PORT][0][0]>>6)&1
+		self.a=~(BrickPi.SensorI2CIn[I2C_PORT][0][0]>>7)&1
+		
+		#For buttons l1,l2,r1,r2
+		self.l2=~(BrickPi.SensorI2CIn[I2C_PORT][0][1])&1
+		self.r2=~(BrickPi.SensorI2CIn[I2C_PORT][0][1]>>1)&1
+		self.l1=~(BrickPi.SensorI2CIn[I2C_PORT][0][1]>>2)&1
+		self.r1=~(BrickPi.SensorI2CIn[I2C_PORT][0][1]>>3)&1
+		
+		#For buttons square,triangle,cross,circle
+		self.tri=~(BrickPi.SensorI2CIn[I2C_PORT][0][1]>>4)&1
+		self.cir=~(BrickPi.SensorI2CIn[I2C_PORT][0][1]>>5)&1
+		self.cro=~(BrickPi.SensorI2CIn[I2C_PORT][0][1]>>6)&1
+		self.sqr=~(BrickPi.SensorI2CIn[I2C_PORT][0][1]>>7)&1
+		
+		#Left joystick x and y , -127 to 127
+		self.ljx=BrickPi.SensorI2CIn[I2C_PORT][0][2]-128
+		self.ljy=~BrickPi.SensorI2CIn[I2C_PORT][0][3]+129
+	
+		#Right joystick x and y , -127 to 127
+		self.rjx=BrickPi.SensorI2CIn[I2C_PORT][0][4]-128
+		self.rjy=~BrickPi.SensorI2CIn[I2C_PORT][0][5]+129
+	
+	#Show button values
+	def show_val(self):
+		print "ljb","rjb","d","c","b","a","l2","r2","l1","r1","tri","cir","cro","sqr","ljx","ljy","rjx","rjy"
+		print self.ljb," ",self.rjb," ",self.d,self.c,self.b,self.a,self.l2,"",self.r2,"",self.l1,"",self.r1,"",self.tri," ",self.cir," ",self.cro," ",self.sqr," ",self.ljx," ",self.ljy," ",self.rjx," ",self.rjy
+		print ""
 
 	
 def BrickPiChangeAddress(OldAddr, NewAddr):
