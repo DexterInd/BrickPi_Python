@@ -2,7 +2,7 @@
 ########################################################################                                                                 
 # Program Name: simplebot_speed.py                                     
 # ================================     
-# This code is for moving the simplebot with speed control                                     
+# This code is for moving the simplebot usin the MINDSENSORS PSP Controller                                  
 # http://www.dexterindustries.com/                                                                
 # History
 # ------------------------------------------------
@@ -14,14 +14,7 @@
 #
 ########################################################################
 '''
-#Commands:
-#	w-Move forward
-#	a-Move left
-#	d-Move right
-#	s-Move back
-#	x-Stop
-#	t-Increase speed
-#	g-Decrease Speed
+#Use the joysticks on the PSP controller to control the simplebot, enable the analog mode before using the joysticks
 
 from BrickPi import *   #import BrickPi.py file to use BrickPi operations
 speed=200				#initial speed
