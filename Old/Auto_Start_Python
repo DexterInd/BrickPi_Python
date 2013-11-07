@@ -1,3 +1,0 @@
-sudo nano /etc/rc.local
-python <yourscriptname>.py
-
