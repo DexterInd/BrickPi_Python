@@ -1,17 +1,22 @@
-# Jaikrishna
-# Initial Date: June 24, 2013
-# Last Updated: June 24, 2013
+# DI-dGPS_test.py
+# This code is for testing the BrickPi with a GPS sensor from Dexter Industries
+# Product webpage: http://www.dexterindustries.com/dGPS.html
+#
+# History
+# ------------------------------------------------
+# Author     	Date 			Comments
+# Jaikrishna	June 24, 2013	Initial Authoring
+# Karan			Nov   7, 2013   Change to the longitude and latitude code
 #
 # These files have been made available online through a Creative Commons Attribution-ShareAlike 3.0  license.
 # (http://creativecommons.org/licenses/by-sa/3.0/)
 #
 # http://www.dexterindustries.com/
-# This code is for testing the BrickPi with a GPS sensor from Dexter Industries
-# Product webpage: http://www.dexterindustries.com/dGPS.html
+
 
 from BrickPi import *   #import BrickPi.py file to use BrickPi operations
 
-I2C_PORT  = PORT_3                            # I2C port for the dGPS
+I2C_PORT  = PORT_1                            # I2C port for the dGPS
 I2C_SPEED = 0                                 # delay for as little time as possible. Usually about 100k baud
 I2C_DEVICE_DGPS = 0                        	# dGPS is device 0 on this I2C bus
 
@@ -52,7 +57,12 @@ while True:
 	if not result :
 		if (BrickPi.Sensor[I2C_PORT] & (0x01 << I2C_DEVICE_DGPS)) :
 			lon = ((long)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][0]<<24)) + ((long)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][1]<<16)) + ((long)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][2]<<8)) + (long)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][3])
-
+			if BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][0]>10:	#if the 0th byte >10, then the longitude was negative and use the 2's compliment of the longitude
+				lon=(4294967295L^lon)+1
+				lon=(-float(lon)/1000000)
+			else:
+				lon=(float(lon)/1000000)
+				
 	#Latitude
 	BrickPi.SensorI2COut   [I2C_PORT][I2C_DEVICE_DGPS][0] = DGPS_CMD_LAT	#byte to write
 	BrickPiSetupSensors()
@@ -60,6 +70,11 @@ while True:
 	if not result :
 		if (BrickPi.Sensor[I2C_PORT] & (0x01 << I2C_DEVICE_DGPS)) :
 			lat = ((long)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][0]<<24)) + ((long)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][1]<<16)) + ((long)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][2]<<8)) + (long)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][3])
+			if BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][0]>10:
+				lat=(4294967295L^lat)+1
+				lat=(-float(lat)/1000000)
+			else:
+				lat=(float(lat)/1000000)
 
 	#Heading
 	BrickPi.SensorI2CRead  [I2C_PORT][I2C_DEVICE_DGPS]    = 2
@@ -88,5 +103,5 @@ while True:
 		if (BrickPi.Sensor[I2C_PORT] & (0x01 << I2C_DEVICE_DGPS)) :
 			velo = ((long)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][0]<<16)) + ((long)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][1]<<8)) + ((long)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][2]))
 	
-	print 'Status',status,'UTC',UTC,'Latitude',lat,'Longitude',lon,'Heading',head,'Velocity',velo
+	print 'Status',status,'UTC',UTC,'Latitude %.6f'% lat,'Longitude %.6f'%lon,'Heading',head,'Velocity',velo
 	time.sleep(0.50000);   #giving some delay before acquiring next set of data
