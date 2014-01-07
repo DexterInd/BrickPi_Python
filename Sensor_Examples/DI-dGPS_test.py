@@ -20,7 +20,7 @@ I2C_PORT  = PORT_1                            # I2C port for the dGPS
 I2C_SPEED = 0                                 # delay for as little time as possible. Usually about 100k baud
 I2C_DEVICE_DGPS = 0                        	# dGPS is device 0 on this I2C bus
 
-DGPS_I2C_ADDR   = 0x06      # Barometric sensor device address 
+DGPS_I2C_ADDR   = 0x06      # dGPS Sensor I2C Address 
 DGPS_CMD_UTC    = 0x00      # Fetch UTC 
 DGPS_CMD_STATUS = 0x01      # Status of satellite link: 0 no link, 1 link 
 DGPS_CMD_LAT    = 0x02      # Fetch Latitude 

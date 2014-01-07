@@ -30,12 +30,12 @@ make sure you have installed the `BrickPi` module.  In general, you
 will need to be `root` to run these scripts.  The easiest way to do
 this on most systems is to use the `sudo` command, like this:
 
-    sudo python "Sensor Examples/LEGO-Motor Test.py"
+    sudo python "Sensor_Examples/LEGO-Motor Test.py"
 
 If you want to run the examples without installing the module you can
 set your `PYTHONPATH` environment variable like this:
 
-    sudo env PYTHONPATH=$PWD python "Sensor Examples/LEGO-Motor Test.py"
+    sudo env PYTHONPATH=$PWD python "Sensor_Examples/LEGO-Motor Test.py"
 
 See Also
 ========
