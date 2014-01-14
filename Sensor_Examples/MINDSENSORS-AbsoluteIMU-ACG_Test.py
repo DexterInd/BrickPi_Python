@@ -11,8 +11,10 @@
 # This is a program for testing the RPi BrickPi drivers and I2C communication on the BrickPi with a
 # MindSensors AbsoluteIMU-ACG sensor.
 #
-# This first version of the test program reads identification information from the device and than polls
+# V2: bugfix and cleanup.
+# V1: This first version of the test program reads identification information from the device and than polls
 # all the sensors 10 times and prints the values.
+#
 # TODO: Add a loop at the end that continuously reads out all sensors at a higher rate.
 # TODO: Add some tests to see the effects of callibration.
 #
@@ -41,11 +43,11 @@ AIMU_CMD_RANGE_2G_250               = 0x31 # Accelerometer 2G and Gyro 250 degre
 AIMU_CMD_RANGE_4G_500               = 0x32 # Accelerometer 4G and Gyro 500 degrees per second range
 AIMU_CMD_RANGE_8G_2000              = 0x33 # Accelerometer 8G and Gyro 2000 degrees per second range
 AIMU_CMD_RANGE_16G_2000             = 0x34 # Accelerometer 16G and Gyro 2000 degrees per second range
-AIMU_CMD_BEGIN_COMPASS_CALLIBRATION = 0x43 # 'C'
-AIMU_CMD_END_COMPASS_CALLIBRATION   = 0x63 # 'c'
-AIMU_CMD_RESET_ALL_CALLIBRATION     = 0x52 # 'R'
-AIMU_CMD_BEGIN_GYRO_CALLIBRATION    = 0x47 # 'G'
-AIMU_CMD_END_GYRO_CALLIBRATION      = 0x67 # 'g'
+AIMU_CMD_BEGIN_COMPASS_CALIBRATION = 0x43 # 'C'
+AIMU_CMD_END_COMPASS_CALIBRATION   = 0x63 # 'c'
+AIMU_CMD_RESET_ALL_CALIBRATION     = 0x52 # 'R'
+AIMU_CMD_BEGIN_GYRO_CALIBRATION    = 0x47 # 'G'
+AIMU_CMD_END_GYRO_CALIBRATION      = 0x67 # 'g'
 
 # NOTE: The reset-all and gyro-callibration commands are not documented in the user manual.
 # These have been found in the IMU-lib.nxc code. According to the user-manual the gyro doesn't
@@ -91,17 +93,47 @@ BrickPi.SensorI2CRead  [I2C_PORT][I2C_DEVICE_INDEX]    = 0
 BrickPi.SensorI2COut   [I2C_PORT][I2C_DEVICE_INDEX][0] = AIMU_CMD_REG
 BrickPi.SensorI2COut   [I2C_PORT][I2C_DEVICE_INDEX][1] = AIMU_CMD_RANGE_2G_250
 
-if( BrickPiSetupSensors() ):
+if(BrickPiSetupSensors()):
   print "BrickPiSetupSensors failed for setting sensitivity."
   sys.exit(0)
 
-if( BrickPiUpdateValues() ):
+if(BrickPiUpdateValues()):
   print "BrickPiUpdateValues failed for setting sensitivity."
   sys.exit(0)
 
 # The sensor user manual says that we have to wait at least 50 milliseconds
 # for the sensor to reconfigure itself after changing the sensitivity.
-time.sleep( 0.06 ) # 60ms
+time.sleep(0.06) # 60ms
+
+#BrickPi.SensorI2CWrite [I2C_PORT][I2C_DEVICE_INDEX]    = 2
+#BrickPi.SensorI2CRead  [I2C_PORT][I2C_DEVICE_INDEX]    = 0
+#BrickPi.SensorI2COut   [I2C_PORT][I2C_DEVICE_INDEX][0] = AIMU_CMD_REG
+#BrickPi.SensorI2COut   [I2C_PORT][I2C_DEVICE_INDEX][1] = AIMU_CMD_BEGIN_GYRO_CALIBRATION
+
+#if(BrickPiSetupSensors()):
+  #print "BrickPiSetupSensors failed for setting sensitivity."
+  #sys.exit(0)
+
+#if(BrickPiUpdateValues()):
+  #print "BrickPiUpdateValues failed for setting sensitivity."
+  #sys.exit(0)
+
+#time.sleep(1)
+
+#BrickPi.SensorI2CWrite [I2C_PORT][I2C_DEVICE_INDEX]    = 2
+#BrickPi.SensorI2CRead  [I2C_PORT][I2C_DEVICE_INDEX]    = 0
+#BrickPi.SensorI2COut   [I2C_PORT][I2C_DEVICE_INDEX][0] = AIMU_CMD_REG
+#BrickPi.SensorI2COut   [I2C_PORT][I2C_DEVICE_INDEX][1] = AIMU_CMD_END_GYRO_CALIBRATION
+
+#if(BrickPiSetupSensors()):
+  #print "BrickPiSetupSensors failed for setting sensitivity."
+  #sys.exit(0)
+
+#if(BrickPiUpdateValues()):
+  #print "BrickPiUpdateValues failed for setting sensitivity."
+  #sys.exit(0)
+
+#time.sleep(1)
 
 # Read sensor information
 # Firmware version number
@@ -110,7 +142,7 @@ BrickPi.SensorI2CWrite [I2C_PORT][I2C_DEVICE_INDEX]    = 1
 BrickPi.SensorI2CRead  [I2C_PORT][I2C_DEVICE_INDEX]    = 8
 BrickPi.SensorI2COut   [I2C_PORT][I2C_DEVICE_INDEX][0] = AIMU_REG_VRSN
 
-if( BrickPiSetupSensors() ):
+if(BrickPiSetupSensors()):
   print "BrickPiSetupSensors failed for reading sensor firmware version."
   sys.exit( 0 )
 
@@ -118,7 +150,7 @@ if( BrickPiUpdateValues() ):
   print "BrickPiUpdateValues failed for reading sensor firmware version."
   sys.exit(0)
 
-if( BrickPi.Sensor[I2C_PORT] & ( 0x01 << I2C_DEVICE_INDEX ) ):
+if(BrickPi.Sensor[I2C_PORT] & (0x01 << I2C_DEVICE_INDEX)):
   dbytes = [ None ] * 8;
   for i in range(8):
     dbytes[i] = BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_INDEX][i]
@@ -130,15 +162,15 @@ BrickPi.SensorI2CWrite [I2C_PORT][I2C_DEVICE_INDEX]    = 1
 BrickPi.SensorI2CRead  [I2C_PORT][I2C_DEVICE_INDEX]    = 8
 BrickPi.SensorI2COut   [I2C_PORT][I2C_DEVICE_INDEX][0] = AIMU_REG_VID
 
-if( BrickPiSetupSensors() ):
+if(BrickPiSetupSensors()):
   print "BrickPiSetupSensors failed for reading sensor vendor id."
   sys.exit( 0 )
 
-if( BrickPiUpdateValues() ):
+if(BrickPiUpdateValues()):
   print "BrickPiUpdateValues failed for reading sensor vendor id."
   sys.exit(0)
 
-if( BrickPi.Sensor[I2C_PORT] & ( 0x01 << I2C_DEVICE_INDEX ) ):
+if(BrickPi.Sensor[I2C_PORT] & (0x01 << I2C_DEVICE_INDEX)):
   dbytes = [ None ] * 8;
   for i in range(8):
     dbytes[i] = BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_INDEX][i]
@@ -150,15 +182,15 @@ BrickPi.SensorI2CWrite [I2C_PORT][I2C_DEVICE_INDEX]    = 1
 BrickPi.SensorI2CRead  [I2C_PORT][I2C_DEVICE_INDEX]    = 8
 BrickPi.SensorI2COut   [I2C_PORT][I2C_DEVICE_INDEX][0] = AIMU_REG_DID
 
-if( BrickPiSetupSensors() ):
+if(BrickPiSetupSensors()):
   print "BrickPiSetupSensors failed for reading sensor device id."
   sys.exit( 0 )
 
-if( BrickPiUpdateValues() ):
+if(BrickPiUpdateValues()):
   print "BrickPiUpdateValues failed for reading sensor device id."
   sys.exit(0)
 
-if( BrickPi.Sensor[I2C_PORT] & ( 0x01 << I2C_DEVICE_INDEX ) ):
+if(BrickPi.Sensor[I2C_PORT] & (0x01 << I2C_DEVICE_INDEX)):
   dbytes = [ None ] * 8;
   for i in range(8):
     dbytes[i] = BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_INDEX][i]
@@ -170,15 +202,15 @@ BrickPi.SensorI2CWrite [I2C_PORT][I2C_DEVICE_INDEX]    = 1
 BrickPi.SensorI2CRead  [I2C_PORT][I2C_DEVICE_INDEX]    = 1
 BrickPi.SensorI2COut   [I2C_PORT][I2C_DEVICE_INDEX][0] = AIMU_REG_FLTR
 
-if( BrickPiSetupSensors() ):
+if(BrickPiSetupSensors()):
   print "BrickPiSetupSensors failed for reading sensor filter level."
   sys.exit( 0 )
 
-if( BrickPiUpdateValues() ):
+if(BrickPiUpdateValues()):
   print "BrickPiUpdateValues failed for reading sensor filter level."
   sys.exit(0)
 
-if( BrickPi.Sensor[I2C_PORT] & ( 0x01 << I2C_DEVICE_INDEX ) ):
+if(BrickPi.Sensor[I2C_PORT] & (0x01 << I2C_DEVICE_INDEX)):
   filterLevel = BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_INDEX][0]
   print "Gyro filter level : ", filterLevel 
 
@@ -187,15 +219,15 @@ BrickPi.SensorI2CWrite [I2C_PORT][I2C_DEVICE_INDEX]    = 1
 BrickPi.SensorI2CRead  [I2C_PORT][I2C_DEVICE_INDEX]    = 1
 BrickPi.SensorI2COut   [I2C_PORT][I2C_DEVICE_INDEX][0] = AIMU_REG_GLVL
 
-if( BrickPiSetupSensors() ):
+if(BrickPiSetupSensors()):
   print "BrickPiSetupSensors failed for reading sensor g-level."
   sys.exit( 0 )
 
-if( BrickPiUpdateValues() ):
+if(BrickPiUpdateValues()):
   print "BrickPiUpdateValues failed for reading sensor g-level."
   sys.exit(0)
 
-if( BrickPi.Sensor[I2C_PORT] & ( 0x01 << I2C_DEVICE_INDEX ) ):
+if(BrickPi.Sensor[I2C_PORT] & ( 0x01 << I2C_DEVICE_INDEX )):
   gLevel = BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_INDEX][0]
   print "G-level           : ", gLevel 
 
@@ -205,7 +237,7 @@ BrickPi.SensorI2CWrite [I2C_PORT][I2C_DEVICE_INDEX]    = 1
 BrickPi.SensorI2CRead  [I2C_PORT][I2C_DEVICE_INDEX]    = 3
 BrickPi.SensorI2COut   [I2C_PORT][I2C_DEVICE_INDEX][0] = AIMU_REG_TILT
 
-if( BrickPiSetupSensors() ):
+if(BrickPiSetupSensors()):
   print "BrickPiSetupSensors failed for reading tilt values."
   sys.exit( 0 )
 
@@ -216,21 +248,24 @@ for i in range(10):
         ty = 999
         tz = 999
 
-        if( not BrickPiUpdateValues() ):
-          if( BrickPi.Sensor[I2C_PORT] & ( 0x01 << I2C_DEVICE_INDEX ) ):
+        if(not BrickPiUpdateValues()):
+          if(BrickPi.Sensor[I2C_PORT] & (0x01 << I2C_DEVICE_INDEX)):
             tx = BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_INDEX][0] - 128
             ty = BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_INDEX][1] - 128
             tz = BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_INDEX][2] - 128
 
         if( tx != 999 ):
-          tx = math.degrees( math.asin( tx / 128 ) )
+          txd = math.degrees(math.asin(tx/128.0))
         if( ty != 999 ):
-          ty = math.degrees( math.asin( ty / 128 ) )
+          tyd = math.degrees(math.asin(ty/128.0))
         if( tz != 999 ):
-          tz = math.degrees( math.asin( tz / 128 ) )
+          tzd = math.degrees(math.asin(tz/128.0))
 
-        print "tx:",tx,"ty:",ty,"tz:",tz
+        print("tx: %d %3.2f ty: %d %3.2f tz: %d %3.2f" %(tx, txd, ty, tyd, tz, tzd))
         time.sleep(1)
+        # NOTE: The tilt reading is the angle of an axis with the horizontal
+        # plane. It is stable but not very accurate. You will want to do a
+        # 'null' reading before using it as a level.
 
 # Read the acceleration information from the sensor, ten times.
 BrickPi.SensorSettings [I2C_PORT][I2C_DEVICE_INDEX]    = BIT_I2C_SAME
@@ -249,29 +284,29 @@ for i in range(10):
         ay = 0
         az = 0
 
-        if( not BrickPiUpdateValues() ):
-          if( BrickPi.Sensor[I2C_PORT] & ( 0x01 << I2C_DEVICE_INDEX ) ):
+        if(not BrickPiUpdateValues()):
+          if(BrickPi.Sensor[I2C_PORT] & (0x01 << I2C_DEVICE_INDEX)):
 
             # NOTE: The acceleration values returned by the AbsoluteIMU-ACG
             # are 16bit signed integers. However, python uses a larger (more bits)
             # representation, so simply putting the returned LSB and MSB together
             # results in possitive values only (the sign bit in the MSB isn't
             # interpreted as such). To correct for this, the value of the
-            # combination MSB,LSB is checked. If it is larger than 0x8FFF the
+            # combination MSB,LSB is checked. If it is larger than 0x7FFF the
             # 16th bit is set and it actually represents a negative value.
             # Assuming the sensor uses two's complement representation for negative
             # numbers, the correct negative value can be obtained by subtracting 0xFFFF.
             ax = ( BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_INDEX][0]
-                 | BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_INDEX][1] << 8 )
-            if( ax > 0x8FFF ): # 32767
-              ax -= 0xFFFF     # 65535
+                 | BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_INDEX][1] << 8)
+            if(ax > 0x7FFF): # 32767
+              ax -= 0xFFFF   # 65535
             ay = ( BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_INDEX][2]
-                 | BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_INDEX][3] << 8 )
-            if( ay > 0x8FFF ):
+                 | BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_INDEX][3] << 8)
+            if(ay > 0x7FFF):
               ay -= 0xFFFF
             az = ( BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_INDEX][4]
-                 | BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_INDEX][5] << 8 )
-            if( az > 0x8FFF ):
+                 | BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_INDEX][5] << 8)
+            if(az > 0x7FFF):
               az -= 0xFFFF
 
         print "ax:",ax,"ay:",ay,"az:",az
@@ -297,13 +332,13 @@ for i in range(10):
         # TODO Calibration might change this behaviour, but this hasn't been tested yet.
         ch = 999 # Invalid heading
 
-        if( not BrickPiUpdateValues() ):
-          if( BrickPi.Sensor[I2C_PORT] & ( 0x01 << I2C_DEVICE_INDEX ) ):
+        if(not BrickPiUpdateValues()):
+          if(BrickPi.Sensor[I2C_PORT] & (0x01 << I2C_DEVICE_INDEX)):
 
             # NOTE: The compass heading returned by the AbsoluteIMU-ACG
             # is a 16bit unsigned integer.
             ch = ( BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_INDEX][0]
-                 | BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_INDEX][1] << 8 )
+                 | BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_INDEX][1] << 8)
 
         print "compass heading:",ch
         time.sleep(1)
@@ -325,22 +360,22 @@ for i in range(10):
         mfy = 0
         mfz = 0
 
-        if( not BrickPiUpdateValues() ):
-          if( BrickPi.Sensor[I2C_PORT] & ( 0x01 << I2C_DEVICE_INDEX ) ):
+        if(not BrickPiUpdateValues()):
+          if(BrickPi.Sensor[I2C_PORT] & (0x01 << I2C_DEVICE_INDEX)):
 
             # NOTE: The magnetic field values returned by the AbsoluteIMU-ACG
             # are 16bit signed integers. See the note on reading acceleration.
             mfx = ( BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_INDEX][0]
-                  | BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_INDEX][1] << 8 )
-            if( mfx > 0x8FFF ): # 32767
-              mfx -= 0xFFFF     # 65535
+                  | BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_INDEX][1] << 8)
+            if(mfx > 0x7FFF): # 32767
+              mfx -= 0xFFFF   # 65535
             mfy = ( BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_INDEX][2]
-                  | BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_INDEX][3] << 8 )
-            if( mfy > 0x8FFF ):
+                  | BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_INDEX][3] << 8)
+            if(mfy > 0x7FFF):
               mfy -= 0xFFFF
             mfz = ( BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_INDEX][4]
-                  | BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_INDEX][5] << 8 )
-            if( mfz > 0x8FFF ):
+                  | BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_INDEX][5] << 8)
+            if(mfz > 0x7FFF):
               mfz -= 0xFFFF
 
         print "mfx:",mfx,"mfy:",mfy,"mfz:",mfz
@@ -367,24 +402,24 @@ for i in range(10):
         ry = 0
         rz = 0
 
-        if( not BrickPiUpdateValues() ):
-          if( BrickPi.Sensor[I2C_PORT] & ( 0x01 << I2C_DEVICE_INDEX ) ):
+        if(not BrickPiUpdateValues()):
+          if(BrickPi.Sensor[I2C_PORT] & (0x01 << I2C_DEVICE_INDEX)):
 
             # NOTE: The rotation speed values returned by the AbsoluteIMU-ACG
             # are 16bit signed integers. See the note on reading acceleration.
             rx = ( BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_INDEX][0]
                  | BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_INDEX][1] << 8 )
-            if( rx > 0x8FFF ): # 32767
-              rx -= 0xFFFF     # 65535
+            if(rx > 0x7FFF): # 32767
+              rx -= 0xFFFF   # 65535
             rx *= ROTATION_SPEED_TO_MILLIDEG_PER_SECOND
             ry = ( BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_INDEX][2]
                  | BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_INDEX][3] << 8 )
-            if( ry > 0x8FFF ):
+            if(ry > 0x7FFF):
               ry -= 0xFFFF
             ry *= ROTATION_SPEED_TO_MILLIDEG_PER_SECOND
             rz = ( BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_INDEX][4]
                  | BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_INDEX][5] << 8 )
-            if( rz > 0x8FFF ):
+            if(rz > 0x7FFF):
               rz -= 0xFFFF
             rz *= ROTATION_SPEED_TO_MILLIDEG_PER_SECOND
 
