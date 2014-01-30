@@ -17,7 +17,7 @@
 
 ##################################################################################################################
 # Debugging:
-# - NOTE THAT DEBUGGING ERROR MESSAGES ARE TURNED OFF BY DEFAULT.  To debug, just take the comment out of Line 29.
+# - NOTE THAT DEBUGGING ERROR MESSAGES ARE TURNED OFF BY DEFAULT.  To debug, just take the comment out of Line 48.
 # 
 # If you #define DEBUG in the program, the BrickPi.h drivers will print debug messages to the terminal. One common message is
 # "BrickPiRx error: -2", in function BrickPiUpdateValues(). This is caused by an error in the communication with one of the
@@ -42,10 +42,10 @@ import serial
 ser = serial.Serial()
 ser.port='/dev/ttyAMA0'
 ser.baudrate = 500000
-# ser.writeTimeout = 0.0005		
+# ser.writeTimeout = 0.0005
 # ser.timeout = 0.0001
 
-# DEBUG = 1	# Remove to hide errors 
+# DEBUG = 1  # Remove to hide errors 
 
 PORT_A = 0
 PORT_B = 1
@@ -63,12 +63,12 @@ MASK_9V   = 0x04
 MASK_D0_S = 0x08
 MASK_D1_S = 0x10
 
-BYTE_MSG_TYPE				= 0 # MSG_TYPE is the first byte.
-MSG_TYPE_CHANGE_ADDR		= 1 # Change the UART address.
-MSG_TYPE_SENSOR_TYPE		= 2 # Change/set the sensor type.
-MSG_TYPE_VALUES    			= 3 # Set the motor speed and direction, and return the sesnors and encoders.
-MSG_TYPE_E_STOP      		= 4 # Float motors immidately
-MSG_TYPE_TIMEOUT_SETTINGS	= 5 # Set the timeout
+BYTE_MSG_TYPE        = 0 # MSG_TYPE is the first byte.
+MSG_TYPE_CHANGE_ADDR    = 1 # Change the UART address.
+MSG_TYPE_SENSOR_TYPE    = 2 # Change/set the sensor type.
+MSG_TYPE_VALUES          = 3 # Set the motor speed and direction, and return the sesnors and encoders.
+MSG_TYPE_E_STOP          = 4 # Float motors immidately
+MSG_TYPE_TIMEOUT_SETTINGS  = 5 # Set the timeout
 # New UART address (MSG_TYPE_CHANGE_ADDR)
 BYTE_NEW_ADDRESS   = 1
 
@@ -113,9 +113,9 @@ Retried = 0
 class BrickPiStruct:
     Address = [ 1, 2 ]
     MotorSpeed  = [0] * 4
-	
+
     MotorEnable = [0] * 4
-	
+
     EncoderOffset = [None] * 4
     Encoder       = [None] * 4
 
@@ -136,69 +136,69 @@ BrickPi = BrickPiStruct()
 
 #PSP Mindsensors class
 class button:
-	#Initialize all the buttons to 0
-	def init(self):
-		self.l1=0
-		self.l2=0
-		self.r1=0
-		self.r2=0
-		self.a=0
-		self.b=0
-		self.c=0
-		self.d=0
-		self.tri=0
-		self.sqr=0
-		self.cir=0
-		self.cro=0
-		self.ljb=0
-		self.ljx=0
-		self.ljy=0
-		self.rjx=0
-		rjy=0
-		
-	#Update all the buttons
-	def upd(self,I2C_PORT):
-		#For all buttons:
-		#0:	Unpressed
-		#1:	Pressed
-		#
-		#Left and right joystick: -127 to 127
-		self.ljb=~(BrickPi.SensorI2CIn[I2C_PORT][0][0]>>1)&1
-		self.rjb=~(BrickPi.SensorI2CIn[I2C_PORT][0][0]>>2)&1
-		
-		#For buttons a,b,c,d
-		self.d=~(BrickPi.SensorI2CIn[I2C_PORT][0][0]>>4)&1
-		self.c=~(BrickPi.SensorI2CIn[I2C_PORT][0][0]>>5)&1
-		self.b=~(BrickPi.SensorI2CIn[I2C_PORT][0][0]>>6)&1
-		self.a=~(BrickPi.SensorI2CIn[I2C_PORT][0][0]>>7)&1
-		
-		#For buttons l1,l2,r1,r2
-		self.l2=~(BrickPi.SensorI2CIn[I2C_PORT][0][1])&1
-		self.r2=~(BrickPi.SensorI2CIn[I2C_PORT][0][1]>>1)&1
-		self.l1=~(BrickPi.SensorI2CIn[I2C_PORT][0][1]>>2)&1
-		self.r1=~(BrickPi.SensorI2CIn[I2C_PORT][0][1]>>3)&1
-		
-		#For buttons square,triangle,cross,circle
-		self.tri=~(BrickPi.SensorI2CIn[I2C_PORT][0][1]>>4)&1
-		self.cir=~(BrickPi.SensorI2CIn[I2C_PORT][0][1]>>5)&1
-		self.cro=~(BrickPi.SensorI2CIn[I2C_PORT][0][1]>>6)&1
-		self.sqr=~(BrickPi.SensorI2CIn[I2C_PORT][0][1]>>7)&1
-		
-		#Left joystick x and y , -127 to 127
-		self.ljx=BrickPi.SensorI2CIn[I2C_PORT][0][2]-128
-		self.ljy=~BrickPi.SensorI2CIn[I2C_PORT][0][3]+129
-	
-		#Right joystick x and y , -127 to 127
-		self.rjx=BrickPi.SensorI2CIn[I2C_PORT][0][4]-128
-		self.rjy=~BrickPi.SensorI2CIn[I2C_PORT][0][5]+129
-	
-	#Show button values
-	def show_val(self):
-		print "ljb","rjb","d","c","b","a","l2","r2","l1","r1","tri","cir","cro","sqr","ljx","ljy","rjx","rjy"
-		print self.ljb," ",self.rjb," ",self.d,self.c,self.b,self.a,self.l2,"",self.r2,"",self.l1,"",self.r1,"",self.tri," ",self.cir," ",self.cro," ",self.sqr," ",self.ljx," ",self.ljy," ",self.rjx," ",self.rjy
-		print ""
+    #Initialize all the buttons to 0
+    def init(self):
+      self.l1=0
+      self.l2=0
+      self.r1=0
+      self.r2=0
+      self.a=0
+      self.b=0
+      self.c=0
+      self.d=0
+      self.tri=0
+      self.sqr=0
+      self.cir=0
+      self.cro=0
+      self.ljb=0
+      self.ljx=0
+      self.ljy=0
+      self.rjx=0
+      rjy=0
 
-	
+    #Update all the buttons
+    def upd(self,I2C_PORT):
+      #For all buttons:
+      #0:  Unpressed
+      #1:  Pressed
+      #
+      #Left and right joystick: -127 to 127
+      self.ljb=~(BrickPi.SensorI2CIn[I2C_PORT][0][0]>>1)&1
+      self.rjb=~(BrickPi.SensorI2CIn[I2C_PORT][0][0]>>2)&1
+
+      #For buttons a,b,c,d
+      self.d=~(BrickPi.SensorI2CIn[I2C_PORT][0][0]>>4)&1
+      self.c=~(BrickPi.SensorI2CIn[I2C_PORT][0][0]>>5)&1
+      self.b=~(BrickPi.SensorI2CIn[I2C_PORT][0][0]>>6)&1
+      self.a=~(BrickPi.SensorI2CIn[I2C_PORT][0][0]>>7)&1
+
+      #For buttons l1,l2,r1,r2
+      self.l2=~(BrickPi.SensorI2CIn[I2C_PORT][0][1])&1
+      self.r2=~(BrickPi.SensorI2CIn[I2C_PORT][0][1]>>1)&1
+      self.l1=~(BrickPi.SensorI2CIn[I2C_PORT][0][1]>>2)&1
+      self.r1=~(BrickPi.SensorI2CIn[I2C_PORT][0][1]>>3)&1
+
+      #For buttons square,triangle,cross,circle
+      self.tri=~(BrickPi.SensorI2CIn[I2C_PORT][0][1]>>4)&1
+      self.cir=~(BrickPi.SensorI2CIn[I2C_PORT][0][1]>>5)&1
+      self.cro=~(BrickPi.SensorI2CIn[I2C_PORT][0][1]>>6)&1
+      self.sqr=~(BrickPi.SensorI2CIn[I2C_PORT][0][1]>>7)&1
+
+      #Left joystick x and y , -127 to 127
+      self.ljx=BrickPi.SensorI2CIn[I2C_PORT][0][2]-128
+      self.ljy=~BrickPi.SensorI2CIn[I2C_PORT][0][3]+129
+
+      #Right joystick x and y , -127 to 127
+      self.rjx=BrickPi.SensorI2CIn[I2C_PORT][0][4]-128
+      self.rjy=~BrickPi.SensorI2CIn[I2C_PORT][0][5]+129
+
+    #Show button values
+    def show_val(self):
+      print "ljb","rjb","d","c","b","a","l2","r2","l1","r1","tri","cir","cro","sqr","ljx","ljy","rjx","rjy"
+      print self.ljb," ",self.rjb," ",self.d,self.c,self.b,self.a,self.l2,"",self.r2,"",self.l1,"",self.r1,"",self.tri," ",self.cir," ",self.cro," ",self.sqr," ",self.ljx," ",self.ljy," ",self.rjx," ",self.rjy
+      print ""
+
+
 def BrickPiChangeAddress(OldAddr, NewAddr):
     Array[BYTE_MSG_TYPE] = MSG_TYPE_CHANGE_ADDR;
     Array[BYTE_NEW_ADDRESS] = NewAddr;
@@ -213,72 +213,74 @@ def BrickPiChangeAddress(OldAddr, NewAddr):
     return 0
 
 def BrickPiSetTimeout():
-	for i in range(2):
-		Array[BYTE_MSG_TYPE] = MSG_TYPE_TIMEOUT_SETTINGS
-		Array[BYTE_TIMEOUT] = BrickPi.Timeout&0xFF
-		Array[BYTE_TIMEOUT + 1] = (BrickPi.Timeout / 256     ) & 0xFF
-		Array[BYTE_TIMEOUT + 2] = (BrickPi.Timeout / 65536   ) & 0xFF
-		Array[BYTE_TIMEOUT + 3] = (BrickPi.Timeout / 16777216) & 0xFF
-		BrickPiTx(BrickPi.Address[i], 5, Array)
-		res, BytesReceived, InArray = BrickPiRx(0.002500)
-		if res :
-			return -1
-		for j in range(len(InArray)):
-			Array[j] = InArray[j]
-		if not (BytesReceived == 1 and Array[BYTE_MSG_TYPE] == MSG_TYPE_TIMEOUT_SETTINGS):
-			return -1
-		i+=1
-	return 0
-		
+    for i in range(2):
+        Array[BYTE_MSG_TYPE] = MSG_TYPE_TIMEOUT_SETTINGS
+        Array[BYTE_TIMEOUT] = BrickPi.Timeout&0xFF
+        Array[BYTE_TIMEOUT + 1] = (BrickPi.Timeout / 256     ) & 0xFF
+        Array[BYTE_TIMEOUT + 2] = (BrickPi.Timeout / 65536   ) & 0xFF
+        Array[BYTE_TIMEOUT + 3] = (BrickPi.Timeout / 16777216) & 0xFF
+        BrickPiTx(BrickPi.Address[i], 5, Array)
+        res, BytesReceived, InArray = BrickPiRx(0.002500)
+        if res :
+            return -1
+        for j in range(len(InArray)):
+            Array[j] = InArray[j]
+        if not (BytesReceived == 1 and Array[BYTE_MSG_TYPE] == MSG_TYPE_TIMEOUT_SETTINGS):
+            return -1
+        i+=1
+    return 0
+
 def motorRotateDegree(power,deg,port,sampling_time=.1):
-	"""Rotate the selected motors by specified degre
-	
-	Args:
-		power		: an array of the power values at which to rotate the motors (0-255)
-		deg		: an array of the angle's (in degrees) by which to rotate each of the motor
-		port		: an array of the port's on which the motor is connected
-		sampling_time	: (optional) the rate(in seconds) at which to read the data in the encoders
+    """Rotate the selected motors by specified degre
 
-	Returns:
-		0 on success
+    Args:
+      power    : an array of the power values at which to rotate the motors (0-255)
+      deg    : an array of the angle's (in degrees) by which to rotate each of the motor
+      port    : an array of the port's on which the motor is connected
+      sampling_time  : (optional) the rate(in seconds) at which to read the data in the encoders
 
-	Usage:
-		Pass the arguments in a list. if a single motor has to be controlled then the arguments should be
-		passed like elements of an array,e.g, motorRotateDegree([255],[360],[PORT_A]) or 
-		motorRotateDegree([255,255],[360,360],[PORT_A,PORT_B])
-	"""
+    Returns:
+      0 on success
 
-	num_motor=len(power)		#Number of motors being used
-	init_val=[0]*num_motor
-	final_val=[0]*num_motor
-	BrickPiUpdateValues()  
-	for i in range(num_motor):
-		BrickPi.MotorEnable[port[i]] = 1				#Enable the Motors
-		power[i]=abs(power[i])
-		BrickPi.MotorSpeed[port[i]] = power[i] if deg[i]>0 else -power[i]	#For running clockwise and anticlockwise
-		init_val[i]=BrickPi.Encoder[port[i]]				#Initial reading of the encoder	
-		final_val[i]=init_val[i]+(deg[i]*2)				#Final value when the motor has to be stopped;One encoder value counts for 0.5 degrees
-	run_stat=[0]*num_motor
-	while True:
-		result = BrickPiUpdateValues()  				#Ask BrickPi to update values for sensors/motors
-	    	if not result : 
-			for i in range(num_motor):				#Do for each of the motors
-				if run_stat[i]==1:
-					continue
-				if(deg[i]>0 and final_val[i]>init_val[i]) or (deg[i]<0 and final_val[i]<init_val[i]) :	#Check if final value reached for each of the motors
-	                   		init_val[i]=BrickPi.Encoder[port[i]]    		#Read the encoder degrees  	
-				else:
-					run_stat[i]=1
-					BrickPi.MotorSpeed[port[i]]=-power[i] if deg[i]>0 else power[i]	#Run the motors in reverse direction to stop instantly
-					BrickPiUpdateValues()
-					time.sleep(.04)
-					BrickPi.MotorEnable[port[i]] = 0
-					BrickPiUpdateValues()
-		time.sleep(sampling_time)					#sleep for the sampling time given (default:100 ms)
-		if(all(e==1 for e in run_stat)):				#If all the motors have already completed their rotation, then stop
-			break
-	return 0
-	
+    Usage:
+      Pass the arguments in a list. if a single motor has to be controlled then the arguments should be
+      passed like elements of an array,e.g, motorRotateDegree([255],[360],[PORT_A]) or 
+      motorRotateDegree([255,255],[360,360],[PORT_A,PORT_B])
+    """
+
+    num_motor=len(power)    #Number of motors being used
+    init_val=[0]*num_motor
+    final_val=[0]*num_motor
+    BrickPiUpdateValues()  
+    for i in range(num_motor):
+        BrickPi.MotorEnable[port[i]] = 1        #Enable the Motors
+        power[i]=abs(power[i])
+        BrickPi.MotorSpeed[port[i]] = power[i] if deg[i]>0 else -power[i]  #For running clockwise and anticlockwise
+        init_val[i]=BrickPi.Encoder[port[i]]        #Initial reading of the encoder  
+        final_val[i]=init_val[i]+(deg[i]*2)        #Final value when the motor has to be stopped;One encoder value counts for 0.5 degrees
+    run_stat=[0]*num_motor
+    while True:
+        result = BrickPiUpdateValues()          #Ask BrickPi to update values for sensors/motors
+        if not result : 
+            for i in range(num_motor):        #Do for each of the motors
+                if run_stat[i]==1:
+                    continue
+                # Check if final value reached for each of the motors
+                if(deg[i]>0 and final_val[i]>init_val[i]) or (deg[i]<0 and final_val[i]<init_val[i]) :
+                    # Read the encoder degrees
+                    init_val[i]=BrickPi.Encoder[port[i]]
+                else:
+                    run_stat[i]=1
+                    BrickPi.MotorSpeed[port[i]]=-power[i] if deg[i]>0 else power[i]  #Run the motors in reverse direction to stop instantly
+                    BrickPiUpdateValues()
+                    time.sleep(.04)
+                    BrickPi.MotorEnable[port[i]] = 0
+                    BrickPiUpdateValues()
+        time.sleep(sampling_time)          #sleep for the sampling time given (default:100 ms)
+        if(all(e==1 for e in run_stat)):        #If all the motors have already completed their rotation, then stop
+          break
+    return 0
+
 def GetBits( byte_offset, bit_offset, bits):
     global Bit_Offset
     result = 0
@@ -373,6 +375,7 @@ def BrickPiUpdateValues():
             if(BrickPi.EncoderOffset[port]):
                 Temp_Value = BrickPi.EncoderOffset[port]
                 AddBits(1,0,1,1)
+                Temp_ENC_DIR = 0
                 if Temp_Value < 0 :
                     Temp_ENC_DIR = 1
                     Temp_Value *= -1
@@ -415,7 +418,7 @@ def BrickPiUpdateValues():
         result, BytesReceived, InArray = BrickPiRx(0.007500) #check timeout
         for j in range(len(InArray)):
             Array[j]=InArray[j]
-        
+
         if result != -2 :
             BrickPi.EncoderOffset[(i * 2) + PORT_A] = 0
             BrickPi.EncoderOffset[(i * 2) + PORT_B] = 0
@@ -424,7 +427,7 @@ def BrickPiUpdateValues():
             if 'DEBUG' in globals():
                 if DEBUG == 1:
                     print "BrickPiRx Error :", result
-            
+
             if Retried < 2 :
                 ret = True
                 Retried += 1
@@ -486,7 +489,7 @@ def BrickPiSetup():
         return -1
     return 0
 
-	
+
 def BrickPiTx(dest, ByteCount, OutArray):
     tx_buffer = ''
     tx_buffer+=chr(dest)
@@ -505,19 +508,19 @@ def BrickPiRx(timeout):
     while( ser.inWaiting() <= 0):
         if time.time() - ot >= timeout : 
             return -2, 0 , []
-    
+
     if not ser.isOpen():
         return -1, 0 , []
-    
+
     try:
         while ser.inWaiting():
             rx_buffer += ( ser.read(ser.inWaiting()) )
             #time.sleep(.000075)
     except:
         return -1, 0 , []
-    
+
     RxBytes=len(rx_buffer)
-    
+
     if RxBytes < 2 :
         return -4, 0 , []
 
