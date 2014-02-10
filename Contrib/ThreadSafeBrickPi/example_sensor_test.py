@@ -15,9 +15,9 @@ class myThreadOne( threading.Thread ):
         self.name = name
     def run( self ):
         time.sleep(1)
-        bpc = BPi.BrickPiCom()
+        bpc = BPi.BrickPiCom(0.01)
         us = bpc.register_sensor(
-            "BrickPiLegoUltraSonicSensor",
+            "BrickPiLegoUltraSonicSensorI2C",
             "LEGO-Sensors",
             BPi.PORT_1)
         ls = bpc.register_sensor(
@@ -51,15 +51,15 @@ class myThreadTwo( threading.Thread ):
         self.name = name
     def run(self):
         time.sleep(1)
-        bpc = BPi.BrickPiCom()
+        bpc = BPi.BrickPiCom(0.01)
         us = bpc.register_sensor(
-            "BrickPiLegoUltraSonicSensor",
+            "BrickPiLegoUltraSonicSensorI2C",
             "LEGO-Sensors",
-            BrickPi.PORT_1)
+            BPi.PORT_1)
         cs = bpc.register_sensor(
             "BrickPiLegoColorSensor",
             "LEGO-Sensors",
-            BrickPi.PORT_4)
+            BPi.PORT_4)
         tstart = time.time()
         while running:
             bpc.update()
