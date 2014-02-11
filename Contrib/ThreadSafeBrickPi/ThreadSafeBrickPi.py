@@ -3,19 +3,22 @@
 # Frans Duijnhouwer
 # frans.duijnhouwer<at>gmail.com
 #
-# Initial Date: Januari 28, 2014
-# Last Updated: Februari 11, 2014
+# Initial Date: January 28, 2014
+# Last Updated: February 11, 2014
 #
-# This file has been made available online through a Creative Commons Attribution-ShareAlike 3.0  license.
+# This file has been made available online through a Creative Commons 
+# Attribution-ShareAlike 3.0  license.
 # (http://creativecommons.org/licenses/by-sa/3.0/)
 #
 # Thread safe interface to the BrickPi
-# This file defines the BrickPiCom class that provides thread safe interface to the BrickPi.
-# The implementation is based on the BrickPi.py interface written by: Jaikrishna, Karan Nayan and John Cole
+# This file defines the BrickPiCom class that provides a thread safe interface
+# to the BrickPi. The implementation is based on the BrickPi.py interface
+# written by: Jaikrishna, Karan Nayan and John Cole
 
-##################################################################################################################
+###############################################################################
 # Debugging:
-# - NOTE THAT DEBUGGING ERROR MESSAGES ARE TURNED OFF BY DEFAULT.  To debug, just take the comment out of Line xx.
+# - NOTE THAT DEBUGGING ERROR MESSAGES ARE TURNED OFF BY DEFAULT.
+#   To debug, just delete the '#'-character at the front of line 30.
 
 
 from BrickPi import *
@@ -298,19 +301,23 @@ class BrickPiCom:
             for i in range(4):
                 for j in range(len(self._sensors[i])):
                     s = self._sensors[i][j]
-                    if(self._sensorType[i] in 
+                    if(self._sensorType[i] in
                        [TYPE_SENSOR_I2C, TYPE_SENSOR_I2C_9V]):
-                        if(BrickPi.Sensor[i] & (0x01 << j)):
-                            s.callback_update(
-                                BrickPi.SensorI2CIn[i][j][:]) 
-                            # FIXME Now sending full byte array. Needs to 
-                            #       be limited to required number of input
-                            #       bytes. How to get that number?
-                        elif debug:
-                            print("WARNING: BrickPiCom::update: I2C sensor "
-                                  "%s on port %d failed to return values." %
-                                  (self._sensorClassNames[i][j], i))
+                        eds = s.callback_expected_data_size()
+                        if eds:
+                            if(BrickPi.Sensor[i] & (0x01 << j)):
+                                s.callback_update(
+                                    BrickPi.SensorI2CIn[i][j][0:eds]) 
+                            elif debug:
+                                print("WARNING: BrickPiCom::update: I2C sensor "
+                                    "%s on port %d failed to return values." %
+                                    (self._sensorClassNames[i][j], i))
+                        else:
+                            print("DEBUG: Sensor %s on port %d does not expect "
+                                  "data; no update required." 
+                                  % (self._sensorClassNames[i][j], i))
                     else:
+                        # None-I2C sensors are always updated.
                         s.callback_update(BrickPi.Sensor[i])
             if debug:
                 print "DEBUG: encoder offset :", BrickPi.EncoderOffset
@@ -367,7 +374,8 @@ class BrickPiCom:
     # Should therefore never be called outside of this class definition.
     #------------------------------------------------------------------
 
-    def __check_sensor(self, sensorClassName, sensorModuleName, port, debug, *args):
+    def __check_sensor(self, sensorClassName, sensorModuleName, port, debug,
+                       *args):
         if debug:
             print("DEBUG: BrickPiCom::__check_sensor, START\n"
                   "       Check sensor class %s on port %d"
@@ -508,7 +516,6 @@ class BrickPiCom:
                     BrickPi.SensorI2CSpeed[port] = abs(speed)
 
                 BrickPi.SensorSettings[port][di] = settings
-                time.sleep(sdelay)
                 result = BrickPiSetupSensors()
 
                 if result:
@@ -517,7 +524,7 @@ class BrickPiCom:
                            % (result))
                     raise BrickPiException(msg)
 
-                time.sleep(udelay)
+                time.sleep(sdelay)
                 result = BrickPiUpdateValues()
 
                 if result:
@@ -525,6 +532,8 @@ class BrickPiCom:
                     msg = ("BrickPiUpdateValues failed with code: %d"
                            % (result))
                     raise BrickPiException(msg)
+
+                time.sleep(udelay)
 
                 if numBytesIn:
                     if(BrickPi.Sensor[port] & (0x01 << di)):
@@ -592,8 +601,8 @@ class BrickPiCom:
         # Perform setup (if necessary)
         step = 1
         while len(setupList):
-            setupDelay = 0
-            updateDelay = 0
+            setupDelay = 0.0
+            updateDelay = 0.0
             i2cin = []
             values = []
             sl = list(setupList) # make a copy
@@ -737,6 +746,9 @@ class BrickPiI2CSensor(BrickPiSensor):
         a = []
         # outArray, numBytesIn, speed, settings, sdelay, udelay, more steps
         return a, 0, 0, 0, 0, 0, 0
+
+    def callback_expected_data_size(self):
+        return 0
 
 
 
