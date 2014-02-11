@@ -4,7 +4,7 @@
 # frans.duijnhouwer<at>gmail.com
 #
 # Initial Date: Januari 28, 2014
-# Last Updated: Januari 28, 2014
+# Last Updated: Februari 11, 2014
 #
 # This file has been made available online through a Creative Commons Attribution-ShareAlike 3.0  license.
 # (http://creativecommons.org/licenses/by-sa/3.0/)
@@ -627,7 +627,7 @@ class BrickPiCom:
                     if numBytesIn:
                         i2cin.append((p,d,numBytesIn))
 
-                    if(abs(speed) > BrickPi.SensorI2CSpeed[port]):
+                    if(abs(speed) > BrickPi.SensorI2CSpeed[p]):
                         BrickPi.SensorI2CSpeed[p] = abs(speed)
 
                     BrickPi.SensorSettings[p][d] = settings
@@ -655,19 +655,20 @@ class BrickPiCom:
                 if(more == 0):
                     setupList.remove(ij)
             #
-            time.sleep(setupDelay)
             result = BrickPiSetupSensors()
 
             if(result):
                 msg = "BrickPiSetupSensors failed with code: %d" % (result)
                 raise BrickPiException(msg)
 
-            time.sleep(updateDelay)
+            time.sleep(setupDelay)
             result = BrickPiUpdateValues()
 
             if(result):
                 msg = "BrickPiUpdateValues failed with code: %d" % (result)
                 raise BrickPiException(msg)
+
+            time.sleep(updateDelay)
 
             # Handle I2C input
             for ijk in i2cin:
