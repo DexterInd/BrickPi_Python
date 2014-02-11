@@ -1,4 +1,17 @@
-# Test program for ThreadSafeBrickPi sensors
+# example_sensor_test.py
+#
+# Frans Duijnhouwer
+# frans.duijnhouwer<at>gmail.com
+#
+# Initial Date: January 28, 2014
+# Last Updated: February 11, 2014
+#
+# This file has been made available online through a Creative Commons
+# Attribution-ShareAlike 3.0  license.
+# (http://creativecommons.org/licenses/by-sa/3.0/)
+#
+# Test program for ThreadSafeBrickPi implementation of LEGO sensors
+#
 
 import ThreadSafeBrickPi
 import threading
@@ -15,9 +28,9 @@ class myThreadOne( threading.Thread ):
         self.name = name
     def run( self ):
         time.sleep(1)
-        bpc = BPi.BrickPiCom()
+        bpc = BPi.BrickPiCom(0.01)
         us = bpc.register_sensor(
-            "BrickPiLegoUltraSonicSensor",
+            "BrickPiLegoUltraSonicSensorI2C",
             "LEGO-Sensors",
             BPi.PORT_1)
         ls = bpc.register_sensor(
@@ -51,15 +64,15 @@ class myThreadTwo( threading.Thread ):
         self.name = name
     def run(self):
         time.sleep(1)
-        bpc = BPi.BrickPiCom()
+        bpc = BPi.BrickPiCom(0.01)
         us = bpc.register_sensor(
-            "BrickPiLegoUltraSonicSensor",
+            "BrickPiLegoUltraSonicSensorI2C",
             "LEGO-Sensors",
-            BrickPi.PORT_1)
+            BPi.PORT_1)
         cs = bpc.register_sensor(
             "BrickPiLegoColorSensor",
             "LEGO-Sensors",
-            BrickPi.PORT_4)
+            BPi.PORT_4)
         tstart = time.time()
         while running:
             bpc.update()
