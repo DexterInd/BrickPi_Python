@@ -3,8 +3,8 @@
 # Frans Duijnhouwer
 # frans.duijnhouwer<at>gmail.com
 #
-# Initial Date: Januari 28, 2014
-# Last Updated: Januari 28, 2014
+# Initial Date: January 28, 2014
+# Last Updated: February 11, 2014
 #
 # This file has been made available online through a Creative Commons 
 # Attribution-ShareAlike 3.0  license. 
@@ -72,6 +72,7 @@ class BrickPiLegoUltraSonicSensorI2C(BPi.BrickPiI2CSensor):
     def __init__(self, portNumber):
         self._port = portNumber
         self._value = 999 # invalid (range is from 0 to 255)
+        self._dataSize = 0
         self._lock = threading.Lock()
 
     def get_type(self):
@@ -82,17 +83,26 @@ class BrickPiLegoUltraSonicSensorI2C(BPi.BrickPiI2CSensor):
 
     def callback_init(self, stage):
         if(stage == 1):
+            self._dataSize = 0
             a = [LEGO_US_CMD_REG, LEGO_US_CMD_CONT]
-            return a, 0, 0, 0, 0.0, 0.0, stage+1
+            return a, self._dataSize, 8, 0, 0.0, 0.0, stage+1
         else:
+            self._dataSize = 1
             a = [LEGO_US_DATA_REG]
             # outArray, numBytesIn, speed, settings, sdelay, udelay, more steps
-            return a, 1, 8, BIT_I2C_MID | BIT_I2C_SAME, 0.0, 0.02, 0
+            return a, self._dataSize, 8, BIT_I2C_MID | BIT_I2C_SAME, 0.0, 0.02, 0
 
     def callback_update(self, value):
         self._lock.acquire()
         self._value = value[0]
         self._lock.release()
+
+    def callback_expected_data_size(self):
+        try:
+            self._lock.acquire()
+            return self._dataSize
+        finally:
+            self._lock.release()
 
     def setup_required(self):
         return False
