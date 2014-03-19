@@ -227,7 +227,6 @@ def BrickPiSetTimeout():
             Array[j] = InArray[j]
         if not (BytesReceived == 1 and Array[BYTE_MSG_TYPE] == MSG_TYPE_TIMEOUT_SETTINGS):
             return -1
-        i+=1
     return 0
 
 def motorRotateDegree(power,deg,port,sampling_time=.1):
