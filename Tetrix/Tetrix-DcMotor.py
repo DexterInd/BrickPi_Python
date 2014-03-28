@@ -57,7 +57,7 @@ while True:
 	result=BrickPiUpdateValues()
 	if not result:
 		if not __debug__:
-			print "Resuts ",BrickPi.Sensor
+			print "Results ",BrickPi.Sensor
 		setTetrixDCMotorSpeed(BrickPi,mLeftDrive, i)
 		i = i+ d
 		if i > 120:
