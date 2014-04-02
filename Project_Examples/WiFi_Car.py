@@ -8,7 +8,7 @@
 # Setup battery power source for the RPi & BrickPi and boot. 
 # To control the program, connection must be made though SSH though PuTTY or similar software
 # Open up PuTTY and enter UserName:pi Password:raspberry (Default values)
-# Navigate to the directory containing this code and enter 'python Car.py'
+# Navigate to the directory containing this code and enter 'sudo python WiFi_Car.py'
 # The user needs to enter one of the following keys:
 # 8 - Forward
 # 4 - Left
