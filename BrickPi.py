@@ -47,6 +47,28 @@ ser.baudrate = 500000
 
 # DEBUG = 1  # Remove to hide errors 
 
+# The I2C speed (see below) for the ultrasound is hard 
+# coded to 7 in the firmware of the BrickPi. Unfortunately 
+# this speed is not very robust and sometimes causes the 
+# most significant bit to become corrupted. This leads to
+# values being wrong by +-128. 
+
+# This modification to BrickPi.py fixes the problem 
+# without changing any program source code by mapping 
+# TYPE_SENSOR_ULTRASONIC_CONT to TYPE_SENSOR_I2C and 
+# setting it up manually. 
+
+# For more info see the BrickPi forum:
+# http://www.dexterindustries.com/forum/?topic=problem-ultrasonic-sensor/#post-1273
+
+# If you still have problems try tweaking the value below
+
+US_I2C_SPEED = 10 #tweak this value 
+US_I2C_IDX = 0
+LEGO_US_I2C_ADDR = 0x02
+LEGO_US_I2C_DATA_REG = 0x42
+#######################
+
 PORT_A = 0
 PORT_B = 1
 PORT_C = 2
@@ -322,7 +344,18 @@ def BrickPiSetupSensors():
         Array[BYTE_SENSOR_2_TYPE] = BrickPi.SensorType[PORT_2 + i*2 ]
         for ii in range(2):
             port = i*2 + ii
-            if(Array[BYTE_SENSOR_1_TYPE + ii] == TYPE_SENSOR_I2C or Array[BYTE_SENSOR_1_TYPE + ii] == TYPE_SENSOR_I2C_9V ):
+	    #Jan's US fix###########
+	    if(Array[BYTE_SENSOR_1_TYPE + ii] == TYPE_SENSOR_ULTRASONIC_CONT):
+		Array[BYTE_SENSOR_1_TYPE + ii] = TYPE_SENSOR_I2C
+		BrickPi.SensorI2CSpeed[port] = US_I2C_SPEED
+		BrickPi.SensorI2CDevices[port] = 1
+		BrickPi.SensorSettings[port][US_I2C_IDX] = BIT_I2C_MID | BIT_I2C_SAME
+		BrickPi.SensorI2CAddr[port][US_I2C_IDX] = LEGO_US_I2C_ADDR
+		BrickPi.SensorI2CWrite [port][US_I2C_IDX]    = 1
+		BrickPi.SensorI2CRead  [port][US_I2C_IDX]    = 1
+		BrickPi.SensorI2COut   [port][US_I2C_IDX][0] = LEGO_US_I2C_DATA_REG
+	    ########################
+              if(Array[BYTE_SENSOR_1_TYPE + ii] == TYPE_SENSOR_I2C or Array[BYTE_SENSOR_1_TYPE + ii] == TYPE_SENSOR_I2C_9V ):
                 AddBits(3,0,8,BrickPi.SensorI2CSpeed[port])
 
                 if(BrickPi.SensorI2CDevices[port] > 8):
@@ -402,7 +435,11 @@ def BrickPiUpdateValues():
 
         for ii in range(2):
             port =  (i * 2) + ii
-            if(BrickPi.SensorType[port] == TYPE_SENSOR_I2C or BrickPi.SensorType[port] == TYPE_SENSOR_I2C_9V):
+            #if(BrickPi.SensorType[port] == TYPE_SENSOR_I2C or BrickPi.SensorType[port] == TYPE_SENSOR_I2C_9V):
+			#Jan's US Fix##########
+            #old# if(BrickPi.SensorType[port] == TYPE_SENSOR_I2C or BrickPi.SensorType[port] == TYPE_SENSOR_I2C_9V):
+            if(BrickPi.SensorType[port] == TYPE_SENSOR_I2C or BrickPi.SensorType[port] == TYPE_SENSOR_I2C_9V or BrickPi.SensorType[port] == TYPE_SENSOR_ULTRASONIC_CONT):
+			#######################
                 for device in range(BrickPi.SensorI2CDevices[port]):
                     if not (BrickPi.SensorSettings[port][device] & BIT_I2C_SAME):
                         AddBits(1,0,4, BrickPi.SensorI2CWrite[port][device])
@@ -460,20 +497,35 @@ def BrickPiUpdateValues():
             port = ii + (i * 2)
             if BrickPi.SensorType[port] == TYPE_SENSOR_TOUCH :
                 BrickPi.Sensor[port] = GetBits(1,0,1)
-            elif BrickPi.SensorType[port] == TYPE_SENSOR_ULTRASONIC_CONT or BrickPi.SensorType[port] == TYPE_SENSOR_ULTRASONIC_SS :
-                BrickPi.Sensor[port] = GetBits(1,0,8)
+            #elif BrickPi.SensorType[port] == TYPE_SENSOR_ULTRASONIC_CONT or BrickPi.SensorType[port] == TYPE_SENSOR_ULTRASONIC_SS :
+			#Jan's US fix##########
+				#old# elif BrickPi.SensorType[port] == TYPE_SENSOR_ULTRASONIC_CONT or BrickPi.SensorType[port] == TYPE_SENSOR_ULTRASONIC_SS :
+			elif BrickPi.SensorType[port] == TYPE_SENSOR_ULTRASONIC_SS :
+			#######################            
+				BrickPi.Sensor[port] = GetBits(1,0,8)
             elif BrickPi.SensorType[port] == TYPE_SENSOR_COLOR_FULL:
                 BrickPi.Sensor[port] = GetBits(1,0,3)
                 BrickPi.SensorArray[port][INDEX_BLANK] = GetBits(1,0,10)
                 BrickPi.SensorArray[port][INDEX_RED] = GetBits(1,0,10)
                 BrickPi.SensorArray[port][INDEX_GREEN] = GetBits(1,0,10)
                 BrickPi.SensorArray[port][INDEX_BLUE] = GetBits(1,0,10)
-            elif BrickPi.SensorType[port] == TYPE_SENSOR_I2C or BrickPi.SensorType[port] == TYPE_SENSOR_I2C_9V :
+            #elif BrickPi.SensorType[port] == TYPE_SENSOR_I2C or BrickPi.SensorType[port] == TYPE_SENSOR_I2C_9V :
+			#Jan's US fix##########
+            #old# elif BrickPi.SensorType[port] == TYPE_SENSOR_I2C or BrickPi.SensorType[port] == TYPE_SENSOR_I2C_9V :
+            elif BrickPi.SensorType[port] == TYPE_SENSOR_I2C or BrickPi.SensorType[port] == TYPE_SENSOR_I2C_9V or BrickPi.SensorType[port] == TYPE_SENSOR_ULTRASONIC_CONT:
+            #######################
                 BrickPi.Sensor[port] = GetBits(1,0, BrickPi.SensorI2CDevices[port])
                 for device in range(BrickPi.SensorI2CDevices[port]):
                     if (BrickPi.Sensor[port] & ( 0x01 << device)) :
                         for in_byte in range(BrickPi.SensorI2CRead[port][device]):
                             BrickPi.SensorI2CIn[port][device][in_byte] = GetBits(1,0,8)
+            #Jan's US fix##########
+            if BrickPi.SensorType[port] == TYPE_SENSOR_ULTRASONIC_CONT :
+                if(BrickPi.Sensor[port] & ( 0x01 << US_I2C_IDX)) :
+                     BrickPi.Sensor[port] = BrickPi.SensorI2CIn[port][US_I2C_IDX][0]
+                else:
+				     BrickPi.Sensor[port] = -1
+		#######################
             else:   #For all the light, color and raw sensors 
                 BrickPi.Sensor[ii + (i * 2)] = GetBits(1,0,10)
 
