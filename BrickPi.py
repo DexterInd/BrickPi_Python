@@ -354,8 +354,8 @@ def BrickPiSetupSensors():
 		     BrickPi.SensorI2CWrite [port][US_I2C_IDX]    = 1
 		     BrickPi.SensorI2CRead  [port][US_I2C_IDX]    = 1
 		     BrickPi.SensorI2COut   [port][US_I2C_IDX][0] = LEGO_US_I2C_DATA_REG
-	    ########################
-        if(Array[BYTE_SENSOR_1_TYPE + ii] == TYPE_SENSOR_I2C or Array[BYTE_SENSOR_1_TYPE + ii] == TYPE_SENSOR_I2C_9V ):
+		########################
+		if(Array[BYTE_SENSOR_1_TYPE + ii] == TYPE_SENSOR_I2C or Array[BYTE_SENSOR_1_TYPE + ii] == TYPE_SENSOR_I2C_9V ):
                 AddBits(3,0,8,BrickPi.SensorI2CSpeed[port])
 
                 if(BrickPi.SensorI2CDevices[port] > 8):
