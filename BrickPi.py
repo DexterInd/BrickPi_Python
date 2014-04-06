@@ -500,9 +500,9 @@ def BrickPiUpdateValues():
             #elif BrickPi.SensorType[port] == TYPE_SENSOR_ULTRASONIC_CONT or BrickPi.SensorType[port] == TYPE_SENSOR_ULTRASONIC_SS :
 			#Jan's US fix##########
 				#old# elif BrickPi.SensorType[port] == TYPE_SENSOR_ULTRASONIC_CONT or BrickPi.SensorType[port] == TYPE_SENSOR_ULTRASONIC_SS :
-			elif BrickPi.SensorType[port] == TYPE_SENSOR_ULTRASONIC_SS :
+            elif BrickPi.SensorType[port] == TYPE_SENSOR_ULTRASONIC_SS :
 			#######################            
-				BrickPi.Sensor[port] = GetBits(1,0,8)
+                BrickPi.Sensor[port] = GetBits(1,0,8)
             elif BrickPi.SensorType[port] == TYPE_SENSOR_COLOR_FULL:
                 BrickPi.Sensor[port] = GetBits(1,0,3)
                 BrickPi.SensorArray[port][INDEX_BLANK] = GetBits(1,0,10)
