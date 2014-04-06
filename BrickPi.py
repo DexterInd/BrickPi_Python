@@ -346,16 +346,16 @@ def BrickPiSetupSensors():
             port = i*2 + ii
 	    #Jan's US fix###########
 	    if(Array[BYTE_SENSOR_1_TYPE + ii] == TYPE_SENSOR_ULTRASONIC_CONT):
-		Array[BYTE_SENSOR_1_TYPE + ii] = TYPE_SENSOR_I2C
-		BrickPi.SensorI2CSpeed[port] = US_I2C_SPEED
-		BrickPi.SensorI2CDevices[port] = 1
-		BrickPi.SensorSettings[port][US_I2C_IDX] = BIT_I2C_MID | BIT_I2C_SAME
-		BrickPi.SensorI2CAddr[port][US_I2C_IDX] = LEGO_US_I2C_ADDR
-		BrickPi.SensorI2CWrite [port][US_I2C_IDX]    = 1
-		BrickPi.SensorI2CRead  [port][US_I2C_IDX]    = 1
-		BrickPi.SensorI2COut   [port][US_I2C_IDX][0] = LEGO_US_I2C_DATA_REG
+		     Array[BYTE_SENSOR_1_TYPE + ii] = TYPE_SENSOR_I2C
+		     BrickPi.SensorI2CSpeed[port] = US_I2C_SPEED
+		     BrickPi.SensorI2CDevices[port] = 1
+		     BrickPi.SensorSettings[port][US_I2C_IDX] = BIT_I2C_MID | BIT_I2C_SAME
+		     BrickPi.SensorI2CAddr[port][US_I2C_IDX] = LEGO_US_I2C_ADDR
+		     BrickPi.SensorI2CWrite [port][US_I2C_IDX]    = 1
+		     BrickPi.SensorI2CRead  [port][US_I2C_IDX]    = 1
+		     BrickPi.SensorI2COut   [port][US_I2C_IDX][0] = LEGO_US_I2C_DATA_REG
 	    ########################
-              if(Array[BYTE_SENSOR_1_TYPE + ii] == TYPE_SENSOR_I2C or Array[BYTE_SENSOR_1_TYPE + ii] == TYPE_SENSOR_I2C_9V ):
+        if(Array[BYTE_SENSOR_1_TYPE + ii] == TYPE_SENSOR_I2C or Array[BYTE_SENSOR_1_TYPE + ii] == TYPE_SENSOR_I2C_9V ):
                 AddBits(3,0,8,BrickPi.SensorI2CSpeed[port])
 
                 if(BrickPi.SensorI2CDevices[port] > 8):
