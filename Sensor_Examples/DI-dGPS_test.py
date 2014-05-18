@@ -27,8 +27,15 @@ DGPS_CMD_LAT    = 0x02      # Fetch Latitude
 DGPS_CMD_LONG   = 0x04      # Fetch Longitude 
 DGPS_CMD_VELO   = 0x06      # Fetch velocity in cm/s 
 DGPS_CMD_HEAD   = 0x07      # Fetch heading in degrees 
-
-
+DGPS_CMD_DIST   = 0x08		# Fetch distance to destination
+DGPS_CMD_ANGD   = 0x09      # Fetch angle to destination 
+DGPS_CMD_ANGR   = 0x0A      # Fetch angle travelled since last request
+DGPS_CMD_SLAT   = 0x0B      # Set latitude of destination 
+DGPS_CMD_SLONG  = 0x0C      # Set longitude of destination
+DGPS_CMD_XFIRM  = 0x0D	    # Extended firmware
+DGPS_CMD_ALTTD  = 0x0E	    # Altitude
+DGPS_CMD_HDOP   = 0x0F	    # HDOP
+DGPS_CMD_VWSAT  = 0x10	    # Satellites in View
 
 BrickPiSetup()  # setup the serial port for communication
 
@@ -38,7 +45,16 @@ BrickPi.SensorI2CDevices [I2C_PORT] = 1        #number of devices in the I2C bus
 BrickPi.SensorI2CAddr  [I2C_PORT][I2C_DEVICE_DGPS]    = DGPS_I2C_ADDR	#address for writing
 BrickPi.SensorSettings [I2C_PORT][I2C_DEVICE_DGPS]    = BIT_I2C_MID	# the dGPS device requires a clock change between reading and writing
 BrickPi.SensorI2CWrite [I2C_PORT][I2C_DEVICE_DGPS]    = 1				#number of bytes to write
+BrickPiSetupSensors()
 
+#Enable the Xtend mode
+BrickPi.SensorSettings [I2C_PORT][I2C_DEVICE_DGPS]    = 1	
+BrickPi.SensorI2COut   [I2C_PORT][I2C_DEVICE_DGPS][0] = DGPS_CMD_XFIRM	#byte to write
+BrickPi.SensorI2CWrite [I2C_PORT][I2C_DEVICE_DGPS]    = 1				#number of bytes to write
+BrickPi.SensorI2CRead  [I2C_PORT][I2C_DEVICE_DGPS]    = 3
+BrickPiSetupSensors()
+result = BrickPiUpdateValues() #write and read
+print "Xtend firmware:",result
 
 while True:
 	#UTC
@@ -103,5 +119,32 @@ while True:
 		if (BrickPi.Sensor[I2C_PORT] & (0x01 << I2C_DEVICE_DGPS)) :
 			velo = ((long)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][0]<<16)) + ((long)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][1]<<8)) + ((long)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][2]))
 	
-	print 'Status',status,'UTC',UTC,'Latitude %.6f'% lat,'Longitude %.6f'%lon,'Heading',head,'Velocity',velo
+	#Altitude
+	BrickPi.SensorI2CRead  [I2C_PORT][I2C_DEVICE_DGPS]    = 4
+	BrickPi.SensorI2COut   [I2C_PORT][I2C_DEVICE_DGPS][0] = DGPS_CMD_ALTTD	#byte to write
+	BrickPiSetupSensors()
+	result = BrickPiUpdateValues() #write and read
+	if not result :
+		if (BrickPi.Sensor[I2C_PORT] & (0x01 << I2C_DEVICE_DGPS)) :
+			altitude = ((long)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][0]<<24))+((long)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][1]<<16)) + ((long)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][2]<<8)) + ((long)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][3]))
+			
+	#Read HDOP measure of the precision
+	BrickPi.SensorI2CRead  [I2C_PORT][I2C_DEVICE_DGPS]    = 4
+	BrickPi.SensorI2COut   [I2C_PORT][I2C_DEVICE_DGPS][0] = DGPS_CMD_HDOP	#byte to write
+	BrickPiSetupSensors()
+	result = BrickPiUpdateValues() #write and read
+	if not result :
+		if (BrickPi.Sensor[I2C_PORT] & (0x01 << I2C_DEVICE_DGPS)) :
+			hdop = ((long)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][0]<<24))+((long)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][1]<<16)) + ((long)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][2]<<8)) + ((long)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][3]))
+			
+	#Satellites in view
+	BrickPi.SensorI2CRead  [I2C_PORT][I2C_DEVICE_DGPS]    = 4
+	BrickPi.SensorI2COut   [I2C_PORT][I2C_DEVICE_DGPS][0] = DGPS_CMD_VWSAT	#byte to write
+	BrickPiSetupSensors()
+	result = BrickPiUpdateValues() #write and read
+	if not result :
+		if (BrickPi.Sensor[I2C_PORT] & (0x01 << I2C_DEVICE_DGPS)) :
+			satv = ((long)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][0]<<24))+((long)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][1]<<16)) + ((long)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][2]<<8)) + ((long)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][3]))
+			
+	print 'Status',status,'UTC',UTC,'Latitude %.6f'% lat,'Longitude %.6f'%lon,'Heading',head,'Velocity',velo,'Altitude',altitude,'HDOP',hdop,'Satellites in view',satv
 	time.sleep(0.50000);   #giving some delay before acquiring next set of data
