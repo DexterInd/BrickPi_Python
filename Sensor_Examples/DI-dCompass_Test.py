@@ -1,6 +1,7 @@
-# Jaikrishna
+# coding: utf-8
+# Jaikrishna, John
 # Initial Date: June 24, 2013
-# Last Updated: June 24, 2013
+# Last Updated: May 30, 2014
 #
 # These files have been made available online through a Creative Commons Attribution-ShareAlike 3.0  license.
 # (http://creativecommons.org/licenses/by-sa/3.0/)
@@ -11,6 +12,7 @@
 
 from BrickPi import *   #import BrickPi.py file to use BrickPi operations
 import math
+import sys
 
 I2C_PORT  = PORT_3     # I2C port for the dCompass
 I2C_SPEED = 0          # delay for as little time as possible. Usually about 100k baud  
@@ -22,7 +24,7 @@ BrickPi.SensorI2CDevices [I2C_PORT]    = 1              #number of devices in th
 
 BrickPiSetup()  #setup the serial port for communication
 
-# Getting continuous values from a HMC5883L:
+# Getting continuous values from a HMC5883L
 # 1. Write CRA (00) – send 0x3C 0x00 0x70 (8-average, 15 Hz default, normal measurement)
 # 2. Write CRB (01) – send 0x3C 0x01 0xA0 (Gain=5, or any other desired gain)
 # 3. Write Mode (02) – send 0x3C 0x02 0x00 (Continuous-measurement mode)
@@ -85,13 +87,21 @@ if BrickPiSetupSensors() :
 while True :
 	if not BrickPiUpdateValues() :
 		if (BrickPi.Sensor[I2C_PORT] & (0x01 << I2C_DEVICE_DCOM)) :
-			Y = ((-1)**(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DCOM][4]&0x01))*(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DCOM][5])
-			X = ((-1)**(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DCOM][0]&0x01))*(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DCOM][1])
-			Z = ((-1)**(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DCOM][2]&0x01))*(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DCOM][3])
-			angle = math.atan2(X,Y)
-			if(angle<0) :
-				angle += 2*math.pi
-			angle *= 180/math.pi
+
+			# Python Math is tough to work with on the low-level, so we have to improvise a bit to get the X and Y values out properly.
+			X = BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DCOM][1]
+			if BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DCOM][0] > 0:
+				X = -1*(255-X)
 			
-			print "X: ", X,"Y: ", Y, "Z: ", Z,"H: ",angle
+			Y = BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DCOM][5]
+                        if BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DCOM][4] > 0:
+                                Y = -1*(255-Y)
+
+			angle = 0
+			angle = math.atan2(X,Y)		# Trig
+			if(angle<0) :
+				angle += (2*math.pi)	# Trig
+			angle *= 180/math.pi		# Trig here gives us 0 - 360 degrees.
+
+			print "X: ", X,"Y: ", Y,"H: ",angle		# Print the values.
 	time.sleep(.1)
