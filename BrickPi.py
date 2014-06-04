@@ -495,6 +495,7 @@ def BrickPiUpdateValues():
 
         for ii in range(2):
             port = ii + (i * 2)
+            #print BrickPi.SensorType[port]
             if BrickPi.SensorType[port] == TYPE_SENSOR_TOUCH :
                 BrickPi.Sensor[port] = GetBits(1,0,1)
             #elif BrickPi.SensorType[port] == TYPE_SENSOR_ULTRASONIC_CONT or BrickPi.SensorType[port] == TYPE_SENSOR_ULTRASONIC_SS :
@@ -519,15 +520,17 @@ def BrickPiUpdateValues():
                     if (BrickPi.Sensor[port] & ( 0x01 << device)) :
                         for in_byte in range(BrickPi.SensorI2CRead[port][device]):
                             BrickPi.SensorI2CIn[port][device][in_byte] = GetBits(1,0,8)
+            else:   #For all the light, color and raw sensors 
+                BrickPi.Sensor[ii + (i * 2)] = GetBits(1,0,10)
+				
             #Jan's US fix##########
             if BrickPi.SensorType[port] == TYPE_SENSOR_ULTRASONIC_CONT :
                 if(BrickPi.Sensor[port] & ( 0x01 << US_I2C_IDX)) :
                      BrickPi.Sensor[port] = BrickPi.SensorI2CIn[port][US_I2C_IDX][0]
                 else:
 				     BrickPi.Sensor[port] = -1
-		#######################
-            else:   #For all the light, color and raw sensors 
-                BrickPi.Sensor[ii + (i * 2)] = GetBits(1,0,10)
+			#######################
+            
 
         i += 1
     return 0
