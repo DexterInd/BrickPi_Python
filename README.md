@@ -37,6 +37,19 @@ set your `PYTHONPATH` environment variable like this:
 
     sudo env PYTHONPATH=$PWD python "Sensor_Examples/LEGO-Motor Test.py"
 
+Reinstall or Uninstall BrickPi.py
+========
+
+To update or Reinstall BrickPi.py, you must uninstall the BrickPi module first, then reinstall the BrickPi module.
+
+To uninstall the BrickPi module, open a terminal in the BrickPi_Python directory and run the following:
+
+	sudo python setup.py install --record files.txt
+	cat files.txt | xargs sudo rm -rf
+
+This should uninstall the BrickPi modules from Python.  To install an updated BrickPi.py module, see "Installation" above.
+		
+	
 See Also
 ========
 
