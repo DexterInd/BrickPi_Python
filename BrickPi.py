@@ -119,9 +119,11 @@ TYPE_SENSOR_COLOR_NONE       = 40
 TYPE_SENSOR_I2C              = 41
 TYPE_SENSOR_I2C_9V           = 42
 
-TYPE_SENSOR_EV3_US_M0        = 43
-TYPE_SENSOR_EV3_US_M1        = 44
-TYPE_SENSOR_EV3_US_M2        = 45
+# Mode information for EV3 is here: https://github.com/mindboards/ev3dev/wiki/LEGO-EV3-Ultrasonic-Sensor-%2845504%29
+
+TYPE_SENSOR_EV3_US_M0        = 43	# Continuous measurement, distance, cm
+TYPE_SENSOR_EV3_US_M1        = 44	# Continuous measurement, distance, in
+TYPE_SENSOR_EV3_US_M2        = 45	# Listen // 0 r 1 depending on presence of another US sensor.
 TYPE_SENSOR_EV3_US_M3        = 46
 TYPE_SENSOR_EV3_US_M4        = 47
 TYPE_SENSOR_EV3_US_M5        = 48
@@ -140,12 +142,13 @@ TYPE_SENSOR_EV3_GYRO_M2      = 58	# Raw sensor value ???
 TYPE_SENSOR_EV3_GYRO_M3      = 59	# Angle and Rotational Speed?
 TYPE_SENSOR_EV3_GYRO_M4      = 60 	# Calibration ???
 
-TYPE_SENSOR_EV3_INFRARED_M0  = 61
-TYPE_SENSOR_EV3_INFRARED_M1  = 62
-TYPE_SENSOR_EV3_INFRARED_M2  = 63
-TYPE_SENSOR_EV3_INFRARED_M3  = 64
-TYPE_SENSOR_EV3_INFRARED_M4  = 65
-TYPE_SENSOR_EV3_INFRARED_M5  = 66
+# Mode information is here:  https://github.com/mindboards/ev3dev/wiki/LEGO-EV3-Infrared-Sensor-%2845509%29
+TYPE_SENSOR_EV3_INFRARED_M0   = 61	# Proximity, 0 to 100
+TYPE_SENSOR_EV3_INFRARED_M1   = 62	# IR Seek, -25 (far left) to 25 (far right)
+TYPE_SENSOR_EV3_INFRARED_M2   = 63	# IR Remote Control, 0 - 11 
+TYPE_SENSOR_EV3_INFRARED_M3   = 64
+TYPE_SENSOR_EV3_INFRARED_M4   = 65
+TYPE_SENSOR_EV3_INFRARED_M5   = 66
 
 BIT_I2C_MID  = 0x01  # Do one of those funny clock pulses between writing and reading. defined for each device.
 BIT_I2C_SAME = 0x02  # The transmit data, and the number of bytes to read and write isn't going to change. defined for each device.
