@@ -126,17 +126,20 @@ TYPE_SENSOR_EV3_US_M3        = 46
 TYPE_SENSOR_EV3_US_M4        = 47
 TYPE_SENSOR_EV3_US_M5        = 48
 TYPE_SENSOR_EV3_US_M6        = 49
+
 TYPE_SENSOR_EV3_COLOR_M0     = 50
 TYPE_SENSOR_EV3_COLOR_M1     = 51
 TYPE_SENSOR_EV3_COLOR_M2     = 52
 TYPE_SENSOR_EV3_COLOR_M3     = 53
 TYPE_SENSOR_EV3_COLOR_M4     = 54
 TYPE_SENSOR_EV3_COLOR_M5     = 55
-TYPE_SENSOR_EV3_GYRO_M0      = 56
-TYPE_SENSOR_EV3_GYRO_M1      = 57
-TYPE_SENSOR_EV3_GYRO_M2      = 58
-TYPE_SENSOR_EV3_GYRO_M3      = 59
-TYPE_SENSOR_EV3_GYRO_M4      = 60
+
+TYPE_SENSOR_EV3_GYRO_M0      = 56	# Angle
+TYPE_SENSOR_EV3_GYRO_M1      = 57	# Rotational Speed
+TYPE_SENSOR_EV3_GYRO_M2      = 58	# Raw sensor value ???
+TYPE_SENSOR_EV3_GYRO_M3      = 59	# Angle and Rotational Speed?
+TYPE_SENSOR_EV3_GYRO_M4      = 60 	# Calibration ???
+
 TYPE_SENSOR_EV3_INFRARED_M0  = 61
 TYPE_SENSOR_EV3_INFRARED_M1  = 62
 TYPE_SENSOR_EV3_INFRARED_M2  = 63
@@ -558,8 +561,20 @@ def BrickPiUpdateValues():
                 else:
                     BrickPi.Sensor[port] = -1
 			#######################
-            
-
+			
+			#######################
+			# EV3 Gyro Mode 0, Adjust sign
+            if BrickPi.SensorType[port] == TYPE_SENSOR_EV3_GYRO_M0 :
+				if BrickPi.Sensor[port] >= 32767:		# Negative number.  This seems to return a 2 byte number.
+					BrickPi.Sensor[port] = BrickPi.Sensor[port] - 65535	
+				# else:					# Positive Number print str(gyro)     	
+			#######################
+			# EV3 Gyro Mode 1, Adjust sign
+            elif BrickPi.SensorType[port] == TYPE_SENSOR_EV3_GYRO_M1 :
+				# print "Gyro m1!"
+				if BrickPi.Sensor[port] >= 32767:		# Negative number.  This seems to return a 2 byte number.
+					BrickPi.Sensor[port] = BrickPi.Sensor[port] - 65535	
+				# else:					# Positive Number print str(gyro)
         i += 1
     return 0
 
