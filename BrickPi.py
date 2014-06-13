@@ -127,12 +127,12 @@ TYPE_SENSOR_EV3_US_M4        = 47
 TYPE_SENSOR_EV3_US_M5        = 48
 TYPE_SENSOR_EV3_US_M6        = 49
 
-TYPE_SENSOR_EV3_COLOR_M0     = 50
-TYPE_SENSOR_EV3_COLOR_M1     = 51
-TYPE_SENSOR_EV3_COLOR_M2     = 52
-TYPE_SENSOR_EV3_COLOR_M3     = 53
-TYPE_SENSOR_EV3_COLOR_M4     = 54
-TYPE_SENSOR_EV3_COLOR_M5     = 55
+TYPE_SENSOR_EV3_COLOR_M0     = 50	# Reflected
+TYPE_SENSOR_EV3_COLOR_M1     = 51	# Ambient
+TYPE_SENSOR_EV3_COLOR_M2     = 52	# Color  // Min is 0, max is 7 (brown)
+TYPE_SENSOR_EV3_COLOR_M3     = 53	# Raw reflected
+TYPE_SENSOR_EV3_COLOR_M4     = 54	# Raw Color Components
+TYPE_SENSOR_EV3_COLOR_M5     = 55	# Calibration???  Not currently implemented.
 
 TYPE_SENSOR_EV3_GYRO_M0      = 56	# Angle
 TYPE_SENSOR_EV3_GYRO_M1      = 57	# Rotational Speed
