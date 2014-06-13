@@ -22,6 +22,7 @@ GPIO.setup(12, GPIO.OUT)    #GPIO 18
 GPIO.setup(13, GPIO.OUT)    #GPIO 27
 
 print "Press Ctrl+C to exit"
+print "You will see the two blue LEDs on the BrickPi board blinking."
 
 while True:
     try:

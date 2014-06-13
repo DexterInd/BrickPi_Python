@@ -27,6 +27,7 @@ p1.start(0)
 p2.start(100)
 
 print "Press Ctrl+C to exit"
+print "You will see the two blue LEDs on the BrickPi board blinking."
 
 while True:
     try:
