@@ -24,15 +24,15 @@ from BrickPi import *   								#import BrickPi.py file to use BrickPi operation
 BrickPiSetup()  										# setup the serial port for communication
 ############################################
 # !  Set the sensor type on the line below.  
-BrickPi.SensorType[PORT_2] = TYPE_SENSOR_EV3_INFRARED_M2   	#Set the type of sensor at PORT_4.  M0 is continuous measurement in cm. 
+BrickPi.SensorType[PORT_1] = TYPE_SENSOR_EV3_INFRARED_M0   	#Set the type of sensor at PORT_4.  M0 is proximity, 0 to 100. 
 BrickPiSetupSensors()   									#Send the properties of sensors to BrickPi.  Set up the BrickPi.
 # There's often a long wait for setup with the EV3 sensors.  Up to 5 seconds.
 
 while True:
 	result = BrickPiUpdateValues()  # Ask BrickPi to update values for sensors/motors 
 	if not result :
-		gyro = BrickPi.Sensor[PORT_2]
-		print str(gyro)
+		infrared = BrickPi.Sensor[PORT_1]
+		print str(infrared)
 		
 	time.sleep(.1)     # sleep for 10 ms
 
