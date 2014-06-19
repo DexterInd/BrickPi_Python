@@ -276,7 +276,7 @@ def BrickPiSetTimeout():
             return -1
     return 0
 
-def motorRotateDegree(power,deg,port,sampling_time=.1):
+def motorRotateDegree(power,deg,port,sampling_time=.1,delay_when_stopping=.05):
     """Rotate the selected motors by specified degre
 
     Args:
@@ -284,6 +284,7 @@ def motorRotateDegree(power,deg,port,sampling_time=.1):
       deg    : an array of the angle's (in degrees) by which to rotate each of the motor
       port    : an array of the port's on which the motor is connected
       sampling_time  : (optional) the rate(in seconds) at which to read the data in the encoders
+	  delay_when_stopping:	(optional) the delay (in seconds) for which the motors are run in the opposite direction before stopping
 
     Returns:
       0 on success
@@ -319,7 +320,7 @@ def motorRotateDegree(power,deg,port,sampling_time=.1):
                     run_stat[i]=1
                     BrickPi.MotorSpeed[port[i]]=-power[i] if deg[i]>0 else power[i]  #Run the motors in reverse direction to stop instantly
                     BrickPiUpdateValues()
-                    time.sleep(.05)
+                    time.sleep(delay_when_stopping)
                     BrickPi.MotorEnable[port[i]] = 0
                     BrickPiUpdateValues()
         time.sleep(sampling_time)          #sleep for the sampling time given (default:100 ms)
