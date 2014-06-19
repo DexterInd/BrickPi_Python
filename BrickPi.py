@@ -319,7 +319,7 @@ def motorRotateDegree(power,deg,port,sampling_time=.1):
                     run_stat[i]=1
                     BrickPi.MotorSpeed[port[i]]=-power[i] if deg[i]>0 else power[i]  #Run the motors in reverse direction to stop instantly
                     BrickPiUpdateValues()
-                    time.sleep(.04)
+                    time.sleep(.05)
                     BrickPi.MotorEnable[port[i]] = 0
                     BrickPiUpdateValues()
         time.sleep(sampling_time)          #sleep for the sampling time given (default:100 ms)

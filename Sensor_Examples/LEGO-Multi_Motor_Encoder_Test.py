@@ -22,7 +22,9 @@ angle=360 for the motor connected at Port A
 power=[255]
 deg=[360]
 port=[PORT_A]
-motorRotateDegree(power,deg,port)
+motorRotateDegree(power,deg,port)		#This read the encoder values every 100 ms (default). Not that accurate but not very processor intensive
+#motorRotateDegree(power,deg,port,.05)	#This read the encoder values every 50 ms. A little more accurate 
+#motorRotateDegree(power,deg,port,0)	#This read the encoder values without any delay. Most accurate but take a lot of processing power
 
 """
 If multiple motors have to be controlled then the parameters for running each motor must be passed
