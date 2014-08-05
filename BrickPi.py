@@ -129,12 +129,21 @@ TYPE_SENSOR_EV3_US_M4        = 47
 TYPE_SENSOR_EV3_US_M5        = 48
 TYPE_SENSOR_EV3_US_M6        = 49
 
+<<<<<<< HEAD
 TYPE_SENSOR_EV3_COLOR_M0     = 50	# Reflected
 TYPE_SENSOR_EV3_COLOR_M1     = 51	# Ambient
 TYPE_SENSOR_EV3_COLOR_M2     = 52	# Color  // Min is 0, max is 7 (brown)
 TYPE_SENSOR_EV3_COLOR_M3     = 53	# Raw reflected
 TYPE_SENSOR_EV3_COLOR_M4     = 54	# Raw Color Components
 TYPE_SENSOR_EV3_COLOR_M5     = 55	# Calibration???  Not currently implemented.
+=======
+TYPE_SENSOR_EV3_COLOR_M0     = 50
+TYPE_SENSOR_EV3_COLOR_M1     = 51
+TYPE_SENSOR_EV3_COLOR_M2     = 52
+TYPE_SENSOR_EV3_COLOR_M3     = 53
+TYPE_SENSOR_EV3_COLOR_M4     = 54
+TYPE_SENSOR_EV3_COLOR_M5     = 55
+>>>>>>> origin/ev3dev
 
 TYPE_SENSOR_EV3_GYRO_M0      = 56	# Angle
 TYPE_SENSOR_EV3_GYRO_M1      = 57	# Rotational Speed
@@ -142,6 +151,7 @@ TYPE_SENSOR_EV3_GYRO_M2      = 58	# Raw sensor value ???
 TYPE_SENSOR_EV3_GYRO_M3      = 59	# Angle and Rotational Speed?
 TYPE_SENSOR_EV3_GYRO_M4      = 60 	# Calibration ???
 
+<<<<<<< HEAD
 # Mode information is here:  https://github.com/mindboards/ev3dev/wiki/LEGO-EV3-Infrared-Sensor-%2845509%29
 TYPE_SENSOR_EV3_INFRARED_M0   = 61	# Proximity, 0 to 100
 TYPE_SENSOR_EV3_INFRARED_M1   = 62	# IR Seek, -25 (far left) to 25 (far right)
@@ -149,6 +159,22 @@ TYPE_SENSOR_EV3_INFRARED_M2   = 63	# IR Remote Control, 0 - 11
 TYPE_SENSOR_EV3_INFRARED_M3   = 64
 TYPE_SENSOR_EV3_INFRARED_M4   = 65
 TYPE_SENSOR_EV3_INFRARED_M5   = 66
+=======
+TYPE_SENSOR_EV3_INFRARED_M0  = 61
+TYPE_SENSOR_EV3_INFRARED_M1  = 62
+TYPE_SENSOR_EV3_INFRARED_M2  = 63
+TYPE_SENSOR_EV3_INFRARED_M3  = 64
+TYPE_SENSOR_EV3_INFRARED_M4  = 65
+TYPE_SENSOR_EV3_INFRARED_M5  = 66
+>>>>>>> origin/ev3dev
+
+TYPE_SENSOR_EV3_TOUCH_0		 = 67
+
+TYPE_SENSOR_EV3_TOUCH_DEBOUNCE= 68	# EV3 Touch sensor, debounced.
+TYPE_SENSOR_TOUCH_DEBOUNCE	  = 69	# NXT Touch sensor, debounced.
+
+RETURN_VERSION	       		  = 70	# Returns firmware version.
+
 
 BIT_I2C_MID  = 0x01  # Do one of those funny clock pulses between writing and reading. defined for each device.
 BIT_I2C_SAME = 0x02  # The transmit data, and the number of bytes to read and write isn't going to change. defined for each device.
@@ -551,8 +577,15 @@ def BrickPiUpdateValues():
                     if (BrickPi.Sensor[port] & ( 0x01 << device)) :
                         for in_byte in range(BrickPi.SensorI2CRead[port][device]):
                             BrickPi.SensorI2CIn[port][device][in_byte] = GetBits(1,0,8)
-            elif BrickPi.SensorType[port] in [ TYPE_SENSOR_EV3_COLOR_M3, TYPE_SENSOR_EV3_GYRO_M3, TYPE_SENSOR_EV3_INFRARED_M2 ]:
+            elif BrickPi.SensorType[port] in [ TYPE_SENSOR_EV3_COLOR_M3, TYPE_SENSOR_EV3_GYRO_M3 ]:
                 BrickPi.Sensor[port] = GetBits(1,0,32)
+            elif BrickPi.SensorType[port] in [ TYPE_SENSOR_EV3_INFRARED_M2 ]:
+                BrickPi.Sensor[port] = GetBits(1,0,32)
+          		###############################################################################################################################################		
+                # print "Raw returned: "+str(BrickPi.Sensor[port])
+                if 'DEBUG' in globals():
+					if BrickPi.Sensor[port] > 4278190080:
+						print "IR SENSOR RETURNED ERROR"
             elif BrickPi.SensorType[port] in range(TYPE_SENSOR_EV3_US_M0,TYPE_SENSOR_EV3_INFRARED_M5+1):
                 BrickPi.Sensor[port] = GetBits(1,0,16)
             else:   #For all the light, color and raw sensors 
@@ -579,6 +612,11 @@ def BrickPiUpdateValues():
 				if BrickPi.Sensor[port] >= 32767:		# Negative number.  This seems to return a 2 byte number.
 					BrickPi.Sensor[port] = BrickPi.Sensor[port] - 65535	
 				# else:					# Positive Number print str(gyro)
+<<<<<<< HEAD
+=======
+				
+            # print BrickPi.SensorType[port]
+>>>>>>> origin/ev3dev
         i += 1
     return 0
 
