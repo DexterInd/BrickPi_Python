@@ -166,7 +166,6 @@ TYPE_SENSOR_EV3_INFRARED_M2  = 63
 TYPE_SENSOR_EV3_INFRARED_M3  = 64
 TYPE_SENSOR_EV3_INFRARED_M4  = 65
 TYPE_SENSOR_EV3_INFRARED_M5  = 66
->>>>>>> origin/ev3dev
 
 TYPE_SENSOR_EV3_TOUCH_0		 = 67
 
@@ -612,11 +611,8 @@ def BrickPiUpdateValues():
 				if BrickPi.Sensor[port] >= 32767:		# Negative number.  This seems to return a 2 byte number.
 					BrickPi.Sensor[port] = BrickPi.Sensor[port] - 65535	
 				# else:					# Positive Number print str(gyro)
-<<<<<<< HEAD
-=======
 				
             # print BrickPi.SensorType[port]
->>>>>>> origin/ev3dev
         i += 1
     return 0
 
