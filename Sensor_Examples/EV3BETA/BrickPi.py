@@ -119,14 +119,23 @@ TYPE_SENSOR_COLOR_NONE       = 40
 TYPE_SENSOR_I2C              = 41
 TYPE_SENSOR_I2C_9V           = 42
 
-TYPE_SENSOR_EV3_US_M0        = 43
-TYPE_SENSOR_EV3_US_M1        = 44
-TYPE_SENSOR_EV3_US_M2        = 45
+# Mode information for EV3 is here: https://github.com/mindboards/ev3dev/wiki/LEGO-EV3-Ultrasonic-Sensor-%2845504%29
+
+TYPE_SENSOR_EV3_US_M0        = 43	# Continuous measurement, distance, cm
+TYPE_SENSOR_EV3_US_M1        = 44	# Continuous measurement, distance, in
+TYPE_SENSOR_EV3_US_M2        = 45	# Listen // 0 r 1 depending on presence of another US sensor.
 TYPE_SENSOR_EV3_US_M3        = 46
 TYPE_SENSOR_EV3_US_M4        = 47
 TYPE_SENSOR_EV3_US_M5        = 48
 TYPE_SENSOR_EV3_US_M6        = 49
 
+TYPE_SENSOR_EV3_COLOR_M0     = 50	# Reflected
+TYPE_SENSOR_EV3_COLOR_M1     = 51	# Ambient
+TYPE_SENSOR_EV3_COLOR_M2     = 52	# Color  // Min is 0, max is 7 (brown)
+TYPE_SENSOR_EV3_COLOR_M3     = 53	# Raw reflected
+TYPE_SENSOR_EV3_COLOR_M4     = 54	# Raw Color Components
+TYPE_SENSOR_EV3_COLOR_M5     = 55	# Calibration???  Not currently implemented.
+=======
 TYPE_SENSOR_EV3_COLOR_M0     = 50
 TYPE_SENSOR_EV3_COLOR_M1     = 51
 TYPE_SENSOR_EV3_COLOR_M2     = 52
@@ -134,12 +143,21 @@ TYPE_SENSOR_EV3_COLOR_M3     = 53
 TYPE_SENSOR_EV3_COLOR_M4     = 54
 TYPE_SENSOR_EV3_COLOR_M5     = 55
 
+
 TYPE_SENSOR_EV3_GYRO_M0      = 56	# Angle
 TYPE_SENSOR_EV3_GYRO_M1      = 57	# Rotational Speed
 TYPE_SENSOR_EV3_GYRO_M2      = 58	# Raw sensor value ???
 TYPE_SENSOR_EV3_GYRO_M3      = 59	# Angle and Rotational Speed?
 TYPE_SENSOR_EV3_GYRO_M4      = 60 	# Calibration ???
 
+# Mode information is here:  https://github.com/mindboards/ev3dev/wiki/LEGO-EV3-Infrared-Sensor-%2845509%29
+TYPE_SENSOR_EV3_INFRARED_M0   = 61	# Proximity, 0 to 100
+TYPE_SENSOR_EV3_INFRARED_M1   = 62	# IR Seek, -25 (far left) to 25 (far right)
+TYPE_SENSOR_EV3_INFRARED_M2   = 63	# IR Remote Control, 0 - 11 
+TYPE_SENSOR_EV3_INFRARED_M3   = 64
+TYPE_SENSOR_EV3_INFRARED_M4   = 65
+TYPE_SENSOR_EV3_INFRARED_M5   = 66
+=======
 TYPE_SENSOR_EV3_INFRARED_M0  = 61
 TYPE_SENSOR_EV3_INFRARED_M1  = 62
 TYPE_SENSOR_EV3_INFRARED_M2  = 63
@@ -287,7 +305,7 @@ def BrickPiSetTimeout():
             return -1
     return 0
 
-def motorRotateDegree(power,deg,port,sampling_time=.1):
+def motorRotateDegree(power,deg,port,sampling_time=.1,delay_when_stopping=.05):
     """Rotate the selected motors by specified degre
 
     Args:
@@ -295,6 +313,7 @@ def motorRotateDegree(power,deg,port,sampling_time=.1):
       deg    : an array of the angle's (in degrees) by which to rotate each of the motor
       port    : an array of the port's on which the motor is connected
       sampling_time  : (optional) the rate(in seconds) at which to read the data in the encoders
+	  delay_when_stopping:	(optional) the delay (in seconds) for which the motors are run in the opposite direction before stopping
 
     Returns:
       0 on success
@@ -330,7 +349,7 @@ def motorRotateDegree(power,deg,port,sampling_time=.1):
                     run_stat[i]=1
                     BrickPi.MotorSpeed[port[i]]=-power[i] if deg[i]>0 else power[i]  #Run the motors in reverse direction to stop instantly
                     BrickPiUpdateValues()
-                    time.sleep(.04)
+                    time.sleep(delay_when_stopping)
                     BrickPi.MotorEnable[port[i]] = 0
                     BrickPiUpdateValues()
         time.sleep(sampling_time)          #sleep for the sampling time given (default:100 ms)

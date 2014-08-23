@@ -129,7 +129,6 @@ TYPE_SENSOR_EV3_US_M4        = 47
 TYPE_SENSOR_EV3_US_M5        = 48
 TYPE_SENSOR_EV3_US_M6        = 49
 
-<<<<<<< HEAD
 TYPE_SENSOR_EV3_COLOR_M0     = 50	# Reflected
 TYPE_SENSOR_EV3_COLOR_M1     = 51	# Ambient
 TYPE_SENSOR_EV3_COLOR_M2     = 52	# Color  // Min is 0, max is 7 (brown)
@@ -143,7 +142,7 @@ TYPE_SENSOR_EV3_COLOR_M2     = 52
 TYPE_SENSOR_EV3_COLOR_M3     = 53
 TYPE_SENSOR_EV3_COLOR_M4     = 54
 TYPE_SENSOR_EV3_COLOR_M5     = 55
->>>>>>> origin/ev3dev
+
 
 TYPE_SENSOR_EV3_GYRO_M0      = 56	# Angle
 TYPE_SENSOR_EV3_GYRO_M1      = 57	# Rotational Speed
@@ -151,7 +150,6 @@ TYPE_SENSOR_EV3_GYRO_M2      = 58	# Raw sensor value ???
 TYPE_SENSOR_EV3_GYRO_M3      = 59	# Angle and Rotational Speed?
 TYPE_SENSOR_EV3_GYRO_M4      = 60 	# Calibration ???
 
-<<<<<<< HEAD
 # Mode information is here:  https://github.com/mindboards/ev3dev/wiki/LEGO-EV3-Infrared-Sensor-%2845509%29
 TYPE_SENSOR_EV3_INFRARED_M0   = 61	# Proximity, 0 to 100
 TYPE_SENSOR_EV3_INFRARED_M1   = 62	# IR Seek, -25 (far left) to 25 (far right)
