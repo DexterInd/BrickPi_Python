@@ -331,7 +331,13 @@ def motorRotateDegree(power,deg,port,sampling_time=.1,delay_when_stopping=.05):
     for i in range(num_motor):
         BrickPi.MotorEnable[port[i]] = 1        #Enable the Motors
         power[i]=abs(power[i])
-        BrickPi.MotorSpeed[port[i]] = power[i] if deg[i]>0 else -power[i]  #For running clockwise and anticlockwise
+        #For running clockwise and anticlockwise
+        if deg[i]>0:
+			BrickPi.MotorSpeed[port[i]] = power[i]
+        elif deg[i]<0:
+			BrickPi.MotorSpeed[port[i]] = -power[i]
+        else:
+            BrickPi.MotorSpeed[port[i]] = 0
         init_val[i]=BrickPi.Encoder[port[i]]        #Initial reading of the encoder  
         final_val[i]=init_val[i]+(deg[i]*2)        #Final value when the motor has to be stopped;One encoder value counts for 0.5 degrees
     run_stat=[0]*num_motor
@@ -347,7 +353,12 @@ def motorRotateDegree(power,deg,port,sampling_time=.1,delay_when_stopping=.05):
                     init_val[i]=BrickPi.Encoder[port[i]]
                 else:
                     run_stat[i]=1
-                    BrickPi.MotorSpeed[port[i]]=-power[i] if deg[i]>0 else power[i]  #Run the motors in reverse direction to stop instantly
+                    if deg[i]>0:
+                        BrickPi.MotorSpeed[port[i]] = -power[i]
+                    elif deg[i]<0:
+						BrickPi.MotorSpeed[port[i]] = power[i]
+                    else:
+						BrickPi.MotorSpeed[port[i]] = 0                    
                     BrickPiUpdateValues()
                     time.sleep(delay_when_stopping)
                     BrickPi.MotorEnable[port[i]] = 0
