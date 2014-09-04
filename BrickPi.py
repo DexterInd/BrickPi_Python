@@ -331,7 +331,7 @@ def motorRotateDegree(power,deg,port,sampling_time=.1,delay_when_stopping=.05):
     for i in range(num_motor):
         BrickPi.MotorEnable[port[i]] = 1        #Enable the Motors
         power[i]=abs(power[i])
-        BrickPi.MotorSpeed[port[i]] = power[i] if deg[i]>0 else -power[i]  #For running clockwise and anticlockwise
+        #For running clockwise and anticlockwise
         if deg[i]>0:
 			BrickPi.MotorSpeed[port[i]] = power[i]
         elif deg[i]<0:
