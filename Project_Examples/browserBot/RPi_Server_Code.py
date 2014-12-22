@@ -52,6 +52,8 @@ class MainHandler(tornado.web.RequestHandler):
 class WSHandler(tornado.websocket.WebSocketHandler):
 	def open(self):
 		print 'connection opened...'
+	def check_origin(self,origin):
+		return True
 	def on_message(self, message):      # receives the data from the webpage and is stored in the variable message
 		global c
 		print 'received:', message        # prints the revived from the webpage 
