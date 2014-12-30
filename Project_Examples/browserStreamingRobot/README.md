@@ -20,4 +20,6 @@
 
  >      raspberrypi.local/
  
-- The video stream would load up and you can use the joystick on the screen to control the GoPiGo
+- The video stream would load up and you can use the joystick on the screen to control the robot
+- Note: if you want to change the resolution edit camera_streamer.py so that it has the width height like this self.cameraStreamerProcess = subprocess.Popen( 
+                [ "/usr/local/bin/raspberry_pi_camera_streamer","640","480" ] )
