@@ -24,4 +24,3 @@ while True:
     if not result :
         print col[BrickPi.Sensor[Color_Sensor_Port]]     #BrickPi.Sensor[PORT] stores the value obtained from sensor
     time.sleep(.1)     # sleep for 100 ms
-
