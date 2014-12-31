@@ -43,13 +43,13 @@
         
         #motor_stick {
             position: fixed;
-            top: 150px;
+            top: 180px;
             left: -30px;
         }
         
         #pan_tilt_stick {
             position: fixed;
-            top: 150px;
+            top: 180px;
             left: 400px;
         }
     </style>
@@ -75,13 +75,13 @@
             if ( screen.width > screen.height )
             {
                 // In landscape mode
-                motorStick.css( 'left', 0.2*$(window).width() - 75 );
-                motorStick.css( 'top', 0.85*$(window).height() - 5 );
-                panTiltStick.css( 'left', 0.8*$(window).width() - 75 );
-                panTiltStick.css( 'top', 0.85*$(window).height() - 5 );
+                motorStick.css( 'left', 0.2*screen.width - 50 );
+                motorStick.css( 'top', 0.9*screen.height - 50 );
+                panTiltStick.css( 'left', 0.8*screen.width - 50 );
+                panTiltStick.css( 'top', 0.9*screen.height - 50 );
                 btnShutdown.css( 'position', 'fixed' );
-                btnShutdown.css( 'left', 0.5*$(window).width() );
-                btnShutdown.css( 'top', 0.85*$(window).height() - 5 );
+                btnShutdown.css( 'left', 0.5*screen.width - 50 );
+                btnShutdown.css( 'top', 0.9*screen.height - 50 );
             }
             else
             {
