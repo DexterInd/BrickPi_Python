@@ -44,6 +44,11 @@ import camera_streamer
 
 cameraStreamer = None
 c=0
+global left_power
+global right_power
+right_power = 0
+left_power = 0
+
 #Initialize TOrnado to use 'GET' and load index.html
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
@@ -54,10 +59,13 @@ class MainHandler(tornado.web.RequestHandler):
 class WSHandler(tornado.websocket.WebSocketHandler):
     def open(self):
         print 'connection opened...'
+        cameraStreamer.startStreaming()
     def check_origin(self,origin):
         return True
     def on_message(self, message):      # receives the data from the webpage and is stored in the variable message
         global c
+        global left_power
+        global right_power
         cameraStreamer.update
         print 'received:', message        # prints the revived from the webpage 
         if message == "u":                # checks for the received data and assigns different values to c which controls the movement of robot.
@@ -73,27 +81,50 @@ class WSHandler(tornado.websocket.WebSocketHandler):
         print c
         if c == '8' :
             print "Running Forward"
-            BrickPi.MotorSpeed[PORT_A] = 200  #Set the speed of MotorA (-255 to 255)
-            BrickPi.MotorSpeed[PORT_D] = 200  #Set the speed of MotorD (-255 to 255)
+            right_power = right_power + 50
+            if right_power > 255:
+                right_power = 255
+            left_power = right_power
+            BrickPi.MotorSpeed[PORT_B] = left_power  #Set the speed of MotorB (-255 to 255)
+            BrickPi.MotorSpeed[PORT_D] = right_power  #Set the speed of MotorD (-255 to 255)
         elif c == '2' :
             print "Running Reverse"
-            BrickPi.MotorSpeed[PORT_A] = -200  
-            BrickPi.MotorSpeed[PORT_D] = -200  
+            if right_power > 0:
+                right_power = 0
+            if left_power > 0:
+                left_power = 0
+            right_power = right_power - 50
+            if right_power < -255:
+                right_power = -255
+            left_power = right_power
+            BrickPi.MotorSpeed[PORT_B] = left_power  
+            BrickPi.MotorSpeed[PORT_D] = right_power  
         elif c == '4' :
             print "Turning Right"
-            BrickPi.MotorSpeed[PORT_A] = 200  
-            BrickPi.MotorSpeed[PORT_D] = 0  
+            right_power = left_power / 2
+            left_power = left_power + 50
+            if left_power > 255:
+                left_power = 255
+            BrickPi.MotorSpeed[PORT_B] = left_power  
+            BrickPi.MotorSpeed[PORT_D] = right_power  
         elif c == '6' :
             print "Turning Left"
-            BrickPi.MotorSpeed[PORT_A] = 0  
-            BrickPi.MotorSpeed[PORT_D] = 200  
+            left_power = right_power / 2
+            right_power = right_power + 50
+            if right_power > 255:
+                right_power = 255
+            BrickPi.MotorSpeed[PORT_B] = left_power  
+            BrickPi.MotorSpeed[PORT_D] = right_power  
         elif c == '5' :
             print "Stopped"
-            BrickPi.MotorSpeed[PORT_A] = 0
-            BrickPi.MotorSpeed[PORT_D] = 0
+            right_power = 0
+            left_power = 0
+            BrickPi.MotorSpeed[PORT_B] = left_power
+            BrickPi.MotorSpeed[PORT_D] = right_power
         BrickPiUpdateValues();                # BrickPi updates the values for the motors
         print "Values Updated"
     def on_close(self):
+        cameraStreamer.stopStreaming()
         print 'connection closed...'
 
 application = tornado.web.Application([
@@ -127,7 +158,6 @@ if __name__ == "__main__":
     application.listen(9093)          	#starts the websockets connection
     
     cameraStreamer = camera_streamer.CameraStreamer()
-    cameraStreamer.startStreaming()
     
     tornado.ioloop.IOLoop.instance().start()
   
