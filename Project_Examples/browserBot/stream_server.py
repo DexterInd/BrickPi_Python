@@ -115,14 +115,16 @@ class WSHandler(tornado.websocket.WebSocketHandler):
             BrickPi.MotorSpeed[PORT_D] = right_power  
         elif c == '4' :
             print "Turning Left"
-            right_power = right_power + 100
-            left_power = 0
-            if right_power > 255:
-                right_power = 255
-            BrickPi.MotorSpeed[PORT_B] = left_power  
-            BrickPi.MotorSpeed[PORT_D] = right_power  
+            left_power = left_power + 100
+            right_power = 0
+            if left_power > 255:
+                left_power = 255
+            BrickPi.MotorSpeed[PORT_B] = left_power
+            BrickPi.MotorSpeed[PORT_D] = right_power
         elif c == '7' :
             print "Turning diagonal Left"
+            if right_power > 200:
+                right_power = 100
             right_power = right_power + 50
             left_power = right_power / 2
             if right_power > 255:
@@ -131,14 +133,16 @@ class WSHandler(tornado.websocket.WebSocketHandler):
             BrickPi.MotorSpeed[PORT_D] = right_power
         elif c == '6' :
             print "Turning Right"
-            left_power = left_power + 100
-            right_power = 0
-            if left_power > 255:
-                left_power = 255
-            BrickPi.MotorSpeed[PORT_B] = left_power
-            BrickPi.MotorSpeed[PORT_D] = right_power
+            right_power = right_power + 100
+            left_power = 0
+            if right_power > 255:
+                right_power = 255
+            BrickPi.MotorSpeed[PORT_B] = left_power  
+            BrickPi.MotorSpeed[PORT_D] = right_power  
         elif c == '9' :
             print "Turning diagonal Right"
+            if left_power > 200:
+                left_power = 100
             left_power = left_power + 50
             right_power = left_power / 2
             if left_power > 255:
