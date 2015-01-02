@@ -82,11 +82,11 @@ Enter the hostname/ip address to make the websocket connection <br>
     <input type="text" id="data" size="100"/><br>
 	<input id="clickMe" type="button" value="clickme" onclick="setup2()" /></br>
 <p><span style="font-weight:bold">Instructions for keyboard controls:</span></br>	
-Press Up arrow key - Acceleraate </br>
-Press Down arrow key - Reverse </br>
+Press Up arrow key - Accelerate </br>
+Press Down arrow key - Reverse/Slow down </br>
 Press Right arrow key - Steer Right</br>
 Press Left arrow key - Steer Left</br>
-Press cltr/shift key to Stop</p>
+Press center/cltr/shift key to Stop</p>
 	
 </div>
 
@@ -215,23 +215,50 @@ function setup2()
 				var KeyID = event.keyCode;
 				switch(KeyID)
 				{
-				case 16:
+				case 16: // shift
 				socket.send("b");
 				break; 
-				case 17:
+				case 17: // ctrl
 				socket.send("b");
 				break;
-				case 37:
+				case 37: // left arrow
 				socket.send("l");
 				break;
-				case 38:
+				case 38: // up arrow
 				socket.send("u");
 				break;
-				case 39:
+				case 39: // right arrow
 				socket.send("r");
 				break;
-				case 40:
+				case 40: // down arrow
 				socket.send("d");
+				break;
+				case  104: // numpad 8
+				socket.send("u");
+				break;
+				case  98: // numpad 2
+				socket.send("d");
+				break;
+				case 100: // numpad 4
+				socket.send("l");
+				break;
+				case 102: // numpad 6
+				socket.send("r");
+				break;
+				case 101: // numpad 5
+				socket.send("b");
+				break;
+				case 103: // numpad 7
+				socket.send("lu");
+				break;
+				case 105: // numpad 9
+				socket.send("ru");
+				break;
+				case 97: // numpad 1
+				socket.send("ld");
+				break;
+				case 99: // numpad 3
+				socket.send("rd");
 				break;
 				}
 			}

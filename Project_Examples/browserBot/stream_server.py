@@ -78,9 +78,22 @@ class WSHandler(tornado.websocket.WebSocketHandler):
             c = "4"
         if message == "b":
             c = "5"
+        if message == "lu":
+            c = "7"
+        if message == "ru":
+            c = "9"
+        if message == "ld":
+            c = "1"
+        if message == "rd":
+            c = "3"
         print c
         if c == '8' :
             print "Running Forward"
+            # first check which side has higher power and set it to the lowest setting before increasing it
+            if right_power > left_power:
+                right_power = left_power
+            if left_power > right_power:
+                left_power = right_power
             right_power = right_power + 50
             if right_power > 255:
                 right_power = 255
@@ -89,10 +102,11 @@ class WSHandler(tornado.websocket.WebSocketHandler):
             BrickPi.MotorSpeed[PORT_D] = right_power  #Set the speed of MotorD (-255 to 255)
         elif c == '2' :
             print "Running Reverse"
-            if right_power > 0:
-                right_power = 0
-            if left_power > 0:
-                left_power = 0
+            # first check which side has lower power and set it to the lowest setting before increasing it
+            if right_power < left_power:
+                right_power = left_power
+            if left_power < right_power:
+                left_power = right_power
             right_power = right_power - 50
             if right_power < -255:
                 right_power = -255
@@ -100,21 +114,37 @@ class WSHandler(tornado.websocket.WebSocketHandler):
             BrickPi.MotorSpeed[PORT_B] = left_power  
             BrickPi.MotorSpeed[PORT_D] = right_power  
         elif c == '4' :
-            print "Turning Right"
-            right_power = left_power / 2
-            left_power = left_power + 50
-            if left_power > 255:
-                left_power = 255
-            BrickPi.MotorSpeed[PORT_B] = left_power  
-            BrickPi.MotorSpeed[PORT_D] = right_power  
-        elif c == '6' :
             print "Turning Left"
-            left_power = right_power / 2
-            right_power = right_power + 50
+            right_power = right_power + 100
+            left_power = 0
             if right_power > 255:
                 right_power = 255
             BrickPi.MotorSpeed[PORT_B] = left_power  
             BrickPi.MotorSpeed[PORT_D] = right_power  
+        elif c == '7' :
+            print "Turning diagonal Left"
+            right_power = right_power + 50
+            left_power = right_power / 2
+            if right_power > 255:
+                right_power = 255
+            BrickPi.MotorSpeed[PORT_B] = left_power
+            BrickPi.MotorSpeed[PORT_D] = right_power
+        elif c == '6' :
+            print "Turning Right"
+            left_power = left_power + 100
+            right_power = 0
+            if left_power > 255:
+                left_power = 255
+            BrickPi.MotorSpeed[PORT_B] = left_power
+            BrickPi.MotorSpeed[PORT_D] = right_power
+        elif c == '9' :
+            print "Turning diagonal Right"
+            left_power = left_power + 50
+            right_power = left_power / 2
+            if left_power > 255:
+                left_power = 255
+            BrickPi.MotorSpeed[PORT_B] = left_power
+            BrickPi.MotorSpeed[PORT_D] = right_power
         elif c == '5' :
             print "Stopped"
             right_power = 0
