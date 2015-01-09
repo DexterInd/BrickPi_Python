@@ -19,3 +19,8 @@ To test the installation works correctly, run one of the examples like this:
 
 sudo python opencv_example.py
 
+Tips
+------
+If you plan to use Harris algorithm for 2D feature detection, you will need to keep the original source code around, so don't delete the folder after OpenCV has been built and installed. If you deleted it and want to use Harris, run the example and look at the error message. Unzip the source code to the location it expects and Harris algorithm should work.
+
+If you are using OpenCV to find corners in an image, try using the FAST algorithm if speed is critical for your project. FAST is considerably faster than the other algorithm.
