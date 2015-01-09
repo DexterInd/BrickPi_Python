@@ -15,7 +15,7 @@ This will take 5-6 hours to complete. The script starts by using apt-get to inst
 
 How it works
 ------
-To test the installation works correctly, run one of the examples like this
+To test the installation works correctly, run one of the examples like this:
 
 sudo python opencv_example.py
 
