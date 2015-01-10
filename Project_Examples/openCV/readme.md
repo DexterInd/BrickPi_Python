@@ -29,4 +29,4 @@ If you are using OpenCV to find corners in an image, try using the FAST algorith
 Using FAST algorithm
 ------
 For applications that need fast feature matching, use FAST algorithm. There is an example named fast1.py. It analyzes gridlines3.jpg and saves the result as true.png
-(https://github.com/woolfel/BrickPi_Python/blob/master/Project_Examples/openCV/true.png?raw=true "example result with threshold of 20")
+![Output of FAST algorithm](https://github.com/woolfel/BrickPi_Python/blob/master/Project_Examples/openCV/true.png?raw=true "example result with threshold of 20")
