@@ -1,7 +1,7 @@
 Open Computer Vision
 ======
 
-This project uses OpenCV to process video and images from the Raspberry Pi camera. You can do things like face recognition, object detection and motion tracking. OpenCV was originally created for Stanford's Darpa autonomous vehicle Stanley. It won the grand challenge by completing the course in the shortest time.
+This project uses OpenCV to process video and images from the Raspberry Pi camera. You can do things like face recognition, object detection and motion tracking. OpenCV was originally created for Stanley autonomous vehicle. Stanford won the grand challenge by completing the course in the shortest time. If you don't know what the grand challenge is, go to wikipedia.
 
 Installation
 ------
