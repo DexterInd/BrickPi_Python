@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # MINDSENSORS-Sensors.py
 #
 # Frans Duijnhouwer

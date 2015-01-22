@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # Dexter Industries Example for Connecting the LEGO MINDSTORMS NXT Sensor to the Raspberry Pi
 # January 2013
 #

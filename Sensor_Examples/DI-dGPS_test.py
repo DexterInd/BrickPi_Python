@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # DI-dGPS_test.py
 # This code is for testing the BrickPi with a GPS sensor from Dexter Industries
 # Product webpage: http://www.dexterindustries.com/dGPS.html

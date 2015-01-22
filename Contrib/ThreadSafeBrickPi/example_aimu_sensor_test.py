@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # example_aimu_sensor_test.py
 #
 # Frans Duijnhouwer

@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # FIRMWARE CHECK.
 ############################################
 # This program will check for the correct firmware version.
