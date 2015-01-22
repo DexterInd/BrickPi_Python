@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # BRICKPI LEGO TOUCH SENSOR EXAMPLE.
 ############################################
 # This example will show you how to use the LEGO touch sensor with the BrickPi.  

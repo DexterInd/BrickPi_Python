@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 '''
 *  TetrixControllers.py
 *  Example Code for using the Tetrix DC motors with the BrickPi

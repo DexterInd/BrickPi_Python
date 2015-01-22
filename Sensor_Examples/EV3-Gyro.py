@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # BRICKPI LEGO EV3 GYRO SENSOR EXAMPLE.
 ############################################
 #

@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 '''
 *  TetrixControllers.py
 *  Example Code for using the Tetrix Servo Controller with the BrickPi

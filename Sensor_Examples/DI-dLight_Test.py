@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 '''
 *  DI-dLight_Test.py
 *  Example Code for using the Dexter Industries dLight Sensor with the BrickPi

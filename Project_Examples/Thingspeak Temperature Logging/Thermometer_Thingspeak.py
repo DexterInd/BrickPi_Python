@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # Joshwa
 # This code plots the temperature vs time graph online using thingspeak measured by a thermometer.
 # The Thermometer value is read by BrickPi mounted on RaspberryPi.

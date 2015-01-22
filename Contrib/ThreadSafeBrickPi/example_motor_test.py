@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # Test program for ThreadSafeBrickPi motors
 
 import ThreadSafeBrickPi

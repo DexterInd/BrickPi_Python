@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 '''
 *  TetrixControllers.py
 *  Library for using the Tetrix DC and Servo Controllers with the BrickPi

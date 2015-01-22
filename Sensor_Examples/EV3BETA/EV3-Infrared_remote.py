@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # BRICKPI LEGO EV3 Ultrasonic SENSOR EXAMPLE.
 ############################################
 #
@@ -19,7 +20,6 @@
 #
 # These files have been made available online through a Creative Commons Attribution-ShareAlike 3.0  license.
 # (http://creativecommons.org/licenses/by-sa/3.0/)
-
 
 def interpret_response(response_in):
 	# Check for error reading.  If it's an error reading, return 0.

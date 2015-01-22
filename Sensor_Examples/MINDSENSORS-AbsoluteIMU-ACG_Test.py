@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # MindSensors-AbsoluteIMU-ACG_Test.py
 # This code is for testing the BrickPi with an AbsoluteIMU-ACG sensor from MindSensors
 #

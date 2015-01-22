@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 ###################################################################################
 #bookreader.py
 #Takes a picture of a page of printed text, performs Optical Character Recognition (ORC) 

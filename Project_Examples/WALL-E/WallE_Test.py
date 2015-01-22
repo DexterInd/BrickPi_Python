@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # WALL-E !  
 #
 # Dexter Industries
