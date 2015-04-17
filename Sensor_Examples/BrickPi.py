@@ -136,7 +136,7 @@ TYPE_SENSOR_EV3_COLOR_M2     = 52	# Color  // Min is 0, max is 7 (brown)
 TYPE_SENSOR_EV3_COLOR_M3     = 53	# Raw reflected
 TYPE_SENSOR_EV3_COLOR_M4     = 54	# Raw Color Components
 TYPE_SENSOR_EV3_COLOR_M5     = 55	# Calibration???  Not currently implemented.
-=======
+
 TYPE_SENSOR_EV3_COLOR_M0     = 50
 TYPE_SENSOR_EV3_COLOR_M1     = 51
 TYPE_SENSOR_EV3_COLOR_M2     = 52
