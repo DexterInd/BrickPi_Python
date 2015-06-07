@@ -18,10 +18,9 @@ from BrickPi import *   #import BrickPi.py file to use BrickPi operations
 print "Trying to communicate with firmware."
 result = BrickPiSetup()  # setup the serial port for communication
 if result == 0:
-	print "PASS: Successfully connected to BrickPi."
-	print "PASS: Hardware seems to be running normally."
+	print "PASS: Serial line setup."
 elif result == -1:
-	print "FAIL:  Failed to communicate with BrickPi."
+	print "FAIL:  Failed to setup serial line."
 	print "FAIL:  Please check hardware setup and power."
 else:
 	print "FAIL:  Result is: " + str(result)
@@ -30,7 +29,9 @@ else:
 
 BrickPi.SensorType[PORT_4] = RETURN_VERSION	  # Software hack: sets a sensor as the Firmware Version
 print " "
-BrickPiSetupSensors()   #Send the properties of sensors to BrickPi
+
+sensor_setup = BrickPiSetupSensors()   #Send the properties of sensors to BrickPi
+print "Setup sensors returns: " + str(sensor_setup)
 
 print "Checking Firmware Version of BrickPi."
 result = BrickPiUpdateValues()  # Ask BrickPi to update values for sensors/motors 
