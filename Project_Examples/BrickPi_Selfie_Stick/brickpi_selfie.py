@@ -10,6 +10,8 @@
 #www.dexterindustries.com/BrickPi
 #
 #You may use this code as you wish, provided you give credit where it's due.
+# Requires the Raspberry Pi Camera to be attached and enabled.
+# The touch should be connected on Port 2.
 ###################################################################################
 import time
 from subprocess import call
