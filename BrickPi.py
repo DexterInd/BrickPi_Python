@@ -3,7 +3,7 @@
 # Karan Nayan
 # John Cole
 # Initial Date: June 24, 2013
-# Last Updated: June  9, 2014
+# Last Updated: July 16, 2015
 # http://www.dexterindustries.com/
 #
 # These files have been made available online through a Creative Commons Attribution-ShareAlike 3.0  license.
@@ -15,6 +15,9 @@
 # - The timeout parameter for BrickPiRx is in seconds expressed as a floating value
 # - Instead of Call by Reference in BrickPiRx, multiple values are returned and then copied to the main Array appropriately
 # - BrickPiStruct Variables are assigned to None and then modified to avoid appending which may lead to errors
+
+# Python 3 Setup Notes:
+# run sudo apt-get install python3-serial
 
 ##################################################################################################################
 # Debugging:
@@ -37,9 +40,15 @@
 
 # Function BrickPiRx() (background function that receives UART messages from the BrickPi) can return 0 (success), -1 (undefined error that shouldn't have happened, e.g. a filesystem error), -2 (timeout: the RPi didn't receive any UART communication from the BrickPi within the specified time), -4 (the message was too short to even contain a valid header), -5 (communication checksum error), or -6 (the number of bytes received was less than specified by the length byte).
 
-
 import time
 import serial
+import sys
+
+if sys.version_info<(3,0):
+	p_version=2
+else:
+	p_version=3
+
 ser = serial.Serial()
 ser.port='/dev/ttyAMA0'
 ser.baudrate = 500000
@@ -271,9 +280,9 @@ class button:
 
     #Show button values
     def show_val(self):
-      print "ljb","rjb","d","c","b","a","l2","r2","l1","r1","tri","cir","cro","sqr","ljx","ljy","rjx","rjy"
-      print self.ljb," ",self.rjb," ",self.d,self.c,self.b,self.a,self.l2,"",self.r2,"",self.l1,"",self.r1,"",self.tri," ",self.cir," ",self.cro," ",self.sqr," ",self.ljx," ",self.ljy," ",self.rjx," ",self.rjy
-      print ""
+      print ("ljb","rjb","d","c","b","a","l2","r2","l1","r1","tri","cir","cro","sqr","ljx","ljy","rjx","rjy")
+      print (self.ljb," ",self.rjb," ",self.d,self.c,self.b,self.a,self.l2,"",self.r2,"",self.l1,"",self.r1,"",self.tri," ",self.cir," ",self.cro," ",self.sqr," ",self.ljx," ",self.ljy," ",self.rjx," ",self.rjy)
+      print ("")
 
 
 def BrickPiChangeAddress(OldAddr, NewAddr):
@@ -332,8 +341,17 @@ def motorRotateDegree(power,deg,port,sampling_time=.1,delay_when_stopping=.05):
     for i in range(num_motor):
         BrickPi.MotorEnable[port[i]] = 1        #Enable the Motors
         power[i]=abs(power[i])
-        BrickPi.MotorSpeed[port[i]] = power[i] if deg[i]>0 else -power[i]  #For running clockwise and anticlockwise
-        init_val[i]=BrickPi.Encoder[port[i]]        #Initial reading of the encoder
+		# Updated for compatibility with Python3
+        # BrickPi.MotorSpeed[port[i]] = power[i] if deg[i]>0 else -power[i]  #For running clockwise and anticlockwise
+        # init_val[i]=BrickPi.Encoder[port[i]]        #Initial reading of the encoder
+		#For running clockwise and anticlockwise
+        if deg[i]>0:
+           BrickPi.MotorSpeed[port[i]] = power[i]
+        elif deg[i]<0:
+           BrickPi.MotorSpeed[port[i]] = -power[i]
+        else:
+           BrickPi.MotorSpeed[port[i]] = 0
+           init_val[i]=BrickPi.Encoder[port[i]]        #Initial reading of the encoder     
         final_val[i]=init_val[i]+(deg[i]*2)        #Final value when the motor has to be stopped;One encoder value counts for 0.5 degrees
     run_stat=[0]*num_motor
     while True:
@@ -348,7 +366,16 @@ def motorRotateDegree(power,deg,port,sampling_time=.1,delay_when_stopping=.05):
                     init_val[i]=BrickPi.Encoder[port[i]]
                 else:
                     run_stat[i]=1
-                    BrickPi.MotorSpeed[port[i]]=-power[i] if deg[i]>0 else power[i]  #Run the motors in reverse direction to stop instantly
+					
+					# Updated for compatibility with Python3
+                    # BrickPi.MotorSpeed[port[i]]=-power[i] if deg[i]>0 else power[i]  #Run the motors in reverse direction to stop instantly
+					
+                    if deg[i]>0:
+                        BrickPi.MotorSpeed[port[i]] = -power[i]
+                    elif deg[i]<0:
+                        BrickPi.MotorSpeed[port[i]] = power[i]
+                    else:
+                        BrickPi.MotorSpeed[port[i]] = 0            
                     BrickPiUpdateValues()
                     time.sleep(delay_when_stopping)
                     BrickPi.MotorEnable[port[i]] = 0
@@ -364,7 +391,11 @@ def GetBits( byte_offset, bit_offset, bits):
     i = bits
     while i:
         result *= 2
-        result |= ((Array[(byte_offset + ((bit_offset + Bit_Offset + (i-1)) / 8))] >> ((bit_offset + Bit_Offset + (i-1)) % 8)) & 0x01)
+		
+        if p_version==2:
+            result |= ((Array[(byte_offset + ((bit_offset + Bit_Offset + (i-1)) / 8))] >> ((bit_offset + Bit_Offset + (i-1)) % 8)) & 0x01)
+        else:
+            result |= ((Array[int((byte_offset + ((bit_offset + Bit_Offset + (i-1)) / 8)))] >> ((bit_offset + Bit_Offset + (i-1)) % 8)) & 0x01)
         i -= 1
     Bit_Offset += bits
     return result
@@ -381,8 +412,13 @@ def BitsNeeded(value):
 def AddBits(byte_offset, bit_offset, bits, value):
     global Bit_Offset
     for i in range(bits):
-        if(value & 0x01):
-            Array[(byte_offset + ((bit_offset + Bit_Offset + i)/ 8))] |= (0x01 << ((bit_offset + Bit_Offset + i) % 8));
+        if p_version==2:
+            if(value & 0x01):
+                Array[(byte_offset + ((bit_offset + Bit_Offset + i)/ 8))] |= (0x01 << ((bit_offset + Bit_Offset + i) % 8));
+        else:
+            if(int(value) & 0x01):
+                # Python3 Change: Cast to integer type right after "Array["
+                Array[int((byte_offset + ((bit_offset + Bit_Offset + i)/ 8)))] |= (0x01 << ((bit_offset + Bit_Offset + i) % 8));
         value /=2
     Bit_Offset += bits
 
@@ -503,8 +539,10 @@ def BrickPiUpdateValues():
                             AddBits(1,0,8, BrickPi.SensorI2COut[port][device][out_byte])
                     device += 1
 
-
-        tx_bytes = (((Bit_Offset + 7) / 8 ) + 1) #eq to UART_TX_BYTES
+        if p_version==2:
+            tx_bytes = (((Bit_Offset + 7) / 8 ) + 1) #eq to UART_TX_BYTES
+        else:
+            tx_bytes = int(((Bit_Offset + 7) / 8 ) + 1) #eq to UART_TX_BYTES
         BrickPiTx(BrickPi.Address[i], tx_bytes, Array)
 
         result, BytesReceived, InArray = BrickPiRx(0.007500) #check timeout
@@ -518,7 +556,7 @@ def BrickPiUpdateValues():
         if (result or (Array[BYTE_MSG_TYPE] != MSG_TYPE_VALUES)):
             if 'DEBUG' in globals():
                 if DEBUG == 1:
-                    print "BrickPiRx Error :", result
+                    print ("BrickPiRx Error :", result)
 
             if Retried < 2 :
                 ret = True
@@ -528,7 +566,7 @@ def BrickPiUpdateValues():
             else:
                 if 'DEBUG' in globals():
                     if DEBUG == 1:
-                        print "Retry Failed"
+                        print ("Retry Failed")
                 return -1
 
 
@@ -582,8 +620,8 @@ def BrickPiUpdateValues():
           		###############################################################################################################################################
                 # print "Raw returned: "+str(BrickPi.Sensor[port])
                 if 'DEBUG' in globals():
-					if BrickPi.Sensor[port] > 4278190080:
-						print "IR SENSOR RETURNED ERROR"
+                    if BrickPi.Sensor[port] > 4278190080:
+                        print ("IR SENSOR RETURNED ERROR")
             elif BrickPi.SensorType[port] in range(TYPE_SENSOR_EV3_US_M0,TYPE_SENSOR_EV3_INFRARED_M5+1):
                 BrickPi.Sensor[port] = GetBits(1,0,16)
             else:   #For all the light, color and raw sensors
@@ -600,15 +638,15 @@ def BrickPiUpdateValues():
 			#######################
 			# EV3 Gyro Mode 0, Adjust sign
             if BrickPi.SensorType[port] == TYPE_SENSOR_EV3_GYRO_M0 :
-				if BrickPi.Sensor[port] >= 32767:		# Negative number.  This seems to return a 2 byte number.
-					BrickPi.Sensor[port] = BrickPi.Sensor[port] - 65535
+                if BrickPi.Sensor[port] >= 32767:		# Negative number.  This seems to return a 2 byte number.
+                    BrickPi.Sensor[port] = BrickPi.Sensor[port] - 65535
 				# else:					# Positive Number print str(gyro)
 			#######################
 			# EV3 Gyro Mode 1, Adjust sign
             elif BrickPi.SensorType[port] == TYPE_SENSOR_EV3_GYRO_M1 :
-				# print "Gyro m1!"
-				if BrickPi.Sensor[port] >= 32767:		# Negative number.  This seems to return a 2 byte number.
-					BrickPi.Sensor[port] = BrickPi.Sensor[port] - 65535
+                # print "Gyro m1!"
+                if BrickPi.Sensor[port] >= 32767:		# Negative number.  This seems to return a 2 byte number.
+                    BrickPi.Sensor[port] = BrickPi.Sensor[port] - 65535
 				# else:					# Positive Number print str(gyro)
 
             # print BrickPi.SensorType[port]
@@ -626,13 +664,28 @@ def BrickPiSetup():
 
 
 def BrickPiTx(dest, ByteCount, OutArray):
-    tx_buffer = ''
-    tx_buffer+=chr(dest)
-    tx_buffer+=chr((dest+ByteCount+sum(OutArray[:ByteCount]))%256)
-    tx_buffer+=chr(ByteCount)
-    for i in OutArray[:ByteCount]:
-        tx_buffer+=chr(i)
-    ser.write(tx_buffer)
+    if p_version==2:
+        # print ('a',p_version)
+        tx_buffer = ''
+        tx_buffer+=chr(dest)
+        tx_buffer+=chr((dest+ByteCount+sum(OutArray[:ByteCount]))%256)
+        tx_buffer+=chr(ByteCount)
+        for i in OutArray[:ByteCount]:
+            tx_buffer+=chr(i)
+        ser.write(tx_buffer)
+    else:
+        # print (p_version,'b')
+        intByteCount = int(ByteCount)
+        tx_buffer = ''
+        tx_buffer+=chr(dest)
+        tx_buffer+=chr((dest+intByteCount+sum(OutArray[:intByteCount]))%256)
+        tx_buffer+=chr(intByteCount)
+        
+        for i in OutArray[:intByteCount]:
+            tx_buffer+=chr(i)
+        
+        byte_tx_buffer = bytes(tx_buffer, 'iso-8859-1')
+        ser.write(byte_tx_buffer)	
 
 
 def BrickPiRx(timeout):
@@ -647,13 +700,33 @@ def BrickPiRx(timeout):
     if not ser.isOpen():
         return -1, 0 , []
 
-    try:
-        while ser.inWaiting():
-            rx_buffer += ( ser.read(ser.inWaiting()) )
-            #time.sleep(.000075)
-    except:
-        return -1, 0 , []
+    if p_version==2:
+        try:
+            while ser.inWaiting():
+                rx_buffer += ( ser.read(ser.inWaiting()) )
+				#time.sleep(.000075)
+        except:
+            print ("Unexpected error: ", sys.exc_info()[0])
+            return -1, 0 , []
+    else:
+        buff_in = 0
+        try:
+            while ser.inWaiting():
+                buff_in = ser.inWaiting()
+                buff_read = bytes((ser.read(buff_in)))
+                string_in = ''
+                for i in buff_read:
+                    # print(chr(i))
+                    string_in+=chr(i)
 
+                rx_buffer += (string_in)
+        except:
+            # print ("Unexpected error: ", sys.exc_info()[0])
+            return -1, 0 , []
+
+		# print("Buffer: " + rx_buffer)
+		# print("Buffer Type: " + str(type(rx_buffer)))
+    
     RxBytes=len(rx_buffer)
 
     if RxBytes < 2 :
