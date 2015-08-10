@@ -37,10 +37,10 @@ def thermometer():
                                 i = 3		
                         temp =  1.0 / (_a[i] + (_b[i] * lnRtRt25) + (_c[i] * lnRtRt25 * lnRtRt25) + (_d[i] * lnRtRt25 * lnRtRt25 * lnRtRt25))
                         temp-=273                               
-	                    params = urllib.urlencode({'field1': temp, 'key':'N71BQXDNFTABINT7'})     # use your API key generated in the thingspeak channels for the value of 'key'
-					    # temp is the data you will be sending to the thingspeak channel for plotting the graph. You can add more than one channel and plot more graphs
-                  	    headers = {"Content-typZZe": "application/x-www-form-urlencoded","Accept": "text/plain"}
-                 	    conn = httplib.HTTPConnection("api.thingspeak.com:80")                
+                        params = urllib.urlencode({'field1': temp, 'key':'N71BQXDNFTABINT7'})     # use your API key generated in the thingspeak channels for the value of 'key'
+                        # temp is the data you will be sending to the thingspeak channel for plotting the graph. You can add more than one channel and plot more graphs
+                        headers = {"Content-typZZe": "application/x-www-form-urlencoded","Accept": "text/plain"}
+                        conn = httplib.HTTPConnection("api.thingspeak.com:80")                
                         try:
                                 conn.request("POST", "/update", params, headers)
                                 response = conn.getresponse()
