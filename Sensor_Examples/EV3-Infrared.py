@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # BRICKPI LEGO EV3 Ultrasonic SENSOR EXAMPLE.
 ############################################
-#
-# NOTE: This program is in BETA now
 # 
 # This example will show you how to use the LEGO EV3 Ultrasonic sensor with the BrickPi.  
 # Note you must have the latest firmware installed on the BrickPi or this example to work.  
@@ -15,7 +13,8 @@
 ##
 #
 # Original Author: John
-# Initial Date: June 13, 2014
+# Initial Date: 	Jun 13, 2014
+# Updated:			Aug 19, 2015
 # http://www.dexterindustries.com/BrickPi
 #
 # These files have been made available online through a Creative Commons Attribution-ShareAlike 3.0  license.

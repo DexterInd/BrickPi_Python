@@ -2,15 +2,14 @@
 # BRICKPI LEGO EV3 TOUCH SENSOR
 ############################################
 #
-# NOTE: This program is in BETA now
-# 
 # This example will show you how to use the LEGO EV3 Touch sensor with the BrickPi.  
 ##
 # This program uses the touch sensor.  The analog values of the 6th line are read (SDA/Blue Line) and then filtered.
 ##
 #
 # Original Author: John
-# Initial Date: June 18, 2014
+# Initial Date: 	June 18, 2014
+# Updated: 			Aug 19, 2015
 # http://www.dexterindustries.com/BrickPi
 #
 # These files have been made available online through a Creative Commons Attribution-ShareAlike 3.0  license.

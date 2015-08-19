@@ -2,8 +2,6 @@
 # BRICKPI LEGO EV3 Color SENSOR EXAMPLE.
 ############################################
 #
-# NOTE: This program is in BETA now
-#
 # This example will show you how to use the LEGO EV3 Gyro sensor with the BrickPi.  
 # Note you must have the latest firmware installed on the BrickPi or this example to work.  
 # Gyro sensor is attached to Port 4.

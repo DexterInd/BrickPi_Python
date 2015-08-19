@@ -6,8 +6,7 @@
 # When the touch sensor is pressed, the output should read "1"
 #
 # Original Author: Jaikrishna
-# Initial Date: June 24, 2013
-# Last Updated: June 24, 2013
+# Initial Date: Aug 19, 2015
 # http://www.dexterindustries.com/BrickPi
 #
 # These files have been made available online through a Creative Commons Attribution-ShareAlike 3.0  license.
