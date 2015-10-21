@@ -43,7 +43,12 @@
 import time
 import serial
 import sys
+import ir_receiver_check
 
+if ir_receiver_check.check_ir():
+	print "Disable IR receiver before continuing"
+	exit() 
+	
 if sys.version_info<(3,0):
 	p_version=2
 else:
