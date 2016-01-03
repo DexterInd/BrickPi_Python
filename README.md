@@ -14,7 +14,7 @@ First, open a terminal program on the Raspberry Pi, and change directories to th
 
 Once there, we'll install python setuptools, and then install the BrickPi Python module:
 
-	sudo apt-get install python-setuptools
+    sudo apt-get install python-setuptools python-dev build-essential
     sudo python setup.py install
 
 This will install the `BrickPi` module globally.  To use the module in your own
