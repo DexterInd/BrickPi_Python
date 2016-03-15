@@ -14,6 +14,7 @@
 #
 # Original Author: John
 # Initial Date: Aug 19, 2015
+# Updated: Mar 3, 2015
 # http://www.dexterindustries.com/BrickPi
 #
 
@@ -21,14 +22,14 @@ from BrickPi import *   								#import BrickPi.py file to use BrickPi operation
 BrickPiSetup()  										# setup the serial port for communication
 ############################################
 # !  Set the sensor type on the line below.  
-BrickPi.SensorType[PORT_1] = TYPE_SENSOR_TOUCH   		#Set the type of sensor at PORT_1
-BrickPi.SensorType[PORT_2] = TYPE_SENSOR_EV3_TOUCH_0  	#Set the type of sensor at PORT_4.  M0 is proximity, 0 to 100. 
+BrickPi.SensorType[PORT_1] = TYPE_SENSOR_TOUCH   	#Set the type of sensor at PORT_1.  NXT Touch Sensor.
+BrickPi.SensorType[PORT_2] = TYPE_SENSOR_EV3_TOUCH_0  	#Set the type of sensor at PORT_2.  EV3 Touch sensor.
 BrickPi.MotorEnable[PORT_A] = 1 #Enable the Motor A
 BrickPi.MotorEnable[PORT_B] = 1 #Enable the Motor B
 BrickPi.MotorEnable[PORT_C] = 1 #Enable the Motor A
 BrickPi.MotorEnable[PORT_D] = 1 #Enable the Motor B
 
-BrickPiSetupSensors()   									#Send the properties of sensors to BrickPi.  Set up the BrickPi.
+BrickPiSetupSensors()   				#Send the properties of sensors to BrickPi.  Set up the BrickPi.
 # There's often a long wait for setup with the EV3 sensors.  Up to 5 seconds.
 
 def run_forward():
