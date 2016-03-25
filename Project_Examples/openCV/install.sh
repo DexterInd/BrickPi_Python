@@ -1,18 +1,14 @@
 #! /bin/bash
 
+# for Raspberry Pi 1 B+ and older Noob java 1.7 is installed, change the JAVA_HOME
+# export JAVA_HOME=/usr/lib/jvm/jdk-7-oracle-armhf
+export JAVA_HOME=/usr/lib/jvm/jdk-8-oracle-arm-vfp-hflt
 
-sudo apt-get install build-essential
-sudo apt-get install python-dev python-numpy
-sudo apt-get install libavcodec-dev libavformat-dev libswscale-dev
-sudo apt-get install libjpeg-dev libpng-dev libtiff-dev libjasper-dev
-sudo apt-get install python-scipy python-matplotlib libgtk2.0-dev
-
-sudo wget http://sourceforge.net/projects/opencvlibrary/files/opencv-unix/2.4.10/opencv-2.4.10.zip
-sudo unzip opencv*
-sudo cd opencv*
-sudo mkdir release
-cd release
-cmake -D CMAKE_BUILD_TYPE=RELEASE -D WITH_OPENCL=OFF -D BUILD_PERF_TESTS=OFF -D CMAKE_INSTALL_PREFIX=/usr/local ..
-sudo make
-sudo make install
-
+sudo apt-get -y install build-essential
+sudo apt-get -y install python-dev python-numpy
+sudo apt-get -y install libavcodec-dev libavformat-dev libswscale-dev
+sudo apt-get -y install libjpeg-dev libpng-dev libtiff-dev libjasper-dev
+sudo apt-get -y install python-scipy python-matplotlib libgtk2.0-dev
+sudo apt-get -y install cmake
+sudo apt-get -y install ant
+sudo apt-get -y install opencv2* 
