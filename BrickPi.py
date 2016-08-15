@@ -46,13 +46,13 @@ import sys
 import ir_receiver_check
 
 if ir_receiver_check.check_ir():
-	print "Disable IR receiver before continuing"
-	exit() 
-	
+    print ("Disable IR receiver before continuing")
+    exit() 
+    
 if sys.version_info<(3,0):
-	p_version=2
+    p_version=2
 else:
-	p_version=3
+    p_version=3
 
 ser = serial.Serial()
 ser.port='/dev/ttyAMA0'
@@ -136,20 +136,20 @@ TYPE_SENSOR_I2C_9V           = 42
 
 # Mode information for EV3 is here: https://github.com/mindboards/ev3dev/wiki/LEGO-EV3-Ultrasonic-Sensor-%2845504%29
 
-TYPE_SENSOR_EV3_US_M0        = 43	# Continuous measurement, distance, cm
-TYPE_SENSOR_EV3_US_M1        = 44	# Continuous measurement, distance, in
-TYPE_SENSOR_EV3_US_M2        = 45	# Listen // 0 r 1 depending on presence of another US sensor.
+TYPE_SENSOR_EV3_US_M0        = 43   # Continuous measurement, distance, cm
+TYPE_SENSOR_EV3_US_M1        = 44   # Continuous measurement, distance, in
+TYPE_SENSOR_EV3_US_M2        = 45   # Listen // 0 r 1 depending on presence of another US sensor.
 TYPE_SENSOR_EV3_US_M3        = 46
 TYPE_SENSOR_EV3_US_M4        = 47
 TYPE_SENSOR_EV3_US_M5        = 48
 TYPE_SENSOR_EV3_US_M6        = 49
 
-TYPE_SENSOR_EV3_COLOR_M0     = 50	# Reflected
-TYPE_SENSOR_EV3_COLOR_M1     = 51	# Ambient
-TYPE_SENSOR_EV3_COLOR_M2     = 52	# Color  // Min is 0, max is 7 (brown)
-TYPE_SENSOR_EV3_COLOR_M3     = 53	# Raw reflected
-TYPE_SENSOR_EV3_COLOR_M4     = 54	# Raw Color Components
-TYPE_SENSOR_EV3_COLOR_M5     = 55	# Calibration???  Not currently implemented.
+TYPE_SENSOR_EV3_COLOR_M0     = 50   # Reflected
+TYPE_SENSOR_EV3_COLOR_M1     = 51   # Ambient
+TYPE_SENSOR_EV3_COLOR_M2     = 52   # Color  // Min is 0, max is 7 (brown)
+TYPE_SENSOR_EV3_COLOR_M3     = 53   # Raw reflected
+TYPE_SENSOR_EV3_COLOR_M4     = 54   # Raw Color Components
+TYPE_SENSOR_EV3_COLOR_M5     = 55   # Calibration???  Not currently implemented.
 
 TYPE_SENSOR_EV3_COLOR_M0     = 50
 TYPE_SENSOR_EV3_COLOR_M1     = 51
@@ -159,16 +159,16 @@ TYPE_SENSOR_EV3_COLOR_M4     = 54
 TYPE_SENSOR_EV3_COLOR_M5     = 55
 
 
-TYPE_SENSOR_EV3_GYRO_M0      = 56	# Angle
-TYPE_SENSOR_EV3_GYRO_M1      = 57	# Rotational Speed
-TYPE_SENSOR_EV3_GYRO_M2      = 58	# Raw sensor value ???
-TYPE_SENSOR_EV3_GYRO_M3      = 59	# Angle and Rotational Speed?
-TYPE_SENSOR_EV3_GYRO_M4      = 60 	# Calibration ???
+TYPE_SENSOR_EV3_GYRO_M0      = 56   # Angle
+TYPE_SENSOR_EV3_GYRO_M1      = 57   # Rotational Speed
+TYPE_SENSOR_EV3_GYRO_M2      = 58   # Raw sensor value ???
+TYPE_SENSOR_EV3_GYRO_M3      = 59   # Angle and Rotational Speed?
+TYPE_SENSOR_EV3_GYRO_M4      = 60   # Calibration ???
 
 # Mode information is here:  https://github.com/mindboards/ev3dev/wiki/LEGO-EV3-Infrared-Sensor-%2845509%29
-TYPE_SENSOR_EV3_INFRARED_M0   = 61	# Proximity, 0 to 100
-TYPE_SENSOR_EV3_INFRARED_M1   = 62	# IR Seek, -25 (far left) to 25 (far right)
-TYPE_SENSOR_EV3_INFRARED_M2   = 63	# IR Remote Control, 0 - 11
+TYPE_SENSOR_EV3_INFRARED_M0   = 61  # Proximity, 0 to 100
+TYPE_SENSOR_EV3_INFRARED_M1   = 62  # IR Seek, -25 (far left) to 25 (far right)
+TYPE_SENSOR_EV3_INFRARED_M2   = 63  # IR Remote Control, 0 - 11
 TYPE_SENSOR_EV3_INFRARED_M3   = 64
 TYPE_SENSOR_EV3_INFRARED_M4   = 65
 TYPE_SENSOR_EV3_INFRARED_M5   = 66
@@ -180,12 +180,12 @@ TYPE_SENSOR_EV3_INFRARED_M3  = 64
 TYPE_SENSOR_EV3_INFRARED_M4  = 65
 TYPE_SENSOR_EV3_INFRARED_M5  = 66
 
-TYPE_SENSOR_EV3_TOUCH_0		 = 67
+TYPE_SENSOR_EV3_TOUCH_0      = 67
 
-TYPE_SENSOR_EV3_TOUCH_DEBOUNCE= 68	# EV3 Touch sensor, debounced.
-TYPE_SENSOR_TOUCH_DEBOUNCE	  = 69	# NXT Touch sensor, debounced.
+TYPE_SENSOR_EV3_TOUCH_DEBOUNCE= 68  # EV3 Touch sensor, debounced.
+TYPE_SENSOR_TOUCH_DEBOUNCE    = 69  # NXT Touch sensor, debounced.
 
-RETURN_VERSION	       		  = 70	# Returns firmware version.
+RETURN_VERSION                = 70  # Returns firmware version.
 
 
 BIT_I2C_MID  = 0x01  # Do one of those funny clock pulses between writing and reading. defined for each device.
@@ -328,7 +328,7 @@ def motorRotateDegree(power,deg,port,sampling_time=.1,delay_when_stopping=.05):
       deg    : an array of the angle's (in degrees) by which to rotate each of the motor
       port    : an array of the port's on which the motor is connected
       sampling_time  : (optional) the rate(in seconds) at which to read the data in the encoders
-	  delay_when_stopping:	(optional) the delay (in seconds) for which the motors are run in the opposite direction before stopping
+      delay_when_stopping:  (optional) the delay (in seconds) for which the motors are run in the opposite direction before stopping
 
     Returns:
       0 on success
@@ -346,10 +346,10 @@ def motorRotateDegree(power,deg,port,sampling_time=.1,delay_when_stopping=.05):
     for i in range(num_motor):
         BrickPi.MotorEnable[port[i]] = 1        #Enable the Motors
         power[i]=abs(power[i])
-		# Updated for compatibility with Python3
+        # Updated for compatibility with Python3
         # BrickPi.MotorSpeed[port[i]] = power[i] if deg[i]>0 else -power[i]  #For running clockwise and anticlockwise
         # init_val[i]=BrickPi.Encoder[port[i]]        #Initial reading of the encoder
-		#For running clockwise and anticlockwise
+        #For running clockwise and anticlockwise
         if deg[i]>0:
            BrickPi.MotorSpeed[port[i]] = power[i]
         elif deg[i]<0:
@@ -371,10 +371,10 @@ def motorRotateDegree(power,deg,port,sampling_time=.1,delay_when_stopping=.05):
                     init_val[i]=BrickPi.Encoder[port[i]]
                 else:
                     run_stat[i]=1
-					
-					# Updated for compatibility with Python3
+                    
+                    # Updated for compatibility with Python3
                     # BrickPi.MotorSpeed[port[i]]=-power[i] if deg[i]>0 else power[i]  #Run the motors in reverse direction to stop instantly
-					
+                    
                     if deg[i]>0:
                         BrickPi.MotorSpeed[port[i]] = -power[i]
                     elif deg[i]<0:
@@ -396,7 +396,7 @@ def GetBits( byte_offset, bit_offset, bits):
     i = bits
     while i:
         result *= 2
-		
+        
         if p_version==2:
             result |= ((Array[(byte_offset + ((bit_offset + Bit_Offset + (i-1)) / 8))] >> ((bit_offset + Bit_Offset + (i-1)) % 8)) & 0x01)
         else:
@@ -440,7 +440,7 @@ def BrickPiSetupSensors():
         Array[BYTE_SENSOR_2_TYPE] = BrickPi.SensorType[PORT_2 + i*2 ]
         for ii in range(2):
             port = i*2 + ii
-	    #Jan's US fix###########
+        #Jan's US fix###########
             if(Array[BYTE_SENSOR_1_TYPE + ii] == TYPE_SENSOR_ULTRASONIC_CONT):
                 Array[BYTE_SENSOR_1_TYPE + ii] = TYPE_SENSOR_I2C
                 BrickPi.SensorI2CSpeed[port] = US_I2C_SPEED
@@ -450,7 +450,7 @@ def BrickPiSetupSensors():
                 BrickPi.SensorI2CWrite [port][US_I2C_IDX]    = 1
                 BrickPi.SensorI2CRead  [port][US_I2C_IDX]    = 1
                 BrickPi.SensorI2COut   [port][US_I2C_IDX][0] = LEGO_US_I2C_DATA_REG
-		########################
+        ########################
             if(Array[BYTE_SENSOR_1_TYPE + ii] == TYPE_SENSOR_I2C or Array[BYTE_SENSOR_1_TYPE + ii] == TYPE_SENSOR_I2C_9V ):
                 AddBits(3,0,8,BrickPi.SensorI2CSpeed[port])
 
@@ -532,10 +532,10 @@ def BrickPiUpdateValues():
         for ii in range(2):
             port =  (i * 2) + ii
             #if(BrickPi.SensorType[port] == TYPE_SENSOR_I2C or BrickPi.SensorType[port] == TYPE_SENSOR_I2C_9V):
-			#Jan's US Fix##########
+            #Jan's US Fix##########
             #old# if(BrickPi.SensorType[port] == TYPE_SENSOR_I2C or BrickPi.SensorType[port] == TYPE_SENSOR_I2C_9V):
             if(BrickPi.SensorType[port] == TYPE_SENSOR_I2C or BrickPi.SensorType[port] == TYPE_SENSOR_I2C_9V or BrickPi.SensorType[port] == TYPE_SENSOR_ULTRASONIC_CONT):
-			#######################
+            #######################
                 for device in range(BrickPi.SensorI2CDevices[port]):
                     if not (BrickPi.SensorSettings[port][device] & BIT_I2C_SAME):
                         AddBits(1,0,4, BrickPi.SensorI2CWrite[port][device])
@@ -597,10 +597,10 @@ def BrickPiUpdateValues():
             if BrickPi.SensorType[port] == TYPE_SENSOR_TOUCH :
                 BrickPi.Sensor[port] = GetBits(1,0,1)
             #elif BrickPi.SensorType[port] == TYPE_SENSOR_ULTRASONIC_CONT or BrickPi.SensorType[port] == TYPE_SENSOR_ULTRASONIC_SS :
-			#Jan's US fix##########
-				#old# elif BrickPi.SensorType[port] == TYPE_SENSOR_ULTRASONIC_CONT or BrickPi.SensorType[port] == TYPE_SENSOR_ULTRASONIC_SS :
+            #Jan's US fix##########
+                #old# elif BrickPi.SensorType[port] == TYPE_SENSOR_ULTRASONIC_CONT or BrickPi.SensorType[port] == TYPE_SENSOR_ULTRASONIC_SS :
             elif BrickPi.SensorType[port] == TYPE_SENSOR_ULTRASONIC_SS :
-			#######################
+            #######################
                 BrickPi.Sensor[port] = GetBits(1,0,8)
             elif BrickPi.SensorType[port] == TYPE_SENSOR_COLOR_FULL:
                 BrickPi.Sensor[port] = GetBits(1,0,3)
@@ -609,7 +609,7 @@ def BrickPiUpdateValues():
                 BrickPi.SensorArray[port][INDEX_GREEN] = GetBits(1,0,10)
                 BrickPi.SensorArray[port][INDEX_BLUE] = GetBits(1,0,10)
             #elif BrickPi.SensorType[port] == TYPE_SENSOR_I2C or BrickPi.SensorType[port] == TYPE_SENSOR_I2C_9V :
-			#Jan's US fix##########
+            #Jan's US fix##########
             #old# elif BrickPi.SensorType[port] == TYPE_SENSOR_I2C or BrickPi.SensorType[port] == TYPE_SENSOR_I2C_9V :
             elif BrickPi.SensorType[port] == TYPE_SENSOR_I2C or BrickPi.SensorType[port] == TYPE_SENSOR_I2C_9V or BrickPi.SensorType[port] == TYPE_SENSOR_ULTRASONIC_CONT:
             #######################
@@ -622,7 +622,7 @@ def BrickPiUpdateValues():
                 BrickPi.Sensor[port] = GetBits(1,0,32)
             elif BrickPi.SensorType[port] in [ TYPE_SENSOR_EV3_INFRARED_M2 ]:
                 BrickPi.Sensor[port] = GetBits(1,0,32)
-          		###############################################################################################################################################
+                ###############################################################################################################################################
                 # print "Raw returned: "+str(BrickPi.Sensor[port])
                 if 'DEBUG' in globals():
                     if BrickPi.Sensor[port] > 4278190080:
@@ -638,21 +638,21 @@ def BrickPiUpdateValues():
                     BrickPi.Sensor[port] = BrickPi.SensorI2CIn[port][US_I2C_IDX][0]
                 else:
                     BrickPi.Sensor[port] = -1
-			#######################
+            #######################
 
-			#######################
-			# EV3 Gyro Mode 0, Adjust sign
+            #######################
+            # EV3 Gyro Mode 0, Adjust sign
             if BrickPi.SensorType[port] == TYPE_SENSOR_EV3_GYRO_M0 :
-                if BrickPi.Sensor[port] >= 32767:		# Negative number.  This seems to return a 2 byte number.
+                if BrickPi.Sensor[port] >= 32767:       # Negative number.  This seems to return a 2 byte number.
                     BrickPi.Sensor[port] = BrickPi.Sensor[port] - 65535
-				# else:					# Positive Number print str(gyro)
-			#######################
-			# EV3 Gyro Mode 1, Adjust sign
+                # else:                 # Positive Number print str(gyro)
+            #######################
+            # EV3 Gyro Mode 1, Adjust sign
             elif BrickPi.SensorType[port] == TYPE_SENSOR_EV3_GYRO_M1 :
                 # print "Gyro m1!"
-                if BrickPi.Sensor[port] >= 32767:		# Negative number.  This seems to return a 2 byte number.
+                if BrickPi.Sensor[port] >= 32767:       # Negative number.  This seems to return a 2 byte number.
                     BrickPi.Sensor[port] = BrickPi.Sensor[port] - 65535
-				# else:					# Positive Number print str(gyro)
+                # else:                 # Positive Number print str(gyro)
 
             # print BrickPi.SensorType[port]
         i += 1
@@ -690,7 +690,7 @@ def BrickPiTx(dest, ByteCount, OutArray):
             tx_buffer+=chr(i)
         
         byte_tx_buffer = bytes(tx_buffer, 'iso-8859-1')
-        ser.write(byte_tx_buffer)	
+        ser.write(byte_tx_buffer)   
 
 
 def BrickPiRx(timeout):
@@ -709,7 +709,7 @@ def BrickPiRx(timeout):
         try:
             while ser.inWaiting():
                 rx_buffer += ( ser.read(ser.inWaiting()) )
-				#time.sleep(.000075)
+                #time.sleep(.000075)
         except:
             print ("Unexpected error: ", sys.exc_info()[0])
             return -1, 0 , []
@@ -729,8 +729,8 @@ def BrickPiRx(timeout):
             # print ("Unexpected error: ", sys.exc_info()[0])
             return -1, 0 , []
 
-		# print("Buffer: " + rx_buffer)
-		# print("Buffer Type: " + str(type(rx_buffer)))
+        # print("Buffer: " + rx_buffer)
+        # print("Buffer Type: " + str(type(rx_buffer)))
     
     RxBytes=len(rx_buffer)
 
