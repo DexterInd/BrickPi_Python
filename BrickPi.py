@@ -753,4 +753,3 @@ def BrickPiRx(timeout):
     InBytes = RxBytes - 2
 
     return 0, InBytes, InArray
-
