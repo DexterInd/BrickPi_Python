@@ -754,5 +754,3 @@ def BrickPiRx(timeout):
 
     return 0, InBytes, InArray
 
-test = 150
-print ("BrickPi Test".format(test))
