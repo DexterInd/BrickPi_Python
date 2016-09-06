@@ -33,7 +33,7 @@ BrickPiSetupSensors()   				#Send the properties of sensors to BrickPi.  Set up 
 # There's often a long wait for setup with the EV3 sensors.  Up to 5 seconds.
 
 def run_forward():
-    print "Running Forward"
+    print("Running Forward")
     power = 200
     BrickPi.MotorSpeed[PORT_A] = power  #Set the speed of MotorA (-255 to 255)
     BrickPi.MotorSpeed[PORT_B] = power  #Set the speed of MotorB (-255 to 255)
@@ -51,7 +51,7 @@ while True:
 	if not result :
 		button_value = BrickPi.Sensor[PORT_2]
 		if button_value > 1000:
-			print "Button reads: "+str(button_value)		
+			print( "Button reads: {}".format(button_value))		
 			run_forward()
 	else:
 		time.sleep(0.01)

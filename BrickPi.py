@@ -753,3 +753,6 @@ def BrickPiRx(timeout):
     InBytes = RxBytes - 2
 
     return 0, InBytes, InArray
+
+test = 150
+print ("BrickPi Test".format(test))
