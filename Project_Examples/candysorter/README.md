@@ -5,7 +5,7 @@ In this tutorial, we're going to build a machine to sort your Halloween candy, u
 
 Pile of candy too big this year?  Need to sort the junk from the gold?  Have a certain candy you hate?  Fear not, the BrickPi Candy Sorter is here to help!  In this tutorial we'll harness the powerful Google Cloud Vision, the BrickPi, the Raspberry Pi, the Pi Camera, and a pile of LEGO's to build a machine to fine what you want (and don't want) automatically!  After you run the BrickPi Candy Sorter, you'll have a pile of candy you want, and the junk you can give your little brother.
 
-![Controlling the GoPiGo robot with a mobile phone](https://raw.githubusercontent.com/DexterInd/GoPiGo/master/Software/Python/Examples/Browser%20Streaming%20Robot/Raspberry_Pi_Camera_controlled-by-mobile-browser.jpg "Streaming video from your Raspberry Pi Robot to your mobile phone.")
+![Controlling the GoPiGo robot with a mobile phone](https://github.com/DexterInd/BrickPi_Python/raw/master/Project_Examples/candysorter/Overview-BrickPi-Candy-Sorter.jpg "Overview of a Candy Sorting Robot Using Google Cloud Vision, the Raspberry Pi, and the BrickPi..")
 
 ### Learn More
 
