@@ -21,10 +21,11 @@
 # Karan	     	Oct  16, 2013	Initial Authoring
 # Shoban        Oct  28, 2016   Added comments to describe the connections
 #
+# Connect the dLight Sensor to Sensor port S1.
+#
 # You can learn more about BrickPi here:  http://www.dexterindustries.com/BrickPi
 # Have a question about this example?  Ask on the forums here:  http://forum.dexterindustries.com/c/brickpi
-#
-# Connect the dLight Sensor to Sensor port S1.
+
 
 from BrickPi import *
 import sys
