@@ -2,14 +2,17 @@
 # coding: utf-8
 # Jaikrishna, John
 # Initial Date: June 24, 2013
-# Last Updated: May 30, 2014
+# Last Updated: October 28, 2016 Shoban
 #
 # These files have been made available online through a Creative Commons Attribution-ShareAlike 3.0  license.
 # (http://creativecommons.org/licenses/by-sa/3.0/)
 #
-# http://www.dexterindustries.com/
-# This code is for testing the BrickPi with the Compass from Dexter Industries
 # Product webpage: http://www.dexterindustries.com/dCompass.html
+# This code is for testing the BrickPi with the Compass from Dexter Industries
+# Connect the dCompass Sensor to Sensor port S3.
+#
+# You can learn more about BrickPi here:  http://www.dexterindustries.com/BrickPi
+# Have a question about this example?  Ask on the forums here:  http://forum.dexterindustries.com/c/brickpi
 
 from BrickPi import *   #import BrickPi.py file to use BrickPi operations
 import math

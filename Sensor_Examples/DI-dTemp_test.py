@@ -1,14 +1,19 @@
 #!/usr/bin/env python
 # Jaikrishna
 # Initial Date: June 24, 2013
-# Last Updated: June 24, 2013
+# Last Updated: Oct  28, 2016 Shoban
 #
 # These files have been made available online through a Creative Commons Attribution-ShareAlike 3.0  license.
 # (http://creativecommons.org/licenses/by-sa/3.0/)
 #
-# http://www.dexterindustries.com/
-# This code is for testing the BrickPi with a Temperature sensor from Dexter Industries
 # Product webpage: http://www.dexterindustries.com/Products-Thermometer.html
+# This code is for testing the BrickPi with a Temperature sensor from Dexter Industries
+# Connect the dTemperature Sensor to Sensor port S3.
+#
+# You can learn more about BrickPi here:  http://www.dexterindustries.com/BrickPi
+# Have a question about this example?  Ask on the forums here:  http://forum.dexterindustries.com/c/brickpi
+
+
 
 from BrickPi import *   #import BrickPi.py file to use BrickPi operations
 import math

@@ -22,6 +22,9 @@
 # Product webpage: http://www.mindsensors.com/index.php?module=pagemaster&PAGE_user_op=view_page&PAGE_id=158
 # The information about I2C registers and commands are taken from the AbsoluteIMU-User-Guide.pdf and the
 # IMU-lib.nxc file.
+#
+# You can learn more about BrickPi here:  http://www.dexterindustries.com/BrickPi
+# Have a question about this example?  Ask on the forums here:  http://forum.dexterindustries.com/c/brickpi
 
 from BrickPi import *
 import sys

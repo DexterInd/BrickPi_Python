@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 # DI-dGPS_test.py
-# This code is for testing the BrickPi with a GPS sensor from Dexter Industries
+#
 # Product webpage: http://www.dexterindustries.com/dGPS.html
+# This code is for testing the BrickPi with a GPS sensor from Dexter Industries
+# Connect the dGPS Sensor to Sensor port S1
 #
 # History
 # ------------------------------------------------
@@ -9,12 +11,14 @@
 # Jaikrishna	June 24, 2013	Initial Authoring
 # Karan			Nov   7, 2013   Change to the longitude and latitude code
 # devenknight   May 2014		Added in Extended functions.
-# Karan			May 2014		Added in Extended functions.
+# Karan		    May 2014		Added in Extended functions.
+# Shoban        Oct  28, 2016   Added comments to describe the connections
 #
 # These files have been made available online through a Creative Commons Attribution-ShareAlike 3.0  license.
 # (http://creativecommons.org/licenses/by-sa/3.0/)
 #
-# http://www.dexterindustries.com/
+# You can learn more about BrickPi here:  http://www.dexterindustries.com/BrickPi
+# Have a question about this example?  Ask on the forums here:  http://forum.dexterindustries.com/c/brickpi
 
 
 from BrickPi import *   #import BrickPi.py file to use BrickPi operations

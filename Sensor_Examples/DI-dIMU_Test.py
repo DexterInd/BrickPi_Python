@@ -2,12 +2,17 @@
 # Jaikrishna
 # t.s.jaikrishna<at>gmail.com
 # Initial date: June 27, 2013
+# Last Updated: Oct  28, 2016 Shoban
 # Based on Matthew Richardson's example on testing BrickPi drivers.
 # You may use this code as you wish, provided you give credit where it's due.
 # 
+# Product webpage: http://www.dexterindustries.com/dIMU.html
 # This is a program for testing the RPi BrickPi drivers and I2C communication on the BrickPi with a dIMU
 # The program continuously polls values from the dIMU and displays Accelerometer & Gyroscope Readings
-# Product webpage: http://www.dexterindustries.com/dIMU.html
+# Connect the dIMU Sensor to Sensor port S1.
+#
+# You can learn more about BrickPi here:  http://www.dexterindustries.com/BrickPi
+# Have a question about this example?  Ask on the forums here:  http://forum.dexterindustries.com/c/brickpi
 
 from BrickPi import *
 
