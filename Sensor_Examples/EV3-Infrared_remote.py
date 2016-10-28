@@ -15,7 +15,7 @@
 # Original Author: John
 # Initial Date:		Jun 13, 2014
 # Updated:  		Aug 19, 2015
-# Updated:          Oct 28, 2016 Shoban
+# Updated:          	Oct 28, 2016 Shoban
 #
 # You can learn more about BrickPi here:  http://www.dexterindustries.com/BrickPi
 # Have a question about this example?  Ask on the forums here:  http://forum.dexterindustries.com/c/brickpi
