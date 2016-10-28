@@ -8,11 +8,11 @@
 # History
 # ------------------------------------------------
 # Author     	Date 			Comments
-# Jaikrishna	June 24, 2013	Initial Authoring
-# Karan			Nov   7, 2013   Change to the longitude and latitude code
+# Jaikrishna	June 24, 2013		Initial Authoring
+# Karan		Nov   7, 2013   	Change to the longitude and latitude code
 # devenknight   May 2014		Added in Extended functions.
-# Karan		    May 2014		Added in Extended functions.
-# Shoban        Oct  28, 2016   Added comments to describe the connections
+# Karan		May 2014		Added in Extended functions.
+# Shoban        Oct  28, 2016   	Added comments to describe the connections
 #
 # These files have been made available online through a Creative Commons Attribution-ShareAlike 3.0  license.
 # (http://creativecommons.org/licenses/by-sa/3.0/)
