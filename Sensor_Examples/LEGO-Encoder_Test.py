@@ -1,13 +1,17 @@
 #!/usr/bin/env python
 # Jaikrishna
 # Initial Date: June 24, 2013
-# Last Updated: June 24, 2013
+# Updated: 		June 24, 2013
+# Updated:      Oct  28, 2016  Shoban
 #
 # These files have been made available online through a Creative Commons Attribution-ShareAlike 3.0  license.
 # (http://creativecommons.org/licenses/by-sa/3.0/)
 #
-# http://www.dexterindustries.com/
-# This code is for testing the BrickPi with a Lego Motor 
+# This code is for testing the BrickPi with a Lego Motor. 
+# Connect the LEGO Motor to Motor port MA.
+#
+# You can learn more about BrickPi here:  http://www.dexterindustries.com/BrickPi
+# Have a question about this example?  Ask on the forums here:  http://forum.dexterindustries.com/c/brickpi
 
 from BrickPi import *   #import BrickPi.py file to use BrickPi operations
 

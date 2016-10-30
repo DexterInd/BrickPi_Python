@@ -1,11 +1,11 @@
 #!/usr/bin/env python
-# BRICKPI LEGO EV3 Ultrasonic SENSOR EXAMPLE.
+# BRICKPI LEGO EV3 ULTRASONIC SENSOR EXAMPLE.
 ############################################
 #
 # 
 # This example will show you how to use the LEGO EV3 Ultrasonic sensor with the BrickPi.  
 # Note you must have the latest firmware installed on the BrickPi or this example to work.  
-# Sensor is attached to Port 4.
+# Connect the EV3 Ultrasonic sensor to Sensor port S4.
 ##
 # Select the mode of operation below.  These are the modes of operation for the gyro.
 # TYPE_SENSOR_EV3_US_M0 - Continuous measurement, distance, cm
@@ -15,7 +15,10 @@
 #
 # Original Author: John
 # Initial Date: June 13, 2014
-# http://www.dexterindustries.com/BrickPi
+# Updated:      Oct  28, 2016 Shoban
+#
+# You can learn more about BrickPi here:  http://www.dexterindustries.com/BrickPi
+# Have a question about this example?  Ask on the forums here:  http://forum.dexterindustries.com/c/brickpi
 #
 # These files have been made available online through a Creative Commons Attribution-ShareAlike 3.0  license.
 # (http://creativecommons.org/licenses/by-sa/3.0/)

@@ -4,7 +4,7 @@
 #
 # This example will show you how to use the LEGO EV3 Gyro sensor with the BrickPi.  
 # Note you must have the latest firmware installed on the BrickPi or this example to work.  
-# Gyro sensor is attached to Port 4.
+# Connect the EV3 Gyro Sensor to Sensor port S4.
 ##
 # Select the mode of operation below.  These are the modes of operation for the gyro.
 # TYPE_SENSOR_EV3_GYRO_M0 - Returns absolute angle turned from startup.
@@ -15,11 +15,14 @@
 #
 # Original Author: John
 # Initial Date: 	Jun 13, 2014
-# Updated:			Aug 19, 2015
-# http://www.dexterindustries.com/BrickPi
+# Updated:		Aug 19, 2015
+# Updated:          	Oct 28, 2016 Shoban
 #
 # These files have been made available online through a Creative Commons Attribution-ShareAlike 3.0  license.
 # (http://creativecommons.org/licenses/by-sa/3.0/)
+#
+# You can learn more about BrickPi here:  http://www.dexterindustries.com/BrickPi
+# Have a question about this example?  Ask on the forums here:  http://forum.dexterindustries.com/c/brickpi
 
 from BrickPi import *   								#import BrickPi.py file to use BrickPi operations
 BrickPiSetup()  										# setup the serial port for communication

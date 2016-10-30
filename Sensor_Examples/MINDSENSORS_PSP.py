@@ -46,6 +46,10 @@
 	b1:   a b c d x rjb ljb x
 	b2:   sqr cro cir tri R1 L1 R2 L2
 '''
+#
+# You can learn more about BrickPi here:  http://www.dexterindustries.com/BrickPi
+# Have a question about this example?  Ask on the forums here:  http://forum.dexterindustries.com/c/brickpi
+
 from BrickPi import *   #import BrickPi.py file to use BrickPi operations
     # I2C port for the PSP controller
 #All the definitions and function for the buttons pressed on the controller

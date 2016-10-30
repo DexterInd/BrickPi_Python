@@ -1,13 +1,18 @@
 #!/usr/bin/env python
 # Karan Nayan
 # Initial Date: July 11, 2013
-# Last Updated: July 11, 2013
-# http://www.dexterindustries.com/
+# Updated:      July 11, 2013
+# Updated:      Oct  28, 2016  Shoban
 #
 # These files have been made available online through a Creative Commons Attribution-ShareAlike 3.0  license.
 # (http://creativecommons.org/licenses/by-sa/3.0/)
 #
 # This is an example of controlling the rotation of motors using encoders
+# Connect the LEGO Motors to Motor ports MA and MB.
+#
+# You can learn more about BrickPi here:  http://www.dexterindustries.com/BrickPi
+# Have a question about this example?  Ask on the forums here:  http://forum.dexterindustries.com/c/brickpi
+
 from BrickPi import *   #import BrickPi.py file to use BrickPi operations
 
 BrickPiSetup()  # setup the serial port for sudo su communication
