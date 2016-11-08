@@ -9,6 +9,9 @@
  >      chmod +x brickpi_web_server.py
 
 - Run brickpi_web_server.py
+
+ >      sudo ./brickpi_web_server.py
+
 - Open a web browser on any computer or mobile device and enter the following in the address bar:
 
  >      dex.local:98
