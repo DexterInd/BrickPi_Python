@@ -234,7 +234,8 @@ if __name__ == "__main__":
     # Now start the web server
     logging.info( "Starting web server..." )
     http_server = tornado.httpserver.HTTPServer( application )
-    http_server.listen( 80 )
+	#The port number on which the robot control works, change in line 106 in www/index.html too
+    http_server.listen( 98 )
     
     robotPeriodicCallback = tornado.ioloop.PeriodicCallback( 
         robotUpdate, 100, io_loop=tornado.ioloop.IOLoop.instance() )
