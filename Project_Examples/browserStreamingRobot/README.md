@@ -6,7 +6,7 @@
 - Connect the Motors to Motor Ports B and D.
 - Make brickpi_web_server.py executable
 
- >      chmod +x brickpi_web_server.py
+ >      sudo chmod +x brickpi_web_server.py
 
 - Run brickpi_web_server.py
 
