@@ -13,6 +13,17 @@
 # You can learn more about BrickPi here:  http://www.dexterindustries.com/BrickPi
 # Have a question about this example?  Ask on the forums here:  http://forum.dexterindustries.com/c/brickpi
 
+#For the code to work - sudo pip install -U future
+
+from __future__ import print_function
+from __future__ import division
+from builtins import input
+
+# the above lines are meant for Python3 compatibility.
+# they force the use of Python3 functionality for print(), 
+# the integer division and input()
+# mind your parentheses!
+
 from BrickPi import *   #import BrickPi.py file to use BrickPi operations
 
 TIR_I2C_ADDR        = 0x0E      # TIR I2C device address 
@@ -54,7 +65,7 @@ while True:
 			temp = (float)((BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DTIR][1]<<8)+BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DTIR][0])  #join the MSB and LSB part
 			temp = temp*0.02 - 0.01        #Converting to Celcius
 			temp -= 273.15
-			print "Object Temp:", temp,
+			print("Object Temp:{0:0.2F}".format(temp))
 	time.sleep(0.050000)   #giving some delay before acquiring ambient temp
 
 	BrickPi.SensorI2COut[I2C_PORT][I2C_DEVICE_DTIR][0] = TIR_AMBIENT #then measure ambient temperature
@@ -67,5 +78,5 @@ while True:
 			temp = (float)((BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DTIR][1]<<8)+BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DTIR][0])
 			temp = temp*0.02 - 0.01
 			temp -= 273.15
-			print "Ambient Temp:", temp
+			print("Ambient Temp:{0:0.2F}".format(temp))
 	time.sleep(0.050000)   #giving some delay before acquiring ambient temp

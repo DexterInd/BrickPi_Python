@@ -26,6 +26,16 @@
 # You can learn more about BrickPi here:  http://www.dexterindustries.com/BrickPi
 # Have a question about this example?  Ask on the forums here:  http://forum.dexterindustries.com/c/brickpi
 
+#For the code to work - sudo pip install -U future
+
+from __future__ import print_function
+from __future__ import division
+from builtins import input
+
+# the above lines are meant for Python3 compatibility.
+# they force the use of Python3 functionality for print(), 
+# the integer division and input()
+# mind your parentheses!
 
 from BrickPi import *
 import sys
@@ -68,7 +78,6 @@ def dLightInit(addr):
 	if BrickPiUpdateValues() :              #writing
 		sys.exit(0)
 	time.sleep(.05)
-
 	BrickPi.SensorI2CWrite [I2C_PORT][I2C_DEVICE_DLIGHT]    = 2       #number of bytes to write
 	BrickPi.SensorI2CRead  [I2C_PORT][I2C_DEVICE_DLIGHT]    = 0       #number of bytes to read
 	BrickPi.SensorI2COut   [I2C_PORT][I2C_DEVICE_DLIGHT][0]=DLIGHT_REG_LEDOUT

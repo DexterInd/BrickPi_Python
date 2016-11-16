@@ -8,6 +8,17 @@
 # These files have been made available online through a Creative Commons Attribution-ShareAlike 3.0  license.
 # (http://creativecommons.org/licenses/by-sa/3.0/)
 
+#For the code to work - sudo pip install -U future
+
+from __future__ import print_function
+from __future__ import division
+from builtins import input
+
+# the above lines are meant for Python3 compatibility.
+# they force the use of Python3 functionality for print(), 
+# the integer division and input()
+# mind your parentheses!
+
 import smbus
 
 def get_voltage():
@@ -41,10 +52,10 @@ def get_voltage():
             ratio = 0.01818     # this is 0.1/5.5V Still have to find out why...
             voltage = vratio * ratio
 
-            return voltage
+            return "{:.3F}".format(voltage)
 
     except:
             return False
             
 if __name__ == "__main__":
-    print get_voltage()
+    print(get_voltage())
