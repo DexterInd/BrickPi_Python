@@ -29,17 +29,14 @@ def get_voltage():
             # read data from i2c bus. the 0 command is mandatory for the protocol but not used in this chip.
             data = bus.read_word_data(address, 0)
 
-            # from this data we need the last 4 bits and the first 6.
-            last_4 = data & 0b1111 # using a bit mask
-            first_6 = data >> 10 # left shift 10 because data is 16 bits
+            # invert first and last bytes to obtain tension
+            last_byte = data & 0xFF
+            first_byte = data >> 8
+            tension = (last_byte << 8) | first_byte
 
-            # together they make the voltage conversion ratio
-            # to make it all easier the last_4 bits are most significant :S
-            vratio = (last_4 << 6) | first_6
-
-            # Now we can calculate the battery voltage like so:
-            ratio = 0.01818     # this is 0.1/5.5V Still have to find out why...
-            voltage = vratio * ratio
+            # convert tension (units seems te be in 0.025/5.5 V or 1/220 V) into Volts
+            units_per_volt = 220.0
+            voltage = tension / units_per_volt
 
             return voltage
 
