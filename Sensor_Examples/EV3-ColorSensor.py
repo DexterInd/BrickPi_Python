@@ -35,6 +35,17 @@
 # Have a question about this example?  Ask on the forums here:  http://forum.dexterindustries.com/c/brickpi
 #
 
+#For the code to work - sudo pip install -U future
+
+from __future__ import print_function
+from __future__ import division
+from builtins import input
+
+# the above lines are meant for Python3 compatibility.
+# they force the use of Python3 functionality for print(), 
+# the integer division and input()
+# mind your parentheses!
+
 
 from BrickPi import *   	#import BrickPi.py file to use BrickPi operations
 BrickPiSetup()  		# setup the serial port for communication
@@ -48,7 +59,7 @@ BrickPiSetupSensors()   				#Send the properties of sensors to BrickPi.  Set up 
 
 port_nb = PORT_4
 # tell user which port to use and give a short time to read
-print("EV3 Color sensor should be in PORT {}".format(port_nb+1))
+print(("EV3 Color sensor should be in PORT {}".format(port_nb+1)))
 time.sleep(0.5)
 
 while True:
@@ -56,7 +67,7 @@ while True:
 	if not result :
 		color_sensor = BrickPi.Sensor[port_nb]
 		if color_sensor < 7 :
-			print (colors[color_sensor-1])
+			print((colors[color_sensor-1]))
 		else:
 			print (color_sensor)
 		

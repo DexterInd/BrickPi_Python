@@ -23,6 +23,17 @@
 # These files have been made available online through a Creative Commons Attribution-ShareAlike 3.0  license.
 # (http://creativecommons.org/licenses/by-sa/3.0/)
 
+#For the code to work - sudo pip install -U future
+
+from __future__ import print_function
+from __future__ import division
+from builtins import input
+
+# the above lines are meant for Python3 compatibility.
+# they force the use of Python3 functionality for print(), 
+# the integer division and input()
+# mind your parentheses!
+
 from BrickPi import *   								#import BrickPi.py file to use BrickPi operations
 BrickPiSetup()  										# setup the serial port for communication
 ############################################
@@ -35,7 +46,7 @@ while True:
 	result = BrickPiUpdateValues()  # Ask BrickPi to update values for sensors/motors 
 	if not result :
 		gyro = BrickPi.Sensor[PORT_4]
-		print str(gyro)
+		print(str(gyro))
 		
 	time.sleep(.01)     # sleep for 10 ms
 

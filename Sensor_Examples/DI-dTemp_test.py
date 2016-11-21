@@ -13,6 +13,16 @@
 # You can learn more about BrickPi here:  http://www.dexterindustries.com/BrickPi
 # Have a question about this example?  Ask on the forums here:  http://forum.dexterindustries.com/c/brickpi
 
+#For the code to work - sudo pip install -U future
+
+from __future__ import print_function
+from __future__ import division
+from builtins import input
+
+# the above lines are meant for Python3 compatibility.
+# they force the use of Python3 functionality for print(), 
+# the integer division and input()
+# mind your parentheses!
 
 
 from BrickPi import *   #import BrickPi.py file to use BrickPi operations
@@ -46,5 +56,5 @@ if not BrickPiSetupSensors() :
 			
 			temp =  1.0 / (_a[i] + (_b[i] * lnRtRt25) + (_c[i] * lnRtRt25 * lnRtRt25) + (_d[i] * lnRtRt25 * lnRtRt25 * lnRtRt25))
 			temp-=273
-			print "Temperature:", temp
+			print("Temperature:",temp)
 	time.sleep(.1)

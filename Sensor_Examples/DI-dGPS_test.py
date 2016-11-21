@@ -20,6 +20,17 @@
 # You can learn more about BrickPi here:  http://www.dexterindustries.com/BrickPi
 # Have a question about this example?  Ask on the forums here:  http://forum.dexterindustries.com/c/brickpi
 
+#For the code to work - sudo pip install -U future
+
+from __future__ import print_function
+from __future__ import division
+from builtins import input
+
+# the above lines are meant for Python3 compatibility.
+# they force the use of Python3 functionality for print(), 
+# the integer division and input()
+# mind your parentheses!
+
 
 from BrickPi import *   #import BrickPi.py file to use BrickPi operations
 
@@ -61,7 +72,7 @@ BrickPi.SensorI2CWrite [I2C_PORT][I2C_DEVICE_DGPS]    = 1				#number of bytes to
 BrickPi.SensorI2CRead  [I2C_PORT][I2C_DEVICE_DGPS]    = 3
 BrickPiSetupSensors()
 result = BrickPiUpdateValues() #write and read
-print "Xtend firmware:",result
+print("Xtend firmware:",result)
 
 while True:
 	#UTC
@@ -71,7 +82,7 @@ while True:
 	result = BrickPiUpdateValues() #write and read
 	if not result :
 		if (BrickPi.Sensor[I2C_PORT] & (0x01 << I2C_DEVICE_DGPS)) :
-			UTC = ((long)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][0]<<24)) + ((long)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][1]<<16)) + ((long)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][2]<<8)) + (long)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][3])
+			UTC = ((int)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][0]<<24)) + ((int)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][1]<<16)) + ((int)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][2]<<8)) + (int)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][3])
 	
 	#Longitude
 	BrickPi.SensorI2COut   [I2C_PORT][I2C_DEVICE_DGPS][0] = DGPS_CMD_LONG	#byte to write
@@ -79,9 +90,9 @@ while True:
 	result = BrickPiUpdateValues() #write and read
 	if not result :
 		if (BrickPi.Sensor[I2C_PORT] & (0x01 << I2C_DEVICE_DGPS)) :
-			lon = ((long)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][0]<<24)) + ((long)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][1]<<16)) + ((long)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][2]<<8)) + (long)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][3])
+			lon = ((int)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][0]<<24)) + ((int)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][1]<<16)) + ((int)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][2]<<8)) + (int)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][3])
 			if BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][0]>10:	#if the 0th byte >10, then the longitude was negative and use the 2's compliment of the longitude
-				lon=(4294967295L^lon)+1
+				lon=(4294967295^lon)+1
 				lon=(-float(lon)/1000000)
 			else:
 				lon=(float(lon)/1000000)
@@ -92,9 +103,9 @@ while True:
 	result = BrickPiUpdateValues() #write and read
 	if not result :
 		if (BrickPi.Sensor[I2C_PORT] & (0x01 << I2C_DEVICE_DGPS)) :
-			lat = ((long)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][0]<<24)) + ((long)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][1]<<16)) + ((long)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][2]<<8)) + (long)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][3])
+			lat = ((int)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][0]<<24)) + ((int)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][1]<<16)) + ((int)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][2]<<8)) + (int)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][3])
 			if BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][0]>10:
-				lat=(4294967295L^lat)+1
+				lat=(4294967295^lat)+1
 				lat=(-float(lat)/1000000)
 			else:
 				lat=(float(lat)/1000000)
@@ -106,7 +117,7 @@ while True:
 	result = BrickPiUpdateValues() #write and read
 	if not result :
 		if (BrickPi.Sensor[I2C_PORT] & (0x01 << I2C_DEVICE_DGPS)) :
-			head = ((long)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][0]<<8)) + ((long)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][1]))
+			head = ((int)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][0]<<8)) + ((int)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][1]))
 	
 	#Status
 	BrickPi.SensorI2CRead  [I2C_PORT][I2C_DEVICE_DGPS]    = 1
@@ -115,7 +126,7 @@ while True:
 	result = BrickPiUpdateValues() #write and read
 	if not result :
 		if (BrickPi.Sensor[I2C_PORT] & (0x01 << I2C_DEVICE_DGPS)) :
-			status = ((long)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][0]))
+			status = ((int)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][0]))
 
 	#Velocity
 	BrickPi.SensorI2CRead  [I2C_PORT][I2C_DEVICE_DGPS]    = 3
@@ -124,7 +135,7 @@ while True:
 	result = BrickPiUpdateValues() #write and read
 	if not result :
 		if (BrickPi.Sensor[I2C_PORT] & (0x01 << I2C_DEVICE_DGPS)) :
-			velo = ((long)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][0]<<16)) + ((long)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][1]<<8)) + ((long)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][2]))
+			velo = ((int)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][0]<<16)) + ((int)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][1]<<8)) + ((int)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][2]))
 	
 	#Altitude
 	BrickPi.SensorI2CRead  [I2C_PORT][I2C_DEVICE_DGPS]    = 4
@@ -133,7 +144,7 @@ while True:
 	result = BrickPiUpdateValues() #write and read
 	if not result :
 		if (BrickPi.Sensor[I2C_PORT] & (0x01 << I2C_DEVICE_DGPS)) :
-			altitude = ((long)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][0]<<24))+((long)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][1]<<16)) + ((long)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][2]<<8)) + ((long)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][3]))
+			altitude = ((int)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][0]<<24))+((int)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][1]<<16)) + ((int)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][2]<<8)) + ((int)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][3]))
 			
 	#Read HDOP measure of the precision
 	BrickPi.SensorI2CRead  [I2C_PORT][I2C_DEVICE_DGPS]    = 4
@@ -142,7 +153,7 @@ while True:
 	result = BrickPiUpdateValues() #write and read
 	if not result :
 		if (BrickPi.Sensor[I2C_PORT] & (0x01 << I2C_DEVICE_DGPS)) :
-			hdop = ((long)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][0]<<24))+((long)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][1]<<16)) + ((long)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][2]<<8)) + ((long)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][3]))
+			hdop = ((int)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][0]<<24))+((int)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][1]<<16)) + ((int)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][2]<<8)) + ((int)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][3]))
 			
 	#Satellites in view
 	BrickPi.SensorI2CRead  [I2C_PORT][I2C_DEVICE_DGPS]    = 4
@@ -151,7 +162,7 @@ while True:
 	result = BrickPiUpdateValues() #write and read
 	if not result :
 		if (BrickPi.Sensor[I2C_PORT] & (0x01 << I2C_DEVICE_DGPS)) :
-			satv = ((long)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][0]<<24))+((long)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][1]<<16)) + ((long)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][2]<<8)) + ((long)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][3]))
+			satv = ((int)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][0]<<24))+((int)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][1]<<16)) + ((int)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][2]<<8)) + ((int)(BrickPi.SensorI2CIn[I2C_PORT][I2C_DEVICE_DGPS][3]))
 			
-	print 'Status',status,'UTC',UTC,'Latitude %.6f'% lat,'Longitude %.6f'%lon,'Heading',head,'Velocity',velo,'Altitude',altitude,'HDOP',hdop,'Satellites in view',satv
+	print('Status',status,'UTC',UTC,'Latitude %.6f'% lat,'Longitude %.6f'%lon,'Heading',head,'Velocity',velo,'Altitude',altitude,'HDOP',hdop,'Satellites in view',satv)
 	time.sleep(0.50000);   #giving some delay before acquiring next set of data

@@ -13,6 +13,18 @@
 # You can learn more about BrickPi here:  http://www.dexterindustries.com/BrickPi
 # Have a question about this example?  Ask on the forums here:  http://forum.dexterindustries.com/c/brickpi
 
+#For the code to work - sudo pip install -U future
+
+from __future__ import print_function
+from __future__ import division
+from builtins import input
+
+# the above lines are meant for Python3 compatibility.
+# they force the use of Python3 functionality for print(), 
+# the integer division and input()
+# mind your parentheses!
+
+
 from BrickPi import *   #import BrickPi.py file to use BrickPi operations
 
 BrickPiSetup()  # setup the serial port for communication
@@ -25,7 +37,7 @@ BrickPiSetupSensors()       #Send the properties of sensors to BrickPi
 while True:
     result = BrickPiUpdateValues()  # Ask BrickPi to update values for sensors/motors
     if not result :                 # if updating values succeeded
-        print ( BrickPi.Encoder[PORT_A] %720 ) /2   # print the encoder degrees 
+        print(( BrickPi.Encoder[PORT_A] %720 ) /2)   # print the encoder degrees 
     time.sleep(.1)		#sleep for 100 ms
 
 # Note: One encoder value counts for 0.5 degrees. So 360 degrees = 720 enc. Hence, to get degress = (enc%720)/2
