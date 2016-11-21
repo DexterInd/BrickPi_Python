@@ -512,7 +512,7 @@ def BrickPiSetupSensors():
 
     if 'DEBUG' in globals():
         if DEBUG == 1:
-            print("Setup returned 0")
+            print("Setup returned 0:")
     return 0
 
 
@@ -582,6 +582,7 @@ def BrickPiUpdateValues():
             BrickPiTx(BrickPi.Address[i], tx_bytes, Array)
 
             result, BytesReceived, InArray = BrickPiRx(0.007500) #check timeout
+            #print("Result",result)
             for j in range(len(InArray)):
                 Array[j]=InArray[j]
             if result != -2 :
@@ -591,7 +592,7 @@ def BrickPiUpdateValues():
                 Retried += 1
                 if 'DEBUG' in globals():
                     if DEBUG == 1:
-                        print("BrickPiRx Error: %d" % result)
+                        print("BrickPiRx Error : %d" % result)
             else:
                 Retried = 10 # exit loop
 
@@ -748,14 +749,16 @@ def BrickPiRx(timeout):
         buff_in = 0
         try:
             while ser.inWaiting():
-                buff_in = ser.inWaiting()
-                buff_read = bytes((ser.read(buff_in)))
-                string_in = ''
-                for i in buff_read:
-                    # print(chr(i))
-                    string_in+=chr(i)
+                while ser.inWaiting():
+                    buff_in = ser.inWaiting()
+                    buff_read = bytes((ser.read(buff_in)))
+                    string_in = ''
+                    for i in buff_read:
+                        # print(chr(i))
+                        string_in+=chr(i)
 
-                rx_buffer += (string_in)
+                    rx_buffer += (string_in)
+                time.sleep(.001) # This is required. If the BrickPi is in interrupt listening to a configured (57600 baud) EV3 sensor, it could be about 170uS between bytes. 250uS should be safe.
         except:
             # print ("Unexpected error: ", sys.exc_info()[0])
             return -1, 0 , []
