@@ -8,7 +8,7 @@ These files have been made available online through a [Creative Commons Attribut
 Installation
 ============
 
-First, open a terminal program on the Raspberry Pi, and change directories to the location (directory) you cloned the BrickPi_Python.
+First, open a terminal program on the Raspberry Pi, and change directories to the location (directory) where you wish to clone the BrickPi_Python.
 Follow the following steps to install the BrickPi_Python Module on a Raspbian Jessie Image.
  
 1. Run `sudo apt-get update`
