@@ -8,38 +8,19 @@ These files have been made available online through a [Creative Commons Attribut
 Installation
 ============
 
+The `BrickPi` module can be installed using the `setup.py` script included in the BrickPi_Python repository.
+
 First, open a terminal program on the Raspberry Pi, and change directories to the location (directory) you cloned the BrickPi_Python.
-Follow the following steps to install the BrickPi_Python Module on a Raspbian Jessie Image.
- 
-1. Run `sudo apt-get update`
-2. Run `sudo apt-get upgrade -y`
-3. Edit the boot config with
-  * `sudo nano /boot/config.txt`
-  * Add "dtoverlay=pi3-disable-bt" to the end of the file
-  * Save the file
-  * Run `sudo systemctl disable hciuart` to prevent BT modem from attempting to use UART
-  * Reboot raspberry pi `sudo reboot`
-4. Run `sudo git clone http://www.github.com/DexterInd/BrickPi.git`
-5. Run `cd BrickPi/Setup\ Files`
-6. Run `sudo bash install.sh`
-7. Run `sudo pip install -U future`
-8. `cd ..`
-9. Run `sudo git clone http://www.github.com/DexterInd/BrickPi_Python.git`
-10. Run `sudo apt-get install python-setuptools python-dev build-essential`
-11. Run `cd BrickPi_Python`
-12. Run `sudo python setup.py install` to install the `BrickPi` module globally.
-13. Run `sudo raspi-config` and go to "7 Advanced Options" --> "A8 Serial" --> And then select "No"
-14. Modify /boot/config.txt to enable_uart=1 (This line should be there from the previous install, but set to 0 from the raspi-config commands
-  * Run `sudo nano /boot/config.txt`
-  * At the end of the file, change `enable_uart=0` to `enable_uart=1`
-  * Save the changes.
-  * Reboot raspberry pi `sudo reboot`
-15. `cd Sensor Examples`
-and try running an example. If you get any import BrickPi no module found or import Ir_receiver_check no module found errors, Repeat step 12.
 
-To use the module in your own Python scripts, just import it:
+Once there, we'll install python setuptools, and then install the BrickPi Python module:
 
-    `import BrickPi`
+    sudo apt-get install python-setuptools python-dev build-essential
+    sudo python setup.py install
+
+This will install the `BrickPi` module globally.  To use the module in your own
+Python scripts, just import it:
+
+    import BrickPi
 
 Sensor Examples
 ===============
