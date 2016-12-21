@@ -539,8 +539,9 @@ def BrickPiUpdateValues():
                     if Temp_Value < 0 :
                         Temp_ENC_DIR = 1
                         Temp_Value *= -1
-                    Temp_BitsNeeded = BitsNeeded(Temp_Value) + 1
+                    Temp_BitsNeeded = BitsNeeded(Temp_Value)
                     AddBits(1,0,5, Temp_BitsNeeded)
+                    Temp_BitsNeeded += 1
                     Temp_Value *= 2
                     Temp_Value |= Temp_ENC_DIR
                     AddBits(1,0, Temp_BitsNeeded, Temp_Value)
