@@ -1,3 +1,0 @@
-RPi.GPIO
-pyserial
-future
