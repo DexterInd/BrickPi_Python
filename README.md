@@ -1,7 +1,7 @@
 BrickPi Python Code
 ===================
 
-This code [has been moved here.](https://github.com/DexterInd/BrickPi/tree/master/Software/Python)
+This code [has been moved here.](https://github.com/DexterInd/BrickPi/tree/master/Software/BrickPi_Python)
 
 ============
 
