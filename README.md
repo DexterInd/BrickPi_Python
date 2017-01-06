@@ -22,8 +22,9 @@ Follow the following steps to install the BrickPi_Python Module on a Raspbian Je
 4. Run `sudo git clone http://www.github.com/DexterInd/BrickPi.git`
 5. Run `cd BrickPi/Setup\ Files`
 6. Run `sudo bash install.sh`
-7. Reboot raspberry pi `sudo reboot`
-8. `cd Sensor Examples`
+7. Raspberry pi reboots
+8. Run `sudo git clone http://www.github.com/DexterInd/BrickPi_Python.git`
+9. `cd BrickPi_Python/Sensor Examples`
 and try running an example.
 
 To use the module in your own Python scripts, just import it:
