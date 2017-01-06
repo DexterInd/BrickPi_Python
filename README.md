@@ -22,20 +22,10 @@ Follow the following steps to install the BrickPi_Python Module on a Raspbian Je
 4. Run `sudo git clone http://www.github.com/DexterInd/BrickPi.git`
 5. Run `cd BrickPi/Setup\ Files`
 6. Run `sudo bash install.sh`
-7. Run `sudo pip install -U future`
-8. `cd ..`
-9. Run `sudo git clone http://www.github.com/DexterInd/BrickPi_Python.git`
-10. Run `sudo apt-get install python-setuptools python-dev build-essential`
-11. Run `cd BrickPi_Python`
-12. Run `sudo python setup.py install` to install the `BrickPi` module globally.
-13. Run `sudo raspi-config` and go to "7 Advanced Options" --> "A8 Serial" --> And then select "No"
-14. Modify /boot/config.txt to enable_uart=1 (This line should be there from the previous install, but set to 0 from the raspi-config commands
-  * Run `sudo nano /boot/config.txt`
-  * At the end of the file, change `enable_uart=0` to `enable_uart=1`
-  * Save the changes.
-  * Reboot raspberry pi `sudo reboot`
-15. `cd Sensor Examples`
-and try running an example. If you get any import BrickPi no module found or import Ir_receiver_check no module found errors, Repeat step 12.
+7. Raspberry pi reboots
+8. Run `sudo git clone http://www.github.com/DexterInd/BrickPi_Python.git`
+9. `cd BrickPi_Python/Sensor Examples`
+and try running an example.
 
 To use the module in your own Python scripts, just import it:
 
